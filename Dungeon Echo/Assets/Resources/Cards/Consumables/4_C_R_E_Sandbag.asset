@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd4fc97f411de63419244701c024b123, type: 3}
+  m_Name: 4_C_R_E_Sandbag
+  m_EditorClassIdentifier: 
+  status: 7
+  subType: 10
+  rarity: 2
+  application: 0
+  effectAttribute: []
+  costAttribute:
+    stat: 3
+    value: 0
+  description: '-'
+  fulldescription: '-'
+  cardName: Sandbag
+  displayCardName: Sandbag
+  artCard: {fileID: 21300000, guid: 01e98b49b66060a47bd030a1e3dfa0ae, type: 3}
+  shirtMain: {fileID: 21300000, guid: 77aa79e6a52fd714fa3051e8a0b1e312, type: 3}
+  shirtCard: {fileID: 21300000, guid: 8c3b57e0fd07f184eb9938267077f5cc, type: 3}

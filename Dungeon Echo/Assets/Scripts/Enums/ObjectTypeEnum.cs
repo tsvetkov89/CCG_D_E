@@ -1,0 +1,24 @@
+public enum ObjectTypeEnum
+{
+    Undefined,
+    //PrefabCardGameClass,
+    PrefabIconPlayer,
+    PrefabCard,
+    PrefabCardInInventory,
+    PrefabCardArea,
+    PrefabCardEnemy,
+    PrefabCardBattleEnemy,
+    PrefabCardEvent,
+    CardsGameClass,
+    CardsEquipment,
+    CardsSpells,
+    CardsConsumables,
+    CardsArea,
+    CardsEnemy,
+    CardsUnits,
+    CardsEvents,
+    SlotCardInInventory,
+    SlotInventory2,
+    Adventure,
+    PrefabBtnEvent
+}

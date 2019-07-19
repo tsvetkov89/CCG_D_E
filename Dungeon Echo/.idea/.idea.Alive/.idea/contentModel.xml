@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\чся\.Rider2018.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\чся\.Rider2018.3\system\resharper-host\local\Transient\ReSharperHost\v183\SolutionCaches\_Alive.1749249158.00" t="ExcludeRecursive" />
+    <e p="D:\MyProjects\_Project\Alive" t="IncludeRecursive">
+      <e p="Alive.sln" t="IncludeFlat" />
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="Scripts" t="Include">
+          <e p="CardScripts" t="Include">
+            <e p="ActionsWithCardGameClass.cs" t="Include" />
+            <e p="ActionsWithCards.cs" t="Include" />
+            <e p="ActionsWithSlotInventory.cs" t="Include" />
+            <e p="DraggableCard.cs" t="Include" />
+          </e>
+          <e p="Common" t="Include">
+            <e p="CustomEventArgs.cs" t="Include" />
+            <e p="CustomObject.cs" t="Include" />
+          </e>
+          <e p="Enums" t="Include">
+            <e p="EventArgsGeneric.cs" t="Include" />
+            <e p="EventTypeEnum.cs" t="Include" />
+            <e p="LibraryEnum.cs" t="Include" />
+            <e p="ObjectTypeEnum.cs" t="Include" />
+            <e p="SceneTypes.cs" t="Include" />
+            <e p="Strings.cs" t="Include" />
+          </e>
+          <e p="Extensions" t="Include">
+            <e p="FrameworkExtensions.cs" t="Include" />
+            <e p="RandomExtensions.cs" t="Include" />
+          </e>
+          <e p="Interface" t="Include">
+            <e p="IAnimaManager.cs" t="Include" />
+            <e p="IAudioManager.cs" t="Include" />
+            <e p="ICard.cs" t="Include" />
+            <e p="ICoroutiner.cs" t="Include" />
+            <e p="IDecksManager.cs" t="Include" />
+            <e p="IGameManager.cs" t="Include" />
+            <e p="IGameStageManager.cs" t="Include" />
+            <e p="IInventoryManager.cs" t="Include" />
+            <e p="ILoadManager.cs" t="Include" />
+            <e p="ILogicManager.cs" t="Include" />
+            <e p="IObjectLoader.cs" t="Include" />
+            <e p="IObjectStorage.cs" t="Include" />
+            <e p="IPublisher.cs" t="Include" />
+            <e p="ISaveManager.cs" t="Include" />
+            <e p="IScene.cs" t="Include" />
+            <e p="ISubscriber.cs" t="Include" />
+          </e>
+          <e p="Managers" t="Include">
+            <e p="AnimaManager.cs" t="Include" />
+            <e p="AudioManager.cs" t="Include" />
+            <e p="Coroutiner.cs" t="Include" />
+            <e p="DecksManager.cs" t="Include" />
+            <e p="GameManager.cs" t="Include" />
+            <e p="GameStageManager.cs" t="Include" />
+            <e p="InventoryManager.cs" t="Include" />
+            <e p="LoadManager.cs" t="Include" />
+            <e p="LogicManager.cs" t="Include" />
+            <e p="ObjectLoader.cs" t="Include" />
+            <e p="ObjectStorage.cs" t="Include" />
+            <e p="Publisher.cs" t="Include" />
+            <e p="SaveManager.cs" t="Include" />
+          </e>
+          <e p="Monobehavior" t="Include">
+            <e p="Card.cs" t="Include" />
+          </e>
+          <e p="Popups" t="Include">
+            <e p="PopupDescriptionCard.cs" t="Include" />
+            <e p="PopupGameClass.cs" t="Include" />
+            <e p="PopupInventory.cs" t="Include" />
+            <e p="PopupPlaceInSlot.cs" t="Include" />
+          </e>
+          <e p="SceneControllers" t="Include">
+            <e p="BaseScene.cs" t="Include" />
+            <e p="GameScene.cs" t="Include" />
+            <e p="MenuScene.cs" t="Include" />
+            <e p="SceneBootstrapper.cs" t="Include" />
+          </e>
+          <e p="ScriptableObj" t="Include">
+            <e p="CardConsumables.cs" t="Include" />
+            <e p="CardEnemy.cs" t="Include" />
+            <e p="CardEquipment.cs" t="Include" />
+            <e p="CardGameEvent.cs" t="Include" />
+            <e p="CardsGameArea.cs" t="Include" />
+            <e p="CardsGameClass.cs" t="Include" />
+            <e p="CardSpell.cs" t="Include" />
+          </e>
+          <e p="Struct" t="Include">
+            <e p="DataCard.cs" t="Include" />
+          </e>
+          <e p="UIScripts" t="Include">
+            <e p="ClickHandlerMenu.cs" t="Include" />
+            <e p="ClickHandlerPopupCard.cs" t="Include" />
+            <e p="ScrollingRawImage.cs" t="Include" />
+            <e p="UiButtonsMenu.cs" t="Include" />
+            <e p="UiButtonsPopups.cs" t="Include" />
+          </e>
+        </e>
+        <e p="TextMesh Pro" t="Include">
+          <e p="Resources" t="Include">
+            <e p="LineBreaking Following Characters.txt" t="Include" />
+            <e p="LineBreaking Leading Characters.txt" t="Include" />
+            <e p="Shaders" t="Include">
+              <e p="TMP_Bitmap-Custom-Atlas.shader" t="Include" />
+              <e p="TMP_Bitmap-Mobile.shader" t="Include" />
+              <e p="TMP_Bitmap.shader" t="Include" />
+              <e p="TMP_SDF Overlay.shader" t="Include" />
+              <e p="TMP_SDF-Mobile Masking.shader" t="Include" />
+              <e p="TMP_SDF-Mobile Overlay.shader" t="Include" />
+              <e p="TMP_SDF-Mobile.shader" t="Include" />
+              <e p="TMP_SDF-Surface-Mobile.shader" t="Include" />
+              <e p="TMP_SDF-Surface.shader" t="Include" />
+              <e p="TMP_SDF.shader" t="Include" />
+              <e p="TMP_Sprite.shader" t="Include" />
+              <e p="TMPro.cginc" t="Include" />
+              <e p="TMPro_Properties.cginc" t="Include" />
+              <e p="TMPro_Surface.cginc" t="Include" />
+            </e>
+          </e>
+          <e p="Sprites" t="Include">
+            <e p="EmojiOne Attribution.txt" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="Library" t="ExcludeRecursive" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="Temp" t="ExcludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+      </e>
+    </e>
+  </component>
+</project>

@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a4f772b5c0d452f91a8bac24d61edcd, type: 3}
+  m_Name: 0_C_BaseAttackPurple
+  m_EditorClassIdentifier: 
+  cardType: 6
+  subType: 7
+  rarity: 0
+  classCard: 4
+  area: 1
+  effectAttribute: []
+  costAttribute:
+    stat: 3
+    value: 2
+  statsAttribute:
+  - stat: 2
+    value: 4
+  description: Damage 4
+  fulldescription: "C\u0442\u0430\u043D\u0434\u0430\u0440\u0442\u043D\u043E\u0435
+    \u0437\u0430\u043A\u043B\u0438\u043D\u0430\u043D\u0438\u0435 <color=#ff00ffff>\u0444\u0438\u043E\u043B\u0435\u0442\u043E\u0432\u043E\u0439</color>
+    \u0448\u043A\u043E\u043B\u044B \u043C\u0430\u0433\u0438\u0438. \u041E\u0431\u043B\u0430\u0434\u0430\u0435\u0442
+    \u043C\u0430\u0433\u0438\u0447\u0435\u0441\u043A\u0438\u043C \u044D\u0444\u0444\u0435\u043A\u0442\u043E\u043C,
+    \u043A\u043E\u0442\u043E\u0440\u044B\u0439 \u043F\u043E\u0437\u0432\u043E\u043B\u044F\u0435\u0442
+    \u0441\u0443\u0431\u044A\u0435\u043A\u0442\u0443 \u043D\u0430\u043D\u0435\u0441\u0442\u0438
+    \u043C\u0433\u043D\u043E\u0432\u0435\u043D\u043D\u044B\u0439 \u0443\u0440\u043E\u043D
+    \u043E\u0434\u043D\u043E\u0439 \u0446\u0435\u043B\u0438. \u0421\u0438\u043B\u0430
+    \u0437\u0430\u043A\u043B\u0438\u043D\u0430\u043D\u0438\u044F \u0440\u0430\u0432\u043D\u0430
+    <color=#ff00ffff>4 \u0435\u0434e\u043D\u0438\u0446\u0430\u043C</color>. "
+  cardName: BaseAttackPurple
+  displayCardName: Base Attack
+  artCard: {fileID: 21300000, guid: d8c613d75f48ca74bb8c4a0bf5b40a12, type: 3}
+  shirtMain: {fileID: 21300000, guid: a5cebb48f57715a4cb9f6480b9690afe, type: 3}
+  shirtCard: {fileID: 21300000, guid: 8f571537680dfe74ca60cf151693ca3e, type: 3}
