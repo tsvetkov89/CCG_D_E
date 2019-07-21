@@ -227,10 +227,17 @@ public class ObjectStorage : IObjectStorage
         _poolsObjects[typeEnum].Add(obj);
         ConfigurateZero(obj);
     }
-    public void ConfigurateByParent( GameObject child,GameObject parent)
+    /*public void ConfigurateByParent( GameObject child,GameObject parent)
     {
         child.transform.SetParent(parent.transform);
         child.GetComponent<RectTransform>().SetRect(0, 0, 1, 1);
+        child.GetComponent<RectTransform>().SetOffset(0,0,0,0);
+        child.SetActive(true);
+    }*/
+    public void ConfigurateByParent( GameObject child,GameObject parent,float xmin,float ymin,float xmax,float ymax)
+    {
+        child.transform.SetParent(parent.transform);
+        child.GetComponent<RectTransform>().SetRect(xmin, ymin, xmax, ymax);
         child.GetComponent<RectTransform>().SetOffset(0,0,0,0);
         child.SetActive(true);
     }

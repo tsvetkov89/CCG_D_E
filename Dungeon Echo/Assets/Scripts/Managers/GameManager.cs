@@ -23,8 +23,6 @@ public class GameManager : IGameManager, ISubscriber
 
     //private IDictionary<ObjectTypeEnum,List<GameObject>> _poolGameObjects;
     private GameObject _hud;  //игровой HUD
-    //private GameObject _hand; //область руки игрока
-    //private GameObject _panelEnemy; // область врагов
     private GameObject _shirtDeckInGame; //рубашка колоды
     private ICard _selectedCardEnemy;
    
@@ -354,11 +352,7 @@ public class GameManager : IGameManager, ISubscriber
     public void SetUiComponents(GameObject hud, GameObject deckInGame)
     {
         _hud = hud;
-        //var transform = _hud.GetComponentsInChildren<Transform>().SearchChild("PanelHandPlayer");
-        //_hand = transform.gameObject;
-        //transform = _hud.GetComponentsInChildren<Transform>().SearchChild("PanelEnemy");
-        //_panelEnemy = transform.gameObject;
-        _shirtDeckInGame = deckInGame;   
+        _shirtDeckInGame = deckInGame;
     }
     private void ReturnNoSelectedCard(IEnumerable<GameObject> pool)
     {

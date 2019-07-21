@@ -20,6 +20,8 @@ public class DeckManager : IDeckManager, ISubscriber
     private List<string> _discardCards;
     private GameObject _hud;  //игровой HUD
     private GameObject _hand; //область руки игрока
+    private GameObject _pointStopDrag;
+    private GameObject _pointReturnCard;
     private List<GameObject> _poolCardsPlayer; //колода карт 
     public DeckManager(IObjectStorage objectStorage, IInventoryManager inventoryManager, IAnimaManager animaManager, 
         IPublisher publisher, ICoroutiner coroutiner)
@@ -91,14 +93,13 @@ public class DeckManager : IDeckManager, ISubscriber
         _currentCardsInHand = 0;
         _discardCards.Clear();
     }
-    public void SetUiComponents(GameObject hud)
+    public void SetUiComponents(GameObject hud, GameObject pointStopDrag, GameObject pointReturnCard)
     {
         _hud = hud;
         var transform = _hud.GetComponentsInChildren<Transform>().SearchChild("PanelHandPlayer");
         _hand = transform.gameObject;
-        //transform = _hud.GetComponentsInChildren<Transform>().SearchChild("PanelEnemy");
-        //_panelEnemy = transform.gameObject;
-        //_shirtDeckInGame = deckInGame;   
+        _pointStopDrag = pointStopDrag;
+        _pointReturnCard = pointReturnCard; 
     }
     public void PlaceObjects()
     {
@@ -143,6 +144,8 @@ public class DeckManager : IDeckManager, ISubscriber
                 cardDisplay.CardGame.DisplayCardInGame(cardPlayer);
                 cardDisplay.SetDependecies(_publisher, _animaManager);
                 cardDisplay.enabled = false;
+                var component = cardPlayer.GetComponent<DraggableCard>();
+                component.SetDependecies( _pointStopDrag, _pointReturnCard);
                 cardPlayer.SetActive(true);
                 _animaManager.SetStateAnimation(cardPlayer, "go_hand",true);
                 _currentCardsInHand++;
@@ -196,7 +199,7 @@ public class DeckManager : IDeckManager, ISubscriber
     private IEnumerator SwithParentCard(GameObject card)
     {
         yield return new WaitForSeconds(0.6f);
-        _objectStorage.ConfigurateByParent(card,_hand);
+        _objectStorage.ConfigurateByParent(card,_hand,0.5f, 0.5f, 0.5f, 0.5f);
         card.GetComponent<CanvasGroup>().blocksRaycasts = true;     
     }
 }

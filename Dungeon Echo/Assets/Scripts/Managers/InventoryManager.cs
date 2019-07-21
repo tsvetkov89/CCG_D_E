@@ -392,7 +392,7 @@ public class InventoryManager : IInventoryManager, ISubscriber
         var list = _inventoryPlayers[_player];
         var component = _arrayInventory[index].GetComponent<ActionsWithSlotInventory>();
         var card = _objectStorage.GetPollObjects(ObjectTypeEnum.PrefabCardInInventory, 1)[0];
-        _objectStorage.ConfigurateByParent(card,_arrayInventory[index]);
+        _objectStorage.ConfigurateByParent(card,_arrayInventory[index],0,0,1,1);
         var cardDisplay = card.GetComponent<ActionsWithCards>();
         var name = list[index];
         var cardData = _objectStorage.GetCardByName(name);
@@ -408,7 +408,7 @@ public class InventoryManager : IInventoryManager, ISubscriber
         var list = _equpmentCardsPlayers[_player];
         var component = _arraySpells[index].GetComponent<ActionsWithSlotInventory>();
         var card = _objectStorage.GetPollObjects(ObjectTypeEnum.PrefabCardInInventory, 1)[0];
-        _objectStorage.ConfigurateByParent(card,_arraySpells[index]);
+        _objectStorage.ConfigurateByParent(card,_arraySpells[index],0,0,1,1);
         var cardDisplay = card.GetComponent<ActionsWithCards>();
         var name = list[index];
         var cardData = _objectStorage.GetCardByName(name);

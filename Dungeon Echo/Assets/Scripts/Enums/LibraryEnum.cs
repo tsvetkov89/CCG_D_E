@@ -208,4 +208,10 @@ namespace EnumNamespace
         TouchSilverPart,
         Pass
     }
+
+    public enum StatusCard
+    {
+        InHand,
+        OnBoard,
+    }
  }

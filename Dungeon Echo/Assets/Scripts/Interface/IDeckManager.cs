@@ -4,7 +4,7 @@ namespace InterfaceNamespace
 {
     public interface IDeckManager
     {
-        void SetUiComponents(GameObject obj);
+        void SetUiComponents(GameObject obj,GameObject pointStopDrag, GameObject pointReturnCard);
         void PlaceObjects();
     }
 }

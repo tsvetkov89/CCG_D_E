@@ -9,5 +9,6 @@ namespace InterfaceNamespace
         IEnemyManager EnemyManager { get; }
         IInventoryManager InventoryManager { get; }
         IDeckManager DeckManager { get; }
+        ITargetManager TargetManager { get; }
     }
 }

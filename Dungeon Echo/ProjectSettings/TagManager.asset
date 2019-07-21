@@ -51,3 +51,6 @@ TagManager:
   - name: SpriteInCard
     uniqueID: 1662234349
     locked: 0
+  - name: Effect
+    uniqueID: 3457714973
+    locked: 0

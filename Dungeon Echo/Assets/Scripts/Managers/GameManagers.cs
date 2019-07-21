@@ -6,7 +6,7 @@ public class GameManagers : IGameManagers
 {
     public GameManagers(IGameManager gameManager, IActivateCardManager activateCardManager, IBarsPlayerManager barsPlayerManager,
         IBarsEnemyManager barsEnemyManager, IEnemyManager enemyManager, IPlayersManager playersManager, IDeckManager deckManager, 
-        IInventoryManager inventoryManager)
+        IInventoryManager inventoryManager, ITargetManager targetManager)
     {
         GameManager = gameManager;
         ActivateCardManager = activateCardManager;
@@ -16,6 +16,7 @@ public class GameManagers : IGameManagers
         PlayersManager = playersManager;
         DeckManager = deckManager;
         InventoryManager = inventoryManager;
+        TargetManager = targetManager;
     }
     public IGameManager GameManager { get; private set; }
     public IActivateCardManager ActivateCardManager { get; private set; }
@@ -25,4 +26,5 @@ public class GameManagers : IGameManagers
     public IPlayersManager PlayersManager { get; private set; }
     public IDeckManager DeckManager { get; private set; }
     public IInventoryManager InventoryManager { get; private set; }
+    public ITargetManager TargetManager { get; private set; }
 }

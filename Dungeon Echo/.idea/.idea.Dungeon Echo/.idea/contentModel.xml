@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ContentModelStore">
     <e p="C:\Users\чся\.Rider2018.3\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\чся\.Rider2018.3\system\resharper-host\local\Transient\ReSharperHost\v183\SolutionCaches\_Dungeon Echo.-1401081084.00" t="ExcludeRecursive" />
-    <e p="D:\MyProjects\_Project\Dungeon Echo" t="IncludeRecursive">
+    <e p="C:\Users\чся\.Rider2018.3\system\resharper-host\local\Transient\ReSharperHost\v183\SolutionCaches\_Dungeon Echo.537478274.00" t="ExcludeRecursive" />
+    <e p="D:\MyProjects\_Project\Public_GIT\Dungeon Echo" t="IncludeRecursive">
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
@@ -82,6 +82,7 @@
             <e p="ISaveManager.cs" t="Include" />
             <e p="IScene.cs" t="Include" />
             <e p="ISubscriber.cs" t="Include" />
+            <e p="ITargetManager.cs" t="Include" />
           </e>
           <e p="Managers" t="Include">
             <e p="ActivateCardManager.cs" t="Include" />
@@ -104,6 +105,7 @@
             <e p="PlayersManager.cs" t="Include" />
             <e p="Publisher.cs" t="Include" />
             <e p="SaveManager.cs" t="Include" />
+            <e p="TargetManager.cs" t="Include" />
           </e>
           <e p="Monobehavior" t="Include">
             <e p="Card.cs" t="Include" />
@@ -140,6 +142,7 @@
           <e p="UIScripts" t="Include">
             <e p="ClickHandlerMenu.cs" t="Include" />
             <e p="ClickHandlerPopupCard.cs" t="Include" />
+            <e p="Pointer.cs" t="Include" />
             <e p="ScrollingRawImage.cs" t="Include" />
             <e p="UiButtonsMenu.cs" t="Include" />
             <e p="UiButtonsPopups.cs" t="Include" />

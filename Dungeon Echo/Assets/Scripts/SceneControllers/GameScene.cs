@@ -32,6 +32,8 @@ public class GameScene : BaseScene, ISubscriber
     private GameObject _btnEndTurn;
     private GameObject _btnMenu;
     private GameObject _activateArea;
+    private GameObject _pointStopDrag;
+    private GameObject _pointReturnCard;
     
     private PopupInventory _inventoryPopup;
     private GameObject _deckInGame;
@@ -62,6 +64,8 @@ public class GameScene : BaseScene, ISubscriber
         _poolParent= GameObject.Find("PoolObjects");
         _activateArea = GameObject.Find("HUD/PanelActivationArea");
         _popupText = GameObject.Find("HUD/PopupText");
+        _pointStopDrag = GameObject.Find("HUD/PointStopDragCard");
+        _pointReturnCard = GameObject.Find("HUD/PointReturnCard");
         var child = _popupText.GetComponentsInChildren<Transform>().SearchChild("Message"); 
         _messageText = child.GetComponent<TextMeshProUGUI>();
 
@@ -109,7 +113,7 @@ public class GameScene : BaseScene, ISubscriber
         _objectStorage.CreateAllPools(_poolParent);
         _gameManager.SetUiComponents(_hud, _deckInGame);
         _gameManager.PlaceObjects();
-        _deckManager.SetUiComponents(_hud);
+        _deckManager.SetUiComponents(_hud, _pointStopDrag, _pointReturnCard);
         _deckManager.PlaceObjects();
               
         var uiButtonsPopup = _buttGameObject.GetComponent<UiButtonsPopups>();

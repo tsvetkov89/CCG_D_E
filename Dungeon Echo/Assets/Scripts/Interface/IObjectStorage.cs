@@ -15,7 +15,7 @@ namespace InterfaceNamespace
         ICard GetRandomCardByType(SubTypeCard type, CardRarity rarity);
         ICard GetCardByName(string name);
         void CreateAllPools(GameObject obj);
-        void ConfigurateByParent(GameObject child, GameObject parent);
+        void ConfigurateByParent(GameObject child, GameObject parent, float xmin, float ymin, float xmax, float ymax);
         void ConfigurateByParent(GameObject child, GameObject parent, bool active);
         void Configurate(GameObject child, GameObject parent, bool active, float xmin, float xmax, float ymin, float ymax);
         List<Adventure> GetAdventure();

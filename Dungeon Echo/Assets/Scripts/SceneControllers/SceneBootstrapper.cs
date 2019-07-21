@@ -28,6 +28,7 @@ public class SceneBootstrapper :  BaseScene
     private IEnemyManager _enemyManager;
     private IPlayersManager _playersManager;
     private IDeckManager _deckManager;
+    private ITargetManager _targetManager;
     private ICoroutiner _coroutiner;
 
     private void Awake()
@@ -46,6 +47,7 @@ public class SceneBootstrapper :  BaseScene
        _saveManager = new SaveManager();
        _animaManager = new AnimaManager();
        _objectLoader = new ObjectLoader();
+       _targetManager = new TargetManager();
       
        _objectStorage = new ObjectStorage(_objectLoader);
        _barsPlayerManager = new BarsPlayerManager(_objectStorage);
@@ -72,7 +74,7 @@ public class SceneBootstrapper :  BaseScene
        
        _baseManagers = new BaseManagers(_saveManager,_animaManager,_publisher,_objectStorage,_coroutiner);
        _gameManagers = new GameManagers(_gameManager, _activateCardManager, _barsPlayerManager, _barsEnemyManager, 
-           _enemyManager, _playersManager, _deckManager, _inventoryManager);
+           _enemyManager, _playersManager, _deckManager, _inventoryManager, _targetManager);
        _logicManager = new LogicManager(_baseManagers,_gameManagers);
        _loadManager = new LoadManager(_logicManager);
        //-------------------Делаем переход в сцену "Меню"
