@@ -27,6 +27,6 @@ MonoBehaviour:
     \u043D\u0430 <color=#FF0000>3 \u0435\u0434\u0435\u043D\u0438\u0446\u044B</color>."
   cardName: Small Health Flask
   displayCardName: Small Health Flask
-  artCard: {fileID: 21300000, guid: 4d41847a6a500464e9effd0a730ea881, type: 3}
+  artCard: {fileID: 21300000, guid: 6794404b2b4981844937bb6bc34fc71b, type: 3}
   shirtMain: {fileID: 21300000, guid: a5cebb48f57715a4cb9f6480b9690afe, type: 3}
   shirtCard: {fileID: 21300000, guid: 8c3b57e0fd07f184eb9938267077f5cc, type: 3}

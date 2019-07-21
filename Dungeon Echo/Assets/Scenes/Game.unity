@@ -5396,7 +5396,7 @@ GameObject:
   - component: {fileID: 1725079590}
   - component: {fileID: 1725079593}
   m_Layer: 0
-  m_Name: Pointer
+  m_Name: TargetPointer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

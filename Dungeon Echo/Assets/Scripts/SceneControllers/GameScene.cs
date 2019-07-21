@@ -18,6 +18,7 @@ public class GameScene : BaseScene, ISubscriber
     private IActivateCardManager _activateCardManager;
     private ICoroutiner _coroutiner;
     private IDeckManager _deckManager;
+    private ITargetManager _targetManager;
     
     private GameObject _hud;
     private GameObject _poolParent;
@@ -34,6 +35,7 @@ public class GameScene : BaseScene, ISubscriber
     private GameObject _activateArea;
     private GameObject _pointStopDrag;
     private GameObject _pointReturnCard;
+    private GameObject _targetPointer;
     
     private PopupInventory _inventoryPopup;
     private GameObject _deckInGame;
@@ -66,6 +68,7 @@ public class GameScene : BaseScene, ISubscriber
         _popupText = GameObject.Find("HUD/PopupText");
         _pointStopDrag = GameObject.Find("HUD/PointStopDragCard");
         _pointReturnCard = GameObject.Find("HUD/PointReturnCard");
+        _targetPointer = GameObject.Find("HUD/TargetPointer");
         var child = _popupText.GetComponentsInChildren<Transform>().SearchChild("Message"); 
         _messageText = child.GetComponent<TextMeshProUGUI>();
 
@@ -85,6 +88,7 @@ public class GameScene : BaseScene, ISubscriber
         _popupGameMenu.SetActive(false);
         _btnEscapeBattle.SetActive(false);
         _btnEndTurn.SetActive(false);
+        _targetPointer.SetActive(false);
         
         _membership = Membership.Undefined;
     }
@@ -92,7 +96,7 @@ public class GameScene : BaseScene, ISubscriber
     {
         var logic = LoadManager.LogicManager;
         SetDependecies(logic.BaseManagers.SaveManager, logic.BaseManagers.ObjectStorage, logic.GameManagers.InventoryManager, logic.GameManagers.GameManager, logic.BaseManagers.Publisher,
-            logic.BaseManagers.AnimaManager, logic.GameManagers.ActivateCardManager, logic.BaseManagers.Coroutiner, logic.GameManagers.DeckManager);  
+            logic.BaseManagers.AnimaManager, logic.GameManagers.ActivateCardManager, logic.BaseManagers.Coroutiner, logic.GameManagers.DeckManager, logic.GameManagers.TargetManager);  
         if (_saveManager.CheckLoad())
         {
             //TODO Continue game
@@ -120,6 +124,7 @@ public class GameScene : BaseScene, ISubscriber
         uiButtonsPopup.SetDependecies(_publisher);
         uiButtonsPopup = _btnEndTurn.GetComponent<UiButtonsPopups>();
         uiButtonsPopup.SetDependecies(_publisher);
+        _publisher.AddSubscriber(uiButtonsPopup);
         uiButtonsPopup = _btnMenu.GetComponent<UiButtonsPopups>();
         uiButtonsPopup.SetDependecies(_publisher);
         _publisher.AddSubscriber(uiButtonsPopup);
@@ -161,10 +166,13 @@ public class GameScene : BaseScene, ISubscriber
         
         var dropArea = _activateArea.GetComponent<DropCardInActivationArea>();
         dropArea.SetDependecies(_publisher, _activateCardManager, _animaManager);
+        
+        _targetManager.SetDependecies(_targetPointer);
     }
     private void SetDependecies(ISaveManager saveManager, IObjectStorage objectStorage, 
         IInventoryManager inventoryManager, IGameManager gameManager, IPublisher publisher, 
-        IAnimaManager animaManager, IActivateCardManager activateCardManager, ICoroutiner coroutiner, IDeckManager deckManager)
+        IAnimaManager animaManager, IActivateCardManager activateCardManager, ICoroutiner coroutiner, 
+        IDeckManager deckManager, ITargetManager targetManager)
     {
         _saveManager = saveManager;
         _animaManager = animaManager;
@@ -175,6 +183,7 @@ public class GameScene : BaseScene, ISubscriber
         _coroutiner = coroutiner;
         _activateCardManager = activateCardManager;
         _deckManager = deckManager;
+        _targetManager = targetManager;
         _publisher.AddSubscriber(this);   
     }
 

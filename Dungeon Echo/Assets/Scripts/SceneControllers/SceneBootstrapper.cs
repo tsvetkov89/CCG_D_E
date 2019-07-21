@@ -56,7 +56,7 @@ public class SceneBootstrapper :  BaseScene
        
        _gameStageManager = new GameStageManager(_publisher);
        _gameManager = new GameManager(_publisher, _animaManager, _objectStorage, _coroutiner,_inventoryManager);
-       _deckManager = new DeckManager(_objectStorage,_inventoryManager,_animaManager,_publisher,_coroutiner);
+       _deckManager = new DeckManager(_objectStorage,_inventoryManager,_animaManager,_publisher,_coroutiner, _targetManager);
        _enemyManager = new EnemyManager(_publisher, _coroutiner,_animaManager);
        _playersManager = new PlayersManager(_publisher);
        _barsEnemyManager = new BarsEnemyManager(_enemyManager, _publisher);

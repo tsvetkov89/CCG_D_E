@@ -142,7 +142,7 @@
           <e p="UIScripts" t="Include">
             <e p="ClickHandlerMenu.cs" t="Include" />
             <e p="ClickHandlerPopupCard.cs" t="Include" />
-            <e p="Pointer.cs" t="Include" />
+            <e p="DraggeblePointer.cs" t="Include" />
             <e p="ScrollingRawImage.cs" t="Include" />
             <e p="UiButtonsMenu.cs" t="Include" />
             <e p="UiButtonsPopups.cs" t="Include" />

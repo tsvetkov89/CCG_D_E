@@ -12,7 +12,8 @@ public class DeckManager : IDeckManager, ISubscriber
     private IAnimaManager _animaManager;
     private IPublisher _publisher;
     private ICoroutiner _coroutiner;
-
+    private ITargetManager _targetManager;
+    
     private int _maxCardsInHand;
     private int _currentCardsInHand;
     private int _currentCardsInDiscard;
@@ -24,13 +25,14 @@ public class DeckManager : IDeckManager, ISubscriber
     private GameObject _pointReturnCard;
     private List<GameObject> _poolCardsPlayer; //колода карт 
     public DeckManager(IObjectStorage objectStorage, IInventoryManager inventoryManager, IAnimaManager animaManager, 
-        IPublisher publisher, ICoroutiner coroutiner)
+        IPublisher publisher, ICoroutiner coroutiner, ITargetManager targetManager)
     {
         _objectStorage = objectStorage;
         _inventoryManager = inventoryManager;
         _animaManager = animaManager;
         _publisher = publisher;
         _coroutiner = coroutiner;
+        _targetManager = targetManager;
         _maxCardsInHand = 6;
         _currentCardsInHand = 0;
         _currentCardsInDiscard = 0;
@@ -59,7 +61,6 @@ public class DeckManager : IDeckManager, ISubscriber
                 break;
             case GameEventName.GoEndTurnEnemy:
                 _coroutiner.StartCoroutine(ActivateDraggableCard(1.2f));
-                Debug.Log("card in hand = "+ _currentCardsInHand);
                 if(_currentCardsInHand <=4)
                     _coroutiner.StartCoroutine(GetCardsInHand(2,0.5f));
                 else if ((6 - _currentCardsInHand)> 0)
@@ -145,7 +146,7 @@ public class DeckManager : IDeckManager, ISubscriber
                 cardDisplay.SetDependecies(_publisher, _animaManager);
                 cardDisplay.enabled = false;
                 var component = cardPlayer.GetComponent<DraggableCard>();
-                component.SetDependecies( _pointStopDrag, _pointReturnCard);
+                component.SetDependecies( _pointStopDrag, _pointReturnCard , _targetManager);
                 cardPlayer.SetActive(true);
                 _animaManager.SetStateAnimation(cardPlayer, "go_hand",true);
                 _currentCardsInHand++;
@@ -163,7 +164,6 @@ public class DeckManager : IDeckManager, ISubscriber
         yield return new WaitForSeconds(time);
         var list = _currentDeck.GetRange(0, _currentDeck.Count);
         var counter = 0;
-        Debug.Log("list = " + list.Count);
         foreach (var card in list)
         {
             foreach (var cardPlayer in _poolCardsPlayer)
@@ -178,6 +178,8 @@ public class DeckManager : IDeckManager, ISubscriber
                 cardDisplay.CardGame.DisplayCardInGame(cardPlayer);
                 cardDisplay.SetDependecies(_publisher, _animaManager);
                 cardDisplay.enabled = false;
+                var component = cardPlayer.GetComponent<DraggableCard>();
+                component.SetDependecies( _pointStopDrag, _pointReturnCard , _targetManager);
                 cardPlayer.SetActive(true);
                 _animaManager.SetStateAnimation(cardPlayer, "go_hand", true);
                 _currentCardsInHand++;
