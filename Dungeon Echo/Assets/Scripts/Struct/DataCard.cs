@@ -9,6 +9,7 @@ public struct DataCard
     public GameClass GameClass;
     public SubTypeCard TypeSubCard;
     public CardRarity Rarity;
+    public Membership Application;
     public string NameCard;
     public string DisplayNameCard;
     public string FullDescription;
@@ -20,4 +21,5 @@ public struct DataCard
     public List<CardSpell.StatsSpell> AttributeSpell;
     public List<string> SpawnUnits;
     public CardSpell.CostAttribute CostAttribute;
+    public List<CardConsumables.EffectEqupment> Effect;
 }

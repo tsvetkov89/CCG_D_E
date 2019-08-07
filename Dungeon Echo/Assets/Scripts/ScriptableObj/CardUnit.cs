@@ -42,8 +42,9 @@ public class CardUnit : ScriptableObject, ICard
         var typeCard = new DataCard {TypeSubCard = subType, NameCard = cardName, Art = artCard, AttributeUnit = attribute};
         return typeCard;
     }
-    
-    
-    
+    public DataObjectCard GetDataObjectCard()
+    {
+        return new DataObjectCard();
+    }
 }
 

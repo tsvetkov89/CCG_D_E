@@ -12,6 +12,7 @@ public class PopupEvent : ISubscriber
     private IPublisher _publisher;
     private IAnimaManager _animaManager;
     private ICoroutiner _coroutiner;
+    private IConfigurateManager _configurateManager;
     private readonly GameObject _popupEvent;
     private Adventure _adventure;
     private TMP_Text _title;
@@ -46,12 +47,13 @@ public class PopupEvent : ISubscriber
         _skipPrintDescription = false;
     }
     public void SetDependecies( IObjectStorage objectStorage, IPublisher publisher, IAnimaManager animaManager,
-        ICoroutiner coroutiner)
+        ICoroutiner coroutiner, IConfigurateManager configurateManager)
     {
         _objectStorage = objectStorage;
         _publisher = publisher;
         _animaManager = animaManager;
         _coroutiner = coroutiner;
+        _configurateManager = configurateManager;
         _poolButtons = _objectStorage.GetPollObjects(ObjectTypeEnum.PrefabBtnEvent, 4);
     }
     public void OnEvent(CustomEventArgs messageData)
@@ -82,13 +84,15 @@ public class PopupEvent : ISubscriber
         {
             foreach (var btn in _poolButtons)
             {
+               
                 if (btn.activeSelf) continue; 
                 var child = btn.GetComponentsInChildren<Transform>().SearchChild("Text");
                 var btnText = child.GetComponent<TMP_Text>();
                 btnText.text = @event.label;
                 var button = btn.GetComponent<Button>();
+                Debug.Log("event = " + @event.label);
                 button.onClick.AddListener(delegate {OnClickButtonEvent(@event); });
-                _objectStorage.ConfigurateByParent(btn, count <= 2 ? _panelButtons1 : _panelButtons2, true);
+                _configurateManager.ConfigurateByParent(btn, count <= 2 ? _panelButtons1 : _panelButtons2, true);
                 count++;
                 break;
             }  
@@ -123,11 +127,15 @@ public class PopupEvent : ISubscriber
     private void OnClickButtonEvent(Adventure.Event @event)
     {
         _printDescription = false;
-        _coroutiner.StartCoroutine(DisplayDescription(@event.goodOutcome, 0.1f));
-        _secondArt.sprite = @event.art;
+        var outcomes = @event.outcomes;
+        //var arrayOutcome= new[] {@event.goodOutcome,@event.badOutcome};
+        var outcome = outcomes[RandomExtensions.GetRandomElementDictionary(DropChance.ChanceOutcome)];
+
+        _coroutiner.StartCoroutine(DisplayDescription(outcome.description, 0.1f));
+        _secondArt.sprite = outcome.art;
         _animaManager.SetStateAnimation(_popupEvent,"result",true);
-        var data = _adventure.GetDataEvent();
-        var events = data.Events;
+        //var data = _adventure.GetDataEvent();
+        //var events = data.Events;
         foreach (var btn in _poolButtons)
         {
             if (!btn.activeSelf) continue;
@@ -143,7 +151,7 @@ public class PopupEvent : ISubscriber
             btnText.text = "Продолжить";
             var button = btn.GetComponent<Button>();
             button.onClick.AddListener(OnClickButtonEndEvent);
-            _objectStorage.ConfigurateByParent(btn, _panelButtons2,true);
+            _configurateManager.ConfigurateByParent(btn, _panelButtons2,true);
             break;
         }
     }

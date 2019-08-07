@@ -13,7 +13,7 @@ public class BarsEnemyManager : IBarsEnemyManager, ISubscriber
     private IDictionary<GameObject, TextMeshProUGUI> _damageEnemysText;
     private IDictionary<GameObject, List<int>> _curAndMaxHpEnemys;
     private IDictionary<GameObject, List<int>> _curAndMaxDamageEnemys;
-
+    private GameObject _targetEnemy;
     public BarsEnemyManager (IEnemyManager enemyManager, IPublisher publisher)
     {
         _enemyManager = enemyManager;
@@ -51,9 +51,12 @@ public class BarsEnemyManager : IBarsEnemyManager, ISubscriber
                 InitBarsEnemy(enemy);
                 break;
             }
+            case GameEventName.TargetEnemy:
+                _targetEnemy = messageData.Value as GameObject;
+                break;
             case GameEventName.GoDamageEnemy:
                 var card = messageData.Value as ICard;
-                DamageRandomEnemy(card);
+                DamageTargetEnemy(card);
                 break;
         }
     }
@@ -62,22 +65,22 @@ public class BarsEnemyManager : IBarsEnemyManager, ISubscriber
         _hpEnemysText[enemy].text = _curAndMaxHpEnemys[enemy][1].ToString();
         _damageEnemysText[enemy].text = _curAndMaxDamageEnemys[enemy][1].ToString();
     }
-    private void DamageRandomEnemy(ICard card)
+    private void DamageTargetEnemy(ICard card)
     {
-       
         var attribute = card.GetDataCard().AttributeSpell;
         var damagespell = attribute[0].value;
-        var randomEnemy = _enemyManager.GetRandomEnemy();
-        if (!randomEnemy) return;
-        _curAndMaxHpEnemys[randomEnemy][0] -= damagespell;
-        _hpEnemysText[randomEnemy].text = _curAndMaxHpEnemys[randomEnemy][0].ToString();
-        if (_curAndMaxHpEnemys[randomEnemy][0] < 1)
+        if (_curAndMaxHpEnemys[_targetEnemy][0] - damagespell < 1)
         {
-            _publisher.Publish(null, new CustomEventArgs(GameEventName.GoDeadEnemy, randomEnemy));
-            _hpEnemysText.Remove(randomEnemy);
-            _damageEnemysText.Remove(randomEnemy);
-            _curAndMaxHpEnemys.Remove(randomEnemy);
-            _curAndMaxDamageEnemys.Remove(randomEnemy);
+            _publisher.Publish(null, new CustomEventArgs(GameEventName.GoDeadEnemy, _targetEnemy));
+            _hpEnemysText.Remove(_targetEnemy);
+            _damageEnemysText.Remove(_targetEnemy);
+            _curAndMaxHpEnemys.Remove(_targetEnemy);
+            _curAndMaxDamageEnemys.Remove(_targetEnemy);
+        }
+        else
+        {
+            _curAndMaxHpEnemys[_targetEnemy][0] -= damagespell;
+            _hpEnemysText[_targetEnemy].text = _curAndMaxHpEnemys[_targetEnemy][0].ToString();
         }
     }
     

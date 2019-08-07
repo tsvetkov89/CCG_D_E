@@ -41,6 +41,7 @@ public class CardEnemy : ScriptableObject, ICard
             spriterender = art.GetComponent<SpriteRenderer>();
             spriterender.sprite = artCard;
             art.gameObject.SetActive(false);
+            //spriterender.size = Vector2.zero;
             spriterender = shirtM.GetComponent<SpriteRenderer>();
             spriterender.sprite = shirtMain;
             shirtM.gameObject.SetActive(false);

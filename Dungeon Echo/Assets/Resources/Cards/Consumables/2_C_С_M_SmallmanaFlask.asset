@@ -15,8 +15,12 @@ MonoBehaviour:
   status: 7
   subType: 10
   rarity: 1
-  application: 0
-  effectAttribute: []
+  application: 1
+  effectAttribute:
+  - stat: 6
+    value: 3
+    duration: 0
+    cooldown: 0
   costAttribute:
     stat: 3
     value: 0

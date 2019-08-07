@@ -30,7 +30,9 @@ public static partial class RandomExtensions
         //-------------проценты выпадения награды
         DictionaryArrayPercent.Add(DropChance.ChanceReward,new [] {0.70f, 0.30f});
         //-------------проценты выпадения события
-        DictionaryArrayPercent.Add(DropChance.ChanceEvent,new [] {0.70f, 0.30f, 0.00f});
+        DictionaryArrayPercent.Add(DropChance.ChanceEvent,new [] {0.50f, 0.50f, 0.00f});
+        //-------------проценты выпадения хорошего/плохого исхода
+        DictionaryArrayPercent.Add(DropChance.ChanceOutcome,new [] {0.65f, 0.35f});
     }
     public static int GetRandomElementDictionary(DropChance typeEnum)
     {
@@ -57,8 +59,7 @@ public static partial class RandomExtensions
     private static int RandomElementArray(IList<float> array)
     {
         var total = array.Sum();
-        
-        var randomPoint = (float) _random.NextDouble()*total;
+        var randomPoint = (float)_random.NextDouble()*total;
         for (var i = 0; i < array.Count; i++)
         {
             if (randomPoint < array[i])

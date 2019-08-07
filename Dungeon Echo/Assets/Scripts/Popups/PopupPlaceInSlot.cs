@@ -9,6 +9,7 @@ public class PopupPlaceInSlot:  ISubscriber
     private IPublisher _publisher;
     private GameObject _popupPlaceInSlot;    //вспылывающее окно, просмотр карт в инвентаре
     private GameObject _cardView;
+    private GameObject _shirtCard;
     private ICard _cardGame;
     private bool _flagPopup;
     private bool _flagUnEqupment;
@@ -19,15 +20,12 @@ public class PopupPlaceInSlot:  ISubscriber
         _cardView = card;
         _flagPopup = false;
         _flagUnEqupment = false;
+        var animator = _cardView.GetComponent<Animator>();
+        animator.enabled = false;
         var component = _cardView.GetComponentsInChildren<Transform>().SearchChild("ShirtCard");
         component.gameObject.SetActive(false);
         var description = _popupPlaceInSlot.GetComponentsInChildren<Transform>().SearchChild("FullDescription");
-        _fullDescription = description.GetComponent<TMP_Text>();
-        /*component = _cardView.GetComponentsInChildren<Transform>().SearchChild("SpriteArtCard");
-        component.gameObject.SetActive(false);
-        component = _cardView.GetComponentsInChildren<Transform>().SearchChild("SpriteShirtMain");
-        component.gameObject.SetActive(false);*/
-        
+        _fullDescription = description.GetComponent<TMP_Text>();   
     }
     //--------обрабатываем события
     public void OnEvent(CustomEventArgs messageData)

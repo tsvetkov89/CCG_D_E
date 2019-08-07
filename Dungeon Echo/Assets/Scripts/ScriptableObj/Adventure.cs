@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using EnumNamespace;
 using UnityEngine;
+using UnityEngine.Serialization;
+
 [CreateAssetMenu(fileName = "New Item", menuName = "Adventure")]
 public class Adventure : ScriptableObject
 {
@@ -15,11 +17,17 @@ public class Adventure : ScriptableObject
     {
         public NameEvent nameEvent;
         public string label;
-        public string goodOutcome;
-        public string badOutcome;
-        public Sprite art;
+        [FormerlySerializedAs("Outcomes")] public List<DataOutcome> outcomes;
     }
-    
+    [System.Serializable]
+    public class DataOutcome
+    {
+        public string name;
+        public Sprite art;
+        public string description;
+        public List<RewordEvent> reword;
+    }
+
     public DataEvent GetDataEvent()
     {
         var typeEvent = new DataEvent()

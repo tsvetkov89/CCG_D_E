@@ -15,6 +15,7 @@ public class CardSpell : ScriptableObject, ICard
     [Tooltip("Классовая принадлежность карты")] public GameClass classCard;
     
     [Header("Показатели карты")][Space]
+    [Tooltip("На кого применяется данная карта")]public Membership application;
     [Tooltip("Область воздействия")] public AreaEffectCard area;
     [Tooltip("Эффект карты")]public List<EffectEqupment> effectAttribute; 
     [Header("Затраты на использование карты")][Space]
@@ -50,7 +51,7 @@ public class CardSpell : ScriptableObject, ICard
         var cardObject = obj as GameObject;
         if (cardObject != null)
         {
-            var art = cardObject.GetComponentsInChildren<Transform>().SearchChild("ArtCard");
+            var art = cardObject.GetComponentsInChildren<Transform>().SearchChild("ArtCard");           
             var shirtM = cardObject.GetComponentsInChildren<Transform>().SearchChild("ShirtMain");
             var shirtC = cardObject.GetComponentsInChildren<Transform>().SearchChild("ShirtCard"); 
             var nameCard = cardObject.GetComponentsInChildren<Transform>().SearchChild("NameCard");
@@ -69,23 +70,25 @@ public class CardSpell : ScriptableObject, ICard
                 if (descriptionText.color.a == 0)
                     descriptionText.color = new Color32(255,255,255,255);
             }
+
             if (shirtC != null)
                 shirtC.GetComponent<Image>().sprite = shirtCard;
+   
             art = cardObject.GetComponentsInChildren<Transform>().SearchChild("SpriteArtCard");
             shirtM = cardObject.GetComponentsInChildren<Transform>().SearchChild("SpriteShirtMain");
             if (art)
             {
                 var spriterender = art.GetComponent<SpriteRenderer>();
                 spriterender.sprite = artCard;
-                spriterender.size = new Vector2(244, 303);
-                art.gameObject.SetActive(false);
+                spriterender.size = Vector2.zero;
+                //art.gameObject.SetActive(false);
             }
             if (!shirtM) return;
             {
                 var spriterender = shirtM.GetComponent<SpriteRenderer>();
                 spriterender.sprite = shirtMain;
-                spriterender.size = new Vector2(299, 422);
-                shirtM.gameObject.SetActive(false);
+                spriterender.size = Vector2.zero;
+                //shirtM.gameObject.SetActive(false);
             }
             //----------------Мана на использование
             var manaText = mana.GetComponent<TMP_Text>();
@@ -102,7 +105,7 @@ public class CardSpell : ScriptableObject, ICard
     {
         var typeCard = new DataCard {TypeCard = cardType, TypeSubCard = subType, GameClass = classCard,
             NameCard = cardName, DisplayNameCard = displayCardName, Rarity = rarity, AttributeSpell = statsAttribute,
-            CostAttribute =costAttribute, FullDescription = fulldescription
+            CostAttribute =costAttribute, FullDescription = fulldescription, Application = application
         };
         return typeCard;
     }

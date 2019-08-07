@@ -32,15 +32,11 @@ public class PlayersManager : IPlayersManager, ISubscriber
                 var list = new List<GameObject> {enemy, player};
                 _publisher.Publish(null, new CustomEventArgs(GameEventName.GoPlayerAttack,list));
                 break;  
-            }
-            
-                
+            }   
         }
     }
-
     private GameObject GetRandomEnemy()
     {
         return RandomExtensions.Random(_listPlayers);
     }
-
 }

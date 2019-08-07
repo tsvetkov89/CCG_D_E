@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using EnumNamespace;
 using InterfaceNamespace;
 using UnityEngine;
@@ -7,11 +8,14 @@ public class GameStageManager : IGameStageManager, ISubscriber
 {
     private IPublisher _publisher;
     private List<GameEventName> _stageList;
+    private ICoroutiner _coroutiner;
 
-    public GameStageManager(IPublisher publisher)
+    public GameStageManager(IPublisher publisher, ICoroutiner coroutiner)
     {
         _publisher = publisher;
+        _coroutiner = coroutiner;
     }
+
     //------------------- события
     public void OnEvent(CustomEventArgs messageData)
     {
@@ -25,8 +29,8 @@ public class GameStageManager : IGameStageManager, ISubscriber
                     GameEventName.GoSelectCardSpell,
                     GameEventName.GoStageAddCardConsumables,
                     GameEventName.GoSelectCardConsumables,
-                    GameEventName.GoStageAddCardArea,
-                    GameEventName.GoSelectCardArea,
+                    //GameEventName.GoStageAddCardArea,
+                    //GameEventName.GoSelectCardArea,
                     GameEventName.GoStageAddCardEvent,
                     GameEventName.GoSelectCardEvent
                 };
@@ -42,33 +46,7 @@ public class GameStageManager : IGameStageManager, ISubscriber
             }
             case GameEventName.GoFinishBattle:
             {
-                var list = new List<GameEventName>(){GameEventName.GoStageAddCardSpell,GameEventName.GoStageAddCardConsumables};
-                var newevent = list[RandomExtensions.GetRandomElementDictionary(DropChance.ChanceReward)];
-                Debug.Log(newevent);
-                    
-                switch (newevent)
-                {
-                    case GameEventName.GoStageAddCardSpell:
-                        {
-                            _stageList.Add(GameEventName.GoStageAddCardSpell);
-                            _stageList.Add(GameEventName.GoSelectCardSpell);
-                            _stageList.Add(GameEventName.GoStageAddCardEvent);
-                            _stageList.Add(GameEventName.GoSelectCardEvent);
-                            _publisher.Publish(null, new CustomEventArgs(GameEventName.GoSetNextStage));
-                            Debug.Log("награда");
-                        }
-                        break;
-                    case GameEventName.GoStageAddCardConsumables:
-                    {
-                        _stageList.Add(GameEventName.GoStageAddCardConsumables);
-                        _stageList.Add(GameEventName.GoSelectCardConsumables);
-                        _stageList.Add(GameEventName.GoStageAddCardEvent);
-                        _stageList.Add(GameEventName.GoSelectCardEvent);
-                        _publisher.Publish(null, new CustomEventArgs(GameEventName.GoSetNextStage));
-                        Debug.Log("награда");
-                    }
-                        break;
-                }
+                _coroutiner.StartCoroutine(GoNewEvent());
                 break;
             }
             case GameEventName.GoFinishStageEvent:
@@ -98,6 +76,33 @@ public class GameStageManager : IGameStageManager, ISubscriber
         }
 
     }
+
+    private IEnumerator GoNewEvent()
+    {
+        yield return new WaitForSeconds(0.4f);
+        var list = new List<GameEventName>(){GameEventName.GoStageAddCardSpell,GameEventName.GoStageAddCardConsumables};
+        var newevent = list[RandomExtensions.GetRandomElementDictionary(DropChance.ChanceReward)];       
+        switch (newevent)
+        {
+            case GameEventName.GoStageAddCardSpell:
+                _stageList.Add(GameEventName.GoStageAddCardSpell);
+                _stageList.Add(GameEventName.GoSelectCardSpell);
+                _stageList.Add(GameEventName.GoStageAddCardEvent);
+                _stageList.Add(GameEventName.GoSelectCardEvent);
+                _publisher.Publish(null, new CustomEventArgs(GameEventName.GoSetNextStage));
+                Debug.Log("награда");
+                break;
+            case GameEventName.GoStageAddCardConsumables:
+                _stageList.Add(GameEventName.GoStageAddCardConsumables);
+                _stageList.Add(GameEventName.GoSelectCardConsumables);
+                _stageList.Add(GameEventName.GoStageAddCardEvent);
+                _stageList.Add(GameEventName.GoSelectCardEvent);
+                _publisher.Publish(null, new CustomEventArgs(GameEventName.GoSetNextStage));
+                Debug.Log("награда");
+                break;
+        }
+    }
+    
 }
 
 

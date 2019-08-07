@@ -1,3 +1,4 @@
+using EnumNamespace;
 using UnityEngine;
 
 namespace InterfaceNamespace

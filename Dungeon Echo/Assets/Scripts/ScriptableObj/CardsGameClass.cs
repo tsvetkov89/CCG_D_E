@@ -44,5 +44,9 @@ public class CardsGameClass : ScriptableObject, ICard
 		var typeCard = new DataCard {TypeSubCard = subType, GameClass = cardName, Art = artCard, Attribute = attribute};
 		return typeCard;
 	}
+	public DataObjectCard GetDataObjectCard()
+	{
+		return new DataObjectCard();
+	}
 }
 

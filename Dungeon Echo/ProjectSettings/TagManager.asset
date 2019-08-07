@@ -16,8 +16,8 @@ TagManager:
   - 
   - PostProcessing
   - UI+
-  - 
-  - 
+  - EnemyCard
+  - IconPlayer
   - 
   - 
   - 
@@ -53,4 +53,7 @@ TagManager:
     locked: 0
   - name: Effect
     uniqueID: 3457714973
+    locked: 0
+  - name: IconPlayer
+    uniqueID: 1215587771
     locked: 0

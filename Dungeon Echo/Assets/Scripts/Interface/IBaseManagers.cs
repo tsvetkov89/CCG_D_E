@@ -7,5 +7,7 @@ namespace InterfaceNamespace
         IObjectStorage ObjectStorage { get; }
         ICoroutiner Coroutiner { get; }
         IPublisher Publisher { get; }
+        IConfigurateManager ConfigurateManager { get; }
+        IAudioManager AudioManager { get; }
     }
 }

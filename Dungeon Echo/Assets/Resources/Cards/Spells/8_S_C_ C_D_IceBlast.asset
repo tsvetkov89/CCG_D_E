@@ -16,13 +16,17 @@ MonoBehaviour:
   subType: 9
   rarity: 1
   classCard: 3
+  application: 2
   area: 0
   effectAttribute: []
   costAttribute:
     stat: 3
-    value: 1
-  statsAttribute: []
+    value: 0
+  statsAttribute:
+  - stat: 2
+    value: 0
   description: Damage
+  fulldescription: 
   cardName: Ice Blast
   displayCardName: Ice Blast
   artCard: {fileID: 21300000, guid: f955e3c2782f4124496de84da0e7c9fc, type: 3}

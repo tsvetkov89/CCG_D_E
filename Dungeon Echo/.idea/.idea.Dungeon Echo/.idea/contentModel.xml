@@ -40,7 +40,7 @@
             <e p="ActionsWithCards.cs" t="Include" />
             <e p="ActionsWithSlotInventory.cs" t="Include" />
             <e p="DraggableCard.cs" t="Include" />
-            <e p="DropCardInActivationArea.cs" t="Include" />
+            <e p="DraggeblePointer.cs" t="Include" />
           </e>
           <e p="Common" t="Include">
             <e p="CustomEventArgs.cs" t="Include" />
@@ -66,6 +66,7 @@
             <e p="IBarsPlayerManager.cs" t="Include" />
             <e p="IBaseManagers.cs" t="Include" />
             <e p="ICard.cs" t="Include" />
+            <e p="IConfigurateManager.cs" t="Include" />
             <e p="ICoroutiner.cs" t="Include" />
             <e p="IDeckManager.cs" t="Include" />
             <e p="IEnemyManager.cs" t="Include" />
@@ -91,6 +92,7 @@
             <e p="BarsEnemyManager.cs" t="Include" />
             <e p="BarsPlayerManager.cs" t="Include" />
             <e p="BaseManagers.cs" t="Include" />
+            <e p="ConfigurateManager.cs" t="Include" />
             <e p="Coroutiner.cs" t="Include" />
             <e p="DeckManager.cs" t="Include" />
             <e p="EnemyManager.cs" t="Include" />
@@ -138,11 +140,11 @@
           <e p="Struct" t="Include">
             <e p="DataCard.cs" t="Include" />
             <e p="DataEvent.cs" t="Include" />
+            <e p="DataObjectCard.cs" t="Include" />
           </e>
           <e p="UIScripts" t="Include">
             <e p="ClickHandlerMenu.cs" t="Include" />
             <e p="ClickHandlerPopupCard.cs" t="Include" />
-            <e p="DraggeblePointer.cs" t="Include" />
             <e p="ScrollingRawImage.cs" t="Include" />
             <e p="UiButtonsMenu.cs" t="Include" />
             <e p="UiButtonsPopups.cs" t="Include" />

@@ -12,9 +12,9 @@ public class CardConsumables : ScriptableObject, ICard
     [Tooltip("Подвид карты")] public CardType status;
     [Tooltip("Подтип карты")]public SubTypeCard subType;
     [Tooltip("Редкость карты")] public CardRarity rarity;
-   
+    
     [Header("Показатели карты")][Space]
-    [Tooltip("Применение")] public Membership application;
+    [Tooltip("На кого применяется данная карта")] public Membership application;
     [Tooltip("Эффект карты")]public List<EffectEqupment> effectAttribute; 
     [Header("Затраты на использование карты")][Space]
    
@@ -59,14 +59,33 @@ public class CardConsumables : ScriptableObject, ICard
             art.GetComponent<Image>().sprite = artCard;
             shirtM.GetComponent<Image>().sprite = shirtMain;
             nameCard.GetComponent<TMP_Text>().text = displayCardName;
+            
             if (shirtC != null)
                 shirtC.GetComponent<Image>().sprite = shirtCard;
+
             if (descriptionCard != null)
             {
                 var descriptionText = descriptionCard.GetComponent<TMP_Text>();
                 descriptionText.text = description;
                 if (descriptionText.color.a == 0)
                     descriptionText.color = new Color32(255,255,255,255);
+            }
+            
+            art = cardObject.GetComponentsInChildren<Transform>().SearchChild("SpriteArtCard");
+            shirtM = cardObject.GetComponentsInChildren<Transform>().SearchChild("SpriteShirtMain");
+            if (art)
+            {
+                var spriterender = art.GetComponent<SpriteRenderer>();
+                spriterender.sprite = artCard;
+                spriterender.size = Vector2.zero;
+                //art.gameObject.SetActive(false);
+            }
+            if (!shirtM) return;
+            {
+                var spriterender = shirtM.GetComponent<SpriteRenderer>();
+                spriterender.sprite = shirtMain;
+                spriterender.size = Vector2.zero;
+                //shirtM.gameObject.SetActive(false);
             }
             //----------------Мана на использование
             var manaText = mana.GetComponent<TMP_Text>();
@@ -82,7 +101,7 @@ public class CardConsumables : ScriptableObject, ICard
     public DataCard GetDataCard()
     {
         var typeCard = new DataCard {TypeCard = status, TypeSubCard = subType, FullDescription = fulldescription, 
-            NameCard = cardName, DisplayNameCard = displayCardName, Rarity = rarity};
+            NameCard = cardName, DisplayNameCard = displayCardName, Rarity = rarity , Application = application, Effect = effectAttribute};
         return typeCard;
     }
 }

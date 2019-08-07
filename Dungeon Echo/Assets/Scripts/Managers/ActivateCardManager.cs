@@ -72,11 +72,15 @@ public class ActivateCardManager: IActivateCardManager,ISubscriber
     //--------------проверяем можно ли разыграть карту
     public bool PossiblePlayPlayerCard(ICard card)
     {
+        if (card.GetDataCard().TypeCard == CardType.Consumables)
+            return true;
         var gameclass = card.GetDataCard().GameClass;
         return _barsPlayerManager.PlayerIsAlive(gameclass);
     }
     public bool IsManaPlayPlayerCard(ICard card)
     {
+        if (card.GetDataCard().TypeCard == CardType.Consumables)
+            return true;
         var gameclass = card.GetDataCard().GameClass;
         return _barsPlayerManager.PlayerIsMana(gameclass);
     }
@@ -91,6 +95,11 @@ public class ActivateCardManager: IActivateCardManager,ISubscriber
                 _publisher.Publish(null, new CustomEventArgs(GameEventName.GoDamageEnemy,card));
                 break;
             }
+            case SubTypeCard.Consumables:
+                if(card.GetDataCard().Application == Membership.Player)
+                    _publisher.Publish(null, new CustomEventArgs(GameEventName.GoUseConsumablesOnPlayer,card));
+                break;
+            
         }
         _publisher.Publish(null, new CustomEventArgs(GameEventName.ActivateCardPlayer,card));
     }

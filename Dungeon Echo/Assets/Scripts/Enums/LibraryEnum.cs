@@ -57,7 +57,7 @@ namespace EnumNamespace
         Red,
         Green,
         Blue,
-        Purple
+        Purple   
     }
     public enum DropChance
     {
@@ -70,6 +70,7 @@ namespace EnumNamespace
         ChanceCommonRarity,
         ChanceReward,
         ChanceEvent,
+        ChanceOutcome
     }
     public enum StatsEqupment
     {
@@ -141,6 +142,8 @@ namespace EnumNamespace
         GoDeadEnemy,
         GoFinishBattle,
         GoStartEvent,
+        GoStageMainMenu,
+        GoStageStartGame,
         //---------------------end
         GoEndRandomEvent,
         //---------------------open
@@ -186,8 +189,18 @@ namespace EnumNamespace
         GoActivateCard,
         ActivateCardPlayer,
         GoDamageEnemy,
+        GoUseConsumablesOnPlayer,
         //---------------------finish
         GoFinishStageEvent,
+        //---------------------target
+        TargetСapture,
+        TargetEnemy,
+        TargetPlayer,
+        TargetingСapture,
+        NonTargetСapture,
+        NonTargetingСapture,
+        TargetingPlayer,
+        NonTargetingPlayer,
     }
 
     public enum SortLayer
@@ -213,5 +226,10 @@ namespace EnumNamespace
     {
         InHand,
         OnBoard,
+    }
+    public enum RewordEvent
+    {
+        RestoreHealth,
+        Bleeding,
     }
  }

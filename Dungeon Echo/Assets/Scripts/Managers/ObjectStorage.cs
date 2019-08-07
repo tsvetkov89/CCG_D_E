@@ -12,27 +12,30 @@ using Object = UnityEngine.Object;
 public class ObjectStorage : IObjectStorage
 {
     private IObjectLoader _objectLoader;
-    
+    private IConfigurateManager _configurateManager;
     private readonly IDictionary<ObjectTypeEnum, object> _poolPrefabs;
     private readonly IDictionary<ObjectTypeEnum, object[]> _poolsDataObjects;
     private readonly IDictionary<ObjectTypeEnum, List<GameObject>> _poolsObjects;
     
     private readonly IDictionary<SubTypeCard, IDictionary<string, ICard>> _dictCards;
+    private readonly IDictionary<string, AudioClip> _audioClips;
     private  List<Adventure> _adventure;
-    
-    private GameObject _poolParent;                                    
-    public ObjectStorage (IObjectLoader objectLoader)
+    private IObjectStorage _objectStorageImplementation;
+
+    public ObjectStorage (IObjectLoader objectLoader, IConfigurateManager configurateManager)
     {
         _objectLoader = objectLoader;
+        _configurateManager = configurateManager;
         _poolPrefabs = new Dictionary<ObjectTypeEnum, object>();
         _poolsDataObjects = new Dictionary<ObjectTypeEnum, object[]>();
         _poolsObjects = new Dictionary<ObjectTypeEnum, List<GameObject>>();
         _dictCards = new Dictionary<SubTypeCard, IDictionary<string, ICard>>();
+        _audioClips = new Dictionary<string, AudioClip>();
         _adventure = new List<Adventure>();
+        CreateDictionaryAudio();
     }
-    public void CreateAllPools(GameObject obj)
+    public void CreateAllPools()
     {
-        _poolParent = obj;
         CreatePoolsObject();
         CreateDictionaryCards();
     }
@@ -101,7 +104,7 @@ public class ObjectStorage : IObjectStorage
         for (var i = 0; i < count; i++)
         {
             var prefab = GetObjectInStorage<GameObject>(typeEnum);
-            var clone = _objectLoader.Instantiate(prefab, _poolParent.transform);
+            var clone = _objectLoader.Instantiate(prefab, _configurateManager.GetPoolParent());
             clone.SetActive(false);
             _poolsObjects[typeEnum].Add(clone);
         }
@@ -121,6 +124,12 @@ public class ObjectStorage : IObjectStorage
     {
         return _adventure;
     }
+
+    public AudioClip GetAudioByName(string name)
+    {
+        return _audioClips[name];
+    }
+
     //--------------------Берем рандомную карту по типу и редкости
     public ICard GetRandomCardByType(SubTypeCard type, CardRarity rarity)
     {
@@ -221,11 +230,20 @@ public class ObjectStorage : IObjectStorage
         foreach (var adventure in allAdventure)
             _adventure.Add(adventure);
     }
+
+    private void CreateDictionaryAudio()
+    {
+        var allAudio = GetPoolObjectsInStorage<AudioClip>(ObjectTypeEnum.Music);
+        foreach (var audioClip in allAudio)
+        {
+            _audioClips.Add(audioClip.name, audioClip);
+        }
+    }
     public IEnumerator ReturnInPool(ObjectTypeEnum typeEnum, GameObject obj, float t)
     {
         yield return new WaitForSeconds(t);
         _poolsObjects[typeEnum].Add(obj);
-        ConfigurateZero(obj);
+        _configurateManager.ConfigurateZero(obj);
     }
     /*public void ConfigurateByParent( GameObject child,GameObject parent)
     {
@@ -234,31 +252,5 @@ public class ObjectStorage : IObjectStorage
         child.GetComponent<RectTransform>().SetOffset(0,0,0,0);
         child.SetActive(true);
     }*/
-    public void ConfigurateByParent( GameObject child,GameObject parent,float xmin,float ymin,float xmax,float ymax)
-    {
-        child.transform.SetParent(parent.transform);
-        child.GetComponent<RectTransform>().SetRect(xmin, ymin, xmax, ymax);
-        child.GetComponent<RectTransform>().SetOffset(0,0,0,0);
-        child.SetActive(true);
-    }
-    public void ConfigurateByParent( GameObject child,GameObject parent, bool active)
-    {
-        child.transform.SetParent(parent.transform);
-        child.SetActive(active);
-    }
-    private void ConfigurateZero( GameObject obj)
-    {
-        obj.transform.SetParent(_poolParent.transform);
-        obj.GetComponent<RectTransform>().SetRect(0, 0, 1, 1);
-        obj.GetComponent<RectTransform>().SetOffset(0,0,0,0);
-        obj.SetActive(false);
-    }
-    public void Configurate( GameObject child,GameObject parent, bool active, 
-        float xmin,float xmax,float ymin,float ymax)
-    {
-        child.transform.SetParent(parent.transform);
-        child.GetComponent<RectTransform>().SetRect(xmin,ymin,xmax,ymax);
-        child.GetComponent<RectTransform>().SetOffset(0,0,0,0);
-        child.SetActive(active);
-    }
+   
 }

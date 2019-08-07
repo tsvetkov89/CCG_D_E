@@ -16,13 +16,17 @@ MonoBehaviour:
   subType: 7
   rarity: 1
   classCard: 3
+  application: 2
   area: 0
   effectAttribute: []
   costAttribute:
     stat: 3
-    value: 1
-  statsAttribute: []
+    value: 2
+  statsAttribute:
+  - stat: 2
+    value: 5
   description: Damage
+  fulldescription: 
   cardName: Magic Arrow
   displayCardName: Magic Arrow
   artCard: {fileID: 21300000, guid: 10731f1961daa384c848e1f0bb8fc982, type: 3}

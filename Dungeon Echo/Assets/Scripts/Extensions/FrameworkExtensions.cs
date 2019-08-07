@@ -37,7 +37,18 @@ public static partial class FrameworkExtensions
     { 
         return obj.GetComponent(typeof(T)) != null; 
     }
-
+    public static void SetSizeSprite(this SpriteRenderer sprite, RectTransform rect)
+    {
+        sprite.size = new Vector2(rect.rect.width,rect.rect.height);
+    }
+    public static void SetSizeBox2D(this BoxCollider2D box, RectTransform rect) 
+    { 
+        box.size = new Vector2(rect.rect.width,rect.rect.height);
+    }
+    public static void SetSizeBox2D(this BoxCollider2D box, RectTransform rect, float reduceX,float reduceY) 
+    { 
+        box.size = new Vector2(rect.rect.width-reduceX,rect.rect.height-reduceY);
+    }
     /*public static void SetSize(this RectTransform trans, Vector2 newSize) {
         var oldSize = trans.rect.size;
         var deltaSize = newSize - oldSize;

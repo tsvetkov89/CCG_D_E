@@ -9,6 +9,7 @@ public class PopupPlayers:  ISubscriber
 {
     private IAnimaManager _animaManager;
     private IObjectStorage _objectStorage;
+    private IConfigurateManager _configurateManager;
     private IPublisher _publisher;
     
     private readonly GameObject _popupPlayers;                   
@@ -28,10 +29,11 @@ public class PopupPlayers:  ISubscriber
         _flagOpenInventory = false;
     }
 
-    public void SetDependecies(IAnimaManager animaManager, IObjectStorage objectStorage, IPublisher publisher)
+    public void SetDependecies(IAnimaManager animaManager, IObjectStorage objectStorage, IPublisher publisher, IConfigurateManager configurateManager)
     {
         _animaManager = animaManager;
         _objectStorage = objectStorage;
+        _configurateManager = configurateManager;
         _publisher = publisher;
     }
     //---------------действия на ивенты
@@ -71,7 +73,7 @@ public class PopupPlayers:  ISubscriber
         {
             var gameclass = playersCards[count].GetDataCard().GameClass;
             var points = _dictionaryPoints[gameclass];
-            _objectStorage.Configurate(obj, holderPlayers,true,
+            _configurateManager.Configurate(obj, holderPlayers,true,
                 points[0],points[1],points[2],points[3]);
             var componentObj = obj.GetComponent<ActionsWithCardGameClass>();
             componentObj.СhangeCardType(playersCards[count]);
@@ -80,6 +82,10 @@ public class PopupPlayers:  ISubscriber
             componentObj.SetDependecies(_publisher);
             if (gameclass == GameClass.Red)
                 componentObj.SetSelected();
+            
+            var rect = obj.GetComponent<RectTransform>();
+            obj.GetComponent<BoxCollider2D>().SetSizeBox2D(rect,10f,10f);
+
             _publisher.AddSubscriber(componentObj); 
             _publisher.Publish(null,new CustomEventArgs(GameEventName.SpawnPlayer, obj));
             count++;
@@ -88,5 +94,17 @@ public class PopupPlayers:  ISubscriber
     public List<GameObject> GetArrayPlayers()
     {
         return _arrayPlayers;
+    }
+
+    private void Metod(Sprite sprite)
+    {
+        var originSize = sprite.rect.size;
+
+        var originX = originSize.x;
+        var destX = originX - 100;
+        var ratio =  destX / originX;
+        //var scale = transform.localScale;
+
+       // transform.localScale = new Vector3(scale.x * ratio, scale.y, scale.z);
     }
 }

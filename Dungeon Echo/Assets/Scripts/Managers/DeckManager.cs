@@ -7,12 +7,13 @@ using System.Linq;
 
 public class DeckManager : IDeckManager, ISubscriber
 {
-    private IInventoryManager _inventoryManager;
-    private IObjectStorage _objectStorage;
-    private IAnimaManager _animaManager;
-    private IPublisher _publisher;
-    private ICoroutiner _coroutiner;
-    private ITargetManager _targetManager;
+    private readonly IInventoryManager _inventoryManager;
+    private readonly IObjectStorage _objectStorage;
+    private readonly IAnimaManager _animaManager;
+    private readonly IPublisher _publisher;
+    private readonly ICoroutiner _coroutiner;
+    private readonly ITargetManager _targetManager;
+    private readonly IConfigurateManager _configurateManager;
     
     private int _maxCardsInHand;
     private int _currentCardsInHand;
@@ -24,8 +25,10 @@ public class DeckManager : IDeckManager, ISubscriber
     private GameObject _pointStopDrag;
     private GameObject _pointReturnCard;
     private List<GameObject> _poolCardsPlayer; //колода карт 
+    private IDeckManager _deckManagerImplementation;
+
     public DeckManager(IObjectStorage objectStorage, IInventoryManager inventoryManager, IAnimaManager animaManager, 
-        IPublisher publisher, ICoroutiner coroutiner, ITargetManager targetManager)
+        IPublisher publisher, ICoroutiner coroutiner, ITargetManager targetManager, IConfigurateManager configurateManager)
     {
         _objectStorage = objectStorage;
         _inventoryManager = inventoryManager;
@@ -33,6 +36,7 @@ public class DeckManager : IDeckManager, ISubscriber
         _publisher = publisher;
         _coroutiner = coroutiner;
         _targetManager = targetManager;
+        _configurateManager = configurateManager;
         _maxCardsInHand = 6;
         _currentCardsInHand = 0;
         _currentCardsInDiscard = 0;
@@ -89,7 +93,7 @@ public class DeckManager : IDeckManager, ISubscriber
             if (!cardPlayer.activeSelf) continue;
             var component = cardPlayer.GetComponent<ActionsWithCards>();
             component.Animator.enabled = true;
-            _objectStorage.ConfigurateByParent(cardPlayer, _hud, false);
+            _configurateManager.ConfigurateByParent(cardPlayer, _hud, false);
         }
         _currentCardsInHand = 0;
         _discardCards.Clear();
@@ -102,12 +106,13 @@ public class DeckManager : IDeckManager, ISubscriber
         _pointStopDrag = pointStopDrag;
         _pointReturnCard = pointReturnCard; 
     }
+
     public void PlaceObjects()
     {
         _poolCardsPlayer = _objectStorage.GetPollObjects(ObjectTypeEnum.PrefabCard, 9);
         foreach (var card in _poolCardsPlayer)
         {
-            _objectStorage.Configurate(card, _hud, false,0.034f,0.06f,0.194f,0.46f);
+            _configurateManager.Configurate(card, _hud, false,0.034f,0.06f,0.194f,0.46f);
             card.gameObject.AddComponent<DraggableCard>();
             var component = card.GetComponent<DraggableCard>();
             component.enabled = false;
@@ -148,6 +153,7 @@ public class DeckManager : IDeckManager, ISubscriber
                 var component = cardPlayer.GetComponent<DraggableCard>();
                 component.SetDependecies( _pointStopDrag, _pointReturnCard , _targetManager);
                 cardPlayer.SetActive(true);
+                _configurateManager.ConfigurateCardByBattle(cardPlayer);
                 _animaManager.SetStateAnimation(cardPlayer, "go_hand",true);
                 _currentCardsInHand++;
                 _coroutiner.StartCoroutine(SwithParentCard(cardPlayer));
@@ -179,6 +185,7 @@ public class DeckManager : IDeckManager, ISubscriber
                 cardDisplay.SetDependecies(_publisher, _animaManager);
                 cardDisplay.enabled = false;
                 var component = cardPlayer.GetComponent<DraggableCard>();
+                _configurateManager.ConfigurateCardByBattle(cardPlayer);
                 component.SetDependecies( _pointStopDrag, _pointReturnCard , _targetManager);
                 cardPlayer.SetActive(true);
                 _animaManager.SetStateAnimation(cardPlayer, "go_hand", true);
@@ -201,7 +208,8 @@ public class DeckManager : IDeckManager, ISubscriber
     private IEnumerator SwithParentCard(GameObject card)
     {
         yield return new WaitForSeconds(0.6f);
-        _objectStorage.ConfigurateByParent(card,_hand,0.5f, 0.5f, 0.5f, 0.5f);
+        _configurateManager.ConfigurateByParent(card,_hand,0.5f, 0.5f, 0.5f, 0.5f);
+        //_configurateManager.ConfigurateByParent(card,_hand,0f, 0f, 1f, 1f);
         card.GetComponent<CanvasGroup>().blocksRaycasts = true;     
     }
 }

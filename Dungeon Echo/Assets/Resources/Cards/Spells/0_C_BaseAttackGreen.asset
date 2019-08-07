@@ -16,6 +16,7 @@ MonoBehaviour:
   subType: 7
   rarity: 0
   classCard: 2
+  application: 2
   area: 1
   effectAttribute: []
   costAttribute:

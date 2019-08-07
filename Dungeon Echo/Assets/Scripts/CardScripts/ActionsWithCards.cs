@@ -66,6 +66,7 @@ public class ActionsWithCards: Card, IPointerClickHandler
     }
     public void SetConfigurateByBattle()
     {
+        
         Animator.enabled = false; 
         //_animator.enabled = true; 
     }

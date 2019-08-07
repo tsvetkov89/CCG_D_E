@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6941066145440171916}
   - component: {fileID: 4837885342927688251}
   - component: {fileID: 3251091504072265655}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -85,7 +85,7 @@ GameObject:
   - component: {fileID: 8661074723986816262}
   - component: {fileID: 7574991852826314317}
   - component: {fileID: 3342974499227441247}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: NumberValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -245,7 +245,7 @@ GameObject:
   - component: {fileID: 2787009439416737332}
   - component: {fileID: 5754236118688259321}
   - component: {fileID: 959285783470868278}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -317,7 +317,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6973819173999186146}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Health
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -356,7 +356,7 @@ GameObject:
   - component: {fileID: 6288723415960383790}
   - component: {fileID: 6288723415960383760}
   - component: {fileID: 6288723415960383791}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -430,7 +430,7 @@ GameObject:
   - component: {fileID: 6288723415996591130}
   - component: {fileID: 6288723415996591132}
   - component: {fileID: 6288723415996591131}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Hp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -505,7 +505,7 @@ GameObject:
   - component: {fileID: 6288723416581418013}
   - component: {fileID: 6288723416581418015}
   - component: {fileID: 6288723416581418014}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Mp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -579,10 +579,12 @@ GameObject:
   m_Component:
   - component: {fileID: 6288723416757662942}
   - component: {fileID: 2558430974369592029}
-  m_Layer: 5
+  - component: {fileID: 2410426410741404648}
+  - component: {fileID: 7357711442193525554}
+  m_Layer: 11
   m_Name: prefabIconPlayer
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -620,6 +622,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9368e0664f4fe1a4da8ae1090a96d394, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!61 &2410426410741404648
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6288723416757662941}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
+--- !u!95 &7357711442193525554
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6288723416757662941}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bce949bd10bbc1b4abf302d87c022adf, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7150885931448277665
 GameObject:
   m_ObjectHideFlags: 0
@@ -629,7 +676,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5763216488414042611}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Mana
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -668,7 +715,7 @@ GameObject:
   - component: {fileID: 1813623087820239504}
   - component: {fileID: 7538890265044876264}
   - component: {fileID: 1984670795430951425}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: NumberValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}

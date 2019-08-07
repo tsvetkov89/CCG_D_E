@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using EnumNamespace;
 using UnityEngine;
-using UnityEngine.UI;
 
 public struct DataEvent
 {

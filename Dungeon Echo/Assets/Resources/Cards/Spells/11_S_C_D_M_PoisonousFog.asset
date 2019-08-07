@@ -16,13 +16,17 @@ MonoBehaviour:
   subType: 9
   rarity: 1
   classCard: 2
+  application: 2
   area: 0
   effectAttribute: []
   costAttribute:
     stat: 3
-    value: 1
-  statsAttribute: []
+    value: 0
+  statsAttribute:
+  - stat: 2
+    value: 0
   description: Damage
+  fulldescription: 
   cardName: Poisonous Fog
   displayCardName: Poisonous Fog
   artCard: {fileID: 21300000, guid: 54e1f19f4b4ed494286d75df476106e1, type: 3}

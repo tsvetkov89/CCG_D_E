@@ -16,13 +16,17 @@ MonoBehaviour:
   subType: 7
   rarity: 2
   classCard: 1
+  application: 2
   area: 0
   effectAttribute: []
   costAttribute:
     stat: 3
     value: 1
-  statsAttribute: []
+  statsAttribute:
+  - stat: 2
+    value: 5
   description: Damage
+  fulldescription: 
   cardName: Lava
   displayCardName: Lava
   artCard: {fileID: 21300000, guid: 2f9ce1f96eb74d3409fcddfcf5bdbab9, type: 3}

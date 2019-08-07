@@ -14,8 +14,10 @@ public class BarsPlayerManager : IBarsPlayerManager, ISubscriber
     private IDictionary<GameClass, TextMeshProUGUI> _hpPlayersText;
     private IDictionary<GameClass, TextMeshProUGUI> _mpPlayersText;
     private IDictionary<GameClass, ICard> _cardsPlayers;
-    private IDictionary<GameClass, List<int>> _curAndMaxHpPlayers;
-    private IDictionary<GameClass, List<int>> _curAndMaxMpPlayers;
+    private IDictionary<GameClass, List<float>> _curAndMaxHpPlayers;
+    private IDictionary<GameClass, List<float>> _curAndMaxMpPlayers;
+    private IDictionary<GameObject,GameClass> _players;
+    private GameObject _targetPlayer;
     public BarsPlayerManager (IObjectStorage objectStorage)
     {
         _objectStorage = objectStorage;
@@ -24,8 +26,9 @@ public class BarsPlayerManager : IBarsPlayerManager, ISubscriber
         _hpPlayersText = new Dictionary<GameClass, TextMeshProUGUI>();
         _mpPlayersText = new Dictionary<GameClass, TextMeshProUGUI>();
         _cardsPlayers = new Dictionary<GameClass, ICard>();
-        _curAndMaxHpPlayers = new Dictionary<GameClass, List<int>>();
-        _curAndMaxMpPlayers = new Dictionary<GameClass, List<int>>();
+        _curAndMaxHpPlayers = new Dictionary<GameClass, List<float>>();
+        _curAndMaxMpPlayers = new Dictionary<GameClass, List<float>>();
+        _players = new Dictionary<GameObject, GameClass>();
     }
 
     public void OnEvent(CustomEventArgs messageData)
@@ -56,27 +59,30 @@ public class BarsPlayerManager : IBarsPlayerManager, ISubscriber
                     child = obj.GetComponentsInChildren<Transform>().SearchChild("NumberValue");
                     componentText = child.GetComponent<TextMeshProUGUI>();
                     _mpPlayersText[gameclass] = componentText;
-
+                    _players.Add(player,gameclass);
                 }
-
                 InitDictPlayers();
                 break;
             }
             case GameEventName.GoActivateCard:
             {
                 var card = messageData.Value as ICard;
-                var gameclass = card.GetDataCard().GameClass;
-                var attribute = card.GetDataCard().CostAttribute;
-                var mp = attribute.value;
-                if (_curAndMaxMpPlayers[gameclass][0] - mp < 0)
-                    _curAndMaxMpPlayers[gameclass][0] = 0;
-                else
-                    _curAndMaxMpPlayers[gameclass][0] =_curAndMaxMpPlayers[gameclass][0] - mp;
-                var f = _curAndMaxMpPlayers[gameclass][0] / (float)_curAndMaxMpPlayers[gameclass][1];
-                _mpPlayersImg[gameclass].fillAmount = f;
-                _mpPlayersText[gameclass].text = _curAndMaxMpPlayers[gameclass][0]+ "/" + _curAndMaxMpPlayers[gameclass][1];
+                if (card != null && card.GetDataCard().TypeCard != CardType.Consumables)
+                {
+                    var gameclass = card.GetDataCard().GameClass;
+                    var attribute = card.GetDataCard().CostAttribute;
+                    var mp = attribute.value;
+                    if (_curAndMaxMpPlayers[gameclass][0] - mp < 0)
+                        _curAndMaxMpPlayers[gameclass][0] = 0;
+                    else
+                        _curAndMaxMpPlayers[gameclass][0] = _curAndMaxMpPlayers[gameclass][0] - mp;
+                    var f = _curAndMaxMpPlayers[gameclass][0] / _curAndMaxMpPlayers[gameclass][1];
+                    _mpPlayersImg[gameclass].fillAmount = f;
+                    _mpPlayersText[gameclass].text =
+                        _curAndMaxMpPlayers[gameclass][0] + "/" + _curAndMaxMpPlayers[gameclass][1];
+                }
                 break;
-            }
+        }
             case GameEventName.GoPlayerAttack:
             {
                 var list = messageData.Value as List<GameObject>;
@@ -89,11 +95,17 @@ public class BarsPlayerManager : IBarsPlayerManager, ISubscriber
                 var gameclass = componentGameClass.CardGame.GetDataCard().GameClass;
                 _curAndMaxHpPlayers[gameclass][0] -= damage.value;
                 _hpPlayersText[gameclass].text = _curAndMaxHpPlayers[gameclass][0] + "/" + _curAndMaxHpPlayers[gameclass][1];
-                var f = _curAndMaxHpPlayers[gameclass][0] / (float)_curAndMaxHpPlayers[gameclass][1];
+                var f = _curAndMaxHpPlayers[gameclass][0] / _curAndMaxHpPlayers[gameclass][1];
                 _hpPlayersImg[gameclass].fillAmount = f;
-                f = _curAndMaxMpPlayers[gameclass][0] / (float)_curAndMaxMpPlayers[gameclass][1];
                 break;
             }
+            case GameEventName.TargetPlayer:
+                _targetPlayer = messageData.Value as GameObject;
+                break;
+            case GameEventName.GoUseConsumablesOnPlayer:
+                var consumables = messageData.Value as ICard;
+                UseConsumables(consumables);
+                break;
         }
     }
     private void InitDictPlayers()
@@ -110,12 +122,58 @@ public class BarsPlayerManager : IBarsPlayerManager, ISubscriber
             var attribute = player.Value.GetDataCard().Attribute;
             var hp = attribute[0];
             var mp = attribute[1];
-            _curAndMaxHpPlayers[gameclass] = new List<int>() {hp.value, hp.value};
-            _curAndMaxMpPlayers[gameclass] = new List<int>() {mp.value, mp.value};
+            _curAndMaxHpPlayers[gameclass] = new List<float>() {hp.value, hp.value};
+            _curAndMaxMpPlayers[gameclass] = new List<float>() {mp.value, mp.value};
         }
         InitBarsPlayers();
     }
+    private void UseConsumables(ICard card)
+    {
+        var attribute = card.GetDataCard().Effect;
+        var value = attribute[0].value;
+        var stat = attribute[0].stat;
+        var gameclass = _players[_targetPlayer];
+        switch (stat)
+        {
+            case EffectCard.Health:
+            {
 
+                if (_curAndMaxHpPlayers[gameclass][0] + value > _curAndMaxHpPlayers[gameclass][1])
+                    _curAndMaxHpPlayers[gameclass][0] = _curAndMaxHpPlayers[gameclass][1];
+                else
+                    _curAndMaxHpPlayers[gameclass][0] = _curAndMaxHpPlayers[gameclass][0] +  value;
+                _hpPlayersText[gameclass].text = _curAndMaxHpPlayers[gameclass][0] + "/" + _curAndMaxHpPlayers[gameclass][1];
+                var f = _curAndMaxHpPlayers[gameclass][0] / _curAndMaxHpPlayers[gameclass][1];
+                _hpPlayersImg[gameclass].fillAmount = f;
+                break;
+            }
+            case EffectCard.Mana:
+            {
+                if (_curAndMaxMpPlayers[gameclass][0] + value > _curAndMaxMpPlayers[gameclass][1])
+                    _curAndMaxMpPlayers[gameclass][0] = _curAndMaxMpPlayers[gameclass][1];
+                else
+                    _curAndMaxMpPlayers[gameclass][0] = _curAndMaxMpPlayers[gameclass][0] +  value;
+                _mpPlayersText[gameclass].text = _curAndMaxMpPlayers[gameclass][0] + "/" + _curAndMaxMpPlayers[gameclass][1];
+                var f = _curAndMaxMpPlayers[gameclass][0] / _curAndMaxMpPlayers[gameclass][1];
+                _mpPlayersImg[gameclass].fillAmount = f;
+                break;
+            }
+        }
+
+        /*if (_curAndMaxHpEnemys[_targetEnemy][0] - damagespell < 1)
+        {
+            _publisher.Publish(null, new CustomEventArgs(GameEventName.GoDeadEnemy, _targetEnemy));
+            _hpEnemysText.Remove(_targetEnemy);
+            _damageEnemysText.Remove(_targetEnemy);
+            _curAndMaxHpEnemys.Remove(_targetEnemy);
+            _curAndMaxDamageEnemys.Remove(_targetEnemy);
+        }
+        else
+        {
+            _curAndMaxHpEnemys[_targetEnemy][0] -= damagespell;
+            _hpEnemysText[_targetEnemy].text = _curAndMaxHpEnemys[_targetEnemy][0].ToString();
+        }*/
+    }
     private void InitBarsPlayers()
     {
         foreach (var player in _cardsPlayers)

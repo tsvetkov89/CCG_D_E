@@ -59,6 +59,8 @@ public static class Strings
         _stringsPaths.Add(ObjectTypeEnum.Adventure, "Adventure");
         _stringsPaths.Add(ObjectTypeEnum.PrefabBtnEvent, "Prefabs/prefabBtnEvent");
         
+        _stringsPaths.Add(ObjectTypeEnum.Music, "Music");
+        
     }
     public static string GetScenePath(SceneTypeEnum sceneTypeTo)
     {

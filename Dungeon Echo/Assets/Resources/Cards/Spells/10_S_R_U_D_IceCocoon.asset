@@ -16,13 +16,17 @@ MonoBehaviour:
   subType: 8
   rarity: 2
   classCard: 3
+  application: 2
   area: 0
   effectAttribute: []
   costAttribute:
     stat: 3
-    value: 1
-  statsAttribute: []
+    value: 0
+  statsAttribute:
+  - stat: 2
+    value: 0
   description: Damage
+  fulldescription: 
   cardName: Ice Cocoon
   displayCardName: Ice Cocoon
   artCard: {fileID: 21300000, guid: d887fb05eaa03aa468be216b680469fb, type: 3}

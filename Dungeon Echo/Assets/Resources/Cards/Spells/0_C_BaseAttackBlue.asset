@@ -16,6 +16,7 @@ MonoBehaviour:
   subType: 7
   rarity: 0
   classCard: 3
+  application: 2
   area: 1
   effectAttribute:
   - stat: 0

@@ -16,13 +16,17 @@ MonoBehaviour:
   subType: 8
   rarity: 1
   classCard: 3
+  application: 2
   area: 0
   effectAttribute: []
   costAttribute:
     stat: 3
-    value: 1
-  statsAttribute: []
+    value: 0
+  statsAttribute:
+  - stat: 2
+    value: 0
   description: Damage
+  fulldescription: 
   cardName: Healing
   displayCardName: Healing
   artCard: {fileID: 21300000, guid: 9464dfec2bd4b374caab14fc1f2e9727, type: 3}

@@ -13,7 +13,8 @@ public class GameManager : IGameManager, ISubscriber
     private readonly IAnimaManager _animaManager;
     private readonly IObjectStorage _objectStorage;
     private readonly IInventoryManager _inventoryManager;
-    
+
+    private readonly IConfigurateManager _configurateManager;
     //private List<GameObject> _poolGameClass; 
     private List<GameObject> _poolGameCard; 
     private List<GameObject> _poolCardArea;
@@ -25,15 +26,15 @@ public class GameManager : IGameManager, ISubscriber
     private GameObject _hud;  //игровой HUD
     private GameObject _shirtDeckInGame; //рубашка колоды
     private ICard _selectedCardEnemy;
-   
     public GameManager(IPublisher publisher, IAnimaManager animaManager, IObjectStorage objectStorage,
-        ICoroutiner coroutiner, IInventoryManager inventoryManager)
+        ICoroutiner coroutiner, IInventoryManager inventoryManager, IConfigurateManager configurateManager)
     {
         _publisher = publisher;
         _animaManager = animaManager;
         _objectStorage = objectStorage;
         _coroutiner = coroutiner;
         _inventoryManager = inventoryManager;
+        _configurateManager = configurateManager;
     }
     public void OnEvent(CustomEventArgs messageData)
     {
@@ -98,6 +99,10 @@ public class GameManager : IGameManager, ISubscriber
                 _publisher.Publish(_hud, new CustomEventArgs(GameEventName.GoSetNextStage, cardGame));
                 break;
             }
+            case GameEventName.GoDeadEnemy:
+                var objCard  = messageData.Value as GameObject;
+                _configurateManager.ConfigurateByParent(objCard, _hud, false);
+                break;
             /*case GameEventName.GoEndTurnPlayer:
                 foreach (var card in _poolCardsPlayer)
                 {
@@ -273,19 +278,19 @@ public class GameManager : IGameManager, ISubscriber
     {
         _poolCardBattleEnemy = _objectStorage.GetPollObjects(ObjectTypeEnum.PrefabCardBattleEnemy, 4);
         foreach (var objCard in _poolCardBattleEnemy)
-            _objectStorage.ConfigurateByParent(objCard, _hud, false);
+            _configurateManager.ConfigurateByParent(objCard, _hud, false);
         _poolCardArea = _objectStorage.GetPollObjects(ObjectTypeEnum.PrefabCardArea, 3);
         foreach (var objGameArea in _poolCardArea)
-            _objectStorage.ConfigurateByParent(objGameArea, _hud, false);
+            _configurateManager.ConfigurateByParent(objGameArea, _hud, false);
         _poolCardEvent = _objectStorage.GetPollObjects(ObjectTypeEnum.PrefabCardEvent, 3);
         foreach (var objGameEvent in _poolCardEvent)
-            _objectStorage.ConfigurateByParent(objGameEvent, _hud, false);
+            _configurateManager.ConfigurateByParent(objGameEvent, _hud, false);
         _poolCardEnemy = _objectStorage.GetPollObjects(ObjectTypeEnum.PrefabCardEnemy, 3);
         foreach (var objGameEnemy in _poolCardEnemy)
-            _objectStorage.ConfigurateByParent(objGameEnemy, _hud, false);
+            _configurateManager.ConfigurateByParent(objGameEnemy, _hud, false);
         _poolGameCard = _objectStorage.GetPollObjects(ObjectTypeEnum.PrefabCard, 5);
         foreach (var objCard in _poolGameCard)
-            _objectStorage.ConfigurateByParent(objCard, _hud, false);
+            _configurateManager.ConfigurateByParent(objCard, _hud, false);
         /*_poolCardsPlayer = _objectStorage.GetPollObjects(ObjectTypeEnum.PrefabCard, 9);
         foreach (var card in _poolCardsPlayer)
         {
@@ -325,13 +330,11 @@ public class GameManager : IGameManager, ISubscriber
                 card.SetActive(true);
                 _publisher.Publish(null, new CustomEventArgs(GameEventName.SpawnEnemy, card));
                 _animaManager.SetStateAnimation(card, "stage_battle", true);
-                // _coroutiner.StartCoroutine(SwithParentCard(cardPlayer));
                 break;
             }
             count++;
         }
     }
-
     private void FinishBattle()
     {
         foreach (var element in _poolCardArea)

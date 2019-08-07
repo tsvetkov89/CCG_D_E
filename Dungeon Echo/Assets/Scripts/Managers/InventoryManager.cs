@@ -11,7 +11,7 @@ public class InventoryManager : IInventoryManager, ISubscriber
     private IObjectStorage _objectStorage;
     private IPublisher _publisher;
     private ICoroutiner _coroutiner;
-    
+    private IConfigurateManager _configurateManager;
     private IDictionary<GameClass,List<string>> _inventoryPlayers;     //массив названий предметов в инвентаре
     private IDictionary<GameClass,List<string>> _equpmentCardsPlayers; //массив названий предметов в инвентаре
     
@@ -31,11 +31,12 @@ public class InventoryManager : IInventoryManager, ISubscriber
     private bool _autoequpment;
     private GameObject _parentObject;              //использую при снятии экипированной карты
     //-------------------Конструктор
-    public InventoryManager(IObjectStorage objectStorage , IPublisher publisher, ICoroutiner coroutiner)
+    public InventoryManager(IObjectStorage objectStorage , IPublisher publisher, ICoroutiner coroutiner, IConfigurateManager configurateManager)
     {
         _objectStorage = objectStorage;
         _publisher = publisher;
         _coroutiner = coroutiner;
+        _configurateManager = configurateManager;
         _player = GameClass.Red;
         _autoequpment = true;
         _inventoryPlayers = new Dictionary<GameClass, List<string>>();
@@ -155,7 +156,7 @@ public class InventoryManager : IInventoryManager, ISubscriber
         _arrayInventory =_objectStorage.GetPollObjects(ObjectTypeEnum.SlotCardInInventory,5);
         foreach (var obj in _arrayInventory)
         {
-            _objectStorage.Configurate(obj, _holderCards,true,xmin,xmax,ymin,ymax);
+            _configurateManager.Configurate(obj, _holderCards,true,xmin,xmax,ymin,ymax);
             ymin += ysize;
             ymax += ysize;
             component = obj.GetComponent<ActionsWithSlotInventory>();
@@ -169,7 +170,7 @@ public class InventoryManager : IInventoryManager, ISubscriber
         var count = 0;
         foreach (var obj in _arraySpells)
         {
-            _objectStorage.Configurate(obj, _holderInventory, true, xmin, xmax, ymin, ymax);
+            _configurateManager.Configurate(obj, _holderInventory, true, xmin, xmax, ymin, ymax);
             component = obj.GetComponent<ActionsWithSlotInventory>();
             component.SetDependecies(_publisher);
             component.SetVarsSlot(true, false);
@@ -392,7 +393,7 @@ public class InventoryManager : IInventoryManager, ISubscriber
         var list = _inventoryPlayers[_player];
         var component = _arrayInventory[index].GetComponent<ActionsWithSlotInventory>();
         var card = _objectStorage.GetPollObjects(ObjectTypeEnum.PrefabCardInInventory, 1)[0];
-        _objectStorage.ConfigurateByParent(card,_arrayInventory[index],0,0,1,1);
+        _configurateManager.ConfigurateByParent(card,_arrayInventory[index],0,0,1,1);
         var cardDisplay = card.GetComponent<ActionsWithCards>();
         var name = list[index];
         var cardData = _objectStorage.GetCardByName(name);
@@ -408,7 +409,7 @@ public class InventoryManager : IInventoryManager, ISubscriber
         var list = _equpmentCardsPlayers[_player];
         var component = _arraySpells[index].GetComponent<ActionsWithSlotInventory>();
         var card = _objectStorage.GetPollObjects(ObjectTypeEnum.PrefabCardInInventory, 1)[0];
-        _objectStorage.ConfigurateByParent(card,_arraySpells[index],0,0,1,1);
+        _configurateManager.ConfigurateByParent(card,_arraySpells[index],0,0,1,1);
         var cardDisplay = card.GetComponent<ActionsWithCards>();
         var name = list[index];
         var cardData = _objectStorage.GetCardByName(name);

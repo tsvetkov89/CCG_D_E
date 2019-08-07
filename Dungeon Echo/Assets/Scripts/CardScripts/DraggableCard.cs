@@ -4,7 +4,7 @@ using InterfaceNamespace;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class DraggableCard : Card, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class DraggableCard : Card, IBeginDragHandler, IDragHandler
 {
     private ITargetManager _targetManager;
     public Transform ParentToReturnTo { private get; set; }
@@ -61,12 +61,10 @@ public class DraggableCard : Card, IBeginDragHandler, IDragHandler, IEndDragHand
                 break;
             }
         }
-
         if (transform.position.y > _pointStopDrag.transform.position.y && _statusCard == StatusCard.InHand)
         {
             _statusCard = StatusCard.OnBoard;
         }
-
         // if (!(Pointer.instance.transform.position.y < _pointReturnCard.transform.position.y)) return;
         // _statusCard = StatusCard.InHand;
         //  Pointer.instance.Reset();
@@ -77,11 +75,10 @@ public class DraggableCard : Card, IBeginDragHandler, IDragHandler, IEndDragHand
         //transform.position = Camera.main.ScreenToWorldPoint(vector3); 
     }
 
-    public void OnEndDrag(PointerEventData evenData)
+    public void OnEndDrag()
     {
         _statusCard = StatusCard.InHand;
         transform.SetParent(ParentToReturnTo);
         GetComponent<CanvasGroup>().blocksRaycasts = true;
     }
-
 }
