@@ -90,7 +90,6 @@ public class PopupEvent : ISubscriber
                 var btnText = child.GetComponent<TMP_Text>();
                 btnText.text = @event.label;
                 var button = btn.GetComponent<Button>();
-                Debug.Log("event = " + @event.label);
                 button.onClick.AddListener(delegate {OnClickButtonEvent(@event); });
                 _configurateManager.ConfigurateByParent(btn, count <= 2 ? _panelButtons1 : _panelButtons2, true);
                 count++;
@@ -121,21 +120,21 @@ public class PopupEvent : ISubscriber
                 _btnSkip.SetActive(true);
             }
             if(!_printDescription) break;
+            
         }
+        if(_description.text != text)
+            _description.text = text;
     }
 
     private void OnClickButtonEvent(Adventure.Event @event)
     {
         _printDescription = false;
         var outcomes = @event.outcomes;
-        //var arrayOutcome= new[] {@event.goodOutcome,@event.badOutcome};
-        var outcome = outcomes[RandomExtensions.GetRandomElementDictionary(DropChance.ChanceOutcome)];
-
+        var outcome = outcomes.Count != 1 ? outcomes[RandomExtensions.GetRandomElementDictionary(DropChance.ChanceOutcome)] : outcomes[0];
+        Debug.Log(outcome.name);
         _coroutiner.StartCoroutine(DisplayDescription(outcome.description, 0.1f));
         _secondArt.sprite = outcome.art;
         _animaManager.SetStateAnimation(_popupEvent,"result",true);
-        //var data = _adventure.GetDataEvent();
-        //var events = data.Events;
         foreach (var btn in _poolButtons)
         {
             if (!btn.activeSelf) continue;
@@ -170,8 +169,8 @@ public class PopupEvent : ISubscriber
     private void OnClickButtonSkip()
     {
         _btnSkip.SetActive(false);
-        _firstPause = 0f;
-        _secondPause = 0f;
+        _printDescription = false;
+        
     }
 
     private IEnumerator SayEndEvent(float pause)

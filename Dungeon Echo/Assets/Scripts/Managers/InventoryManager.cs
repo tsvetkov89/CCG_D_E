@@ -15,8 +15,8 @@ public class InventoryManager : IInventoryManager, ISubscriber
     private IDictionary<GameClass,List<string>> _inventoryPlayers;     //массив названий предметов в инвентаре
     private IDictionary<GameClass,List<string>> _equpmentCardsPlayers; //массив названий предметов в инвентаре
     
-    private string[] _equipmentPlayer;                  //массив названий предметов в инвентаре
-    private string[] _spellsPlayer;                     //массив названий предметов в инвентаре
+    //private string[] _equipmentPlayer;                  //массив названий предметов в инвентаре
+   // private string[] _spellsPlayer;                     //массив названий предметов в инвентаре
     private GameClass _player;
            
     private List<GameObject> _arrayInventory;           //доступ   
@@ -59,7 +59,7 @@ public class InventoryManager : IInventoryManager, ISubscriber
         }
         _equpmentCardsPlayers[GameClass.Red] = new List<string>(){"BaseAttackRed","","","","",""};
         _equpmentCardsPlayers[GameClass.Green] = new List<string>(){"BaseAttackGreen","","","","",""};
-        _equpmentCardsPlayers[GameClass.Blue] = new List<string>(){"BaseAttackBlue","","","","",""};
+        _equpmentCardsPlayers[GameClass.Blue] = new List<string>(){"BaseAttackBlue","","","","","",""};
         _equpmentCardsPlayers[GameClass.Purple] = new List<string>(){"BaseAttackPurple","","","","",""};
     }
     //--------------------добавим карту в инвентарь
@@ -84,49 +84,71 @@ public class InventoryManager : IInventoryManager, ISubscriber
             gameClass = addCard.GetDataCard().GameClass;
         var list = _inventoryPlayers[gameClass];
         var equpment = _equpmentCardsPlayers[gameClass];
-        var indexInventory = list.IndexOf("");
-        switch (indexInventory)
+        var indexEqupment = equpment.IndexOf("");
+        if (_autoequpment && indexEqupment != -1)
         {
-            //-----------инвентарь переполнен
-            case -1:
-                Debug.Log("инвентарь переполнен!");
-                return;
-            //-----------в инвентаре есть еще место
-            default:
-                var indexEqupment = equpment.IndexOf("");
-                if (_autoequpment && indexEqupment != -1)
-                {
-                    Debug.Log("аутоеквип!");
-                    if (typeCard == CardType.Spell)
-                    {
-                        equpment[indexEqupment] = name;
-                        if( gameClass == _player)
-                            SpawnItemEqupmentCard(indexEqupment);
-                    }
-                    else
-                    {
-                        if (equpment[5] == "")
-                        {
-                            equpment[5] = name;
-                            if( gameClass == _player)
-                                SpawnItemEqupmentCard(5);
-                        }
-                        else
-                        {
-                            list[indexInventory] = name;
-                            if( gameClass == _player)
-                                SpawnItemInventory(indexInventory);
-                        }
-                    }
-                }
-                else
-                {
-                    list[indexInventory] = name;
-                    if( gameClass == _player)
-                        SpawnItemInventory(indexInventory);
-                }
-                break;
+            Debug.Log("аутоеквип!");
+            if (typeCard == CardType.Spell)
+            {
+                equpment[indexEqupment] = name;
+                if (gameClass == _player)
+                    SpawnItemEqupmentCard(indexEqupment);
+            }
+            else
+            {
+                SerchAndEqupmentCard(name);
+            }
         }
+        else
+        {
+            var indexInventory = list.IndexOf("");
+            if (indexInventory != -1)
+            {
+                list[indexInventory] = name;
+                if (gameClass == _player)
+                    SpawnItemInventory(indexInventory);
+            }
+            else
+            {
+                Debug.Log("инвентарь полон");
+            }
+        }
+    }
+
+    private void SerchAndEqupmentCard(string name)
+    {
+        var flag = false;
+        foreach (var equpmentCardsPlayer in _equpmentCardsPlayers)
+        {
+            if (equpmentCardsPlayer.Value[5] != "") continue;
+            equpmentCardsPlayer.Value[5] = name;
+            if( equpmentCardsPlayer.Key == _player)
+                SpawnItemEqupmentCard(5);
+            flag = true;
+            break;
+
+        }
+        if(flag) return;
+        var gameclass = GameClass.Red;
+        var minSlots =  _inventoryPlayers[gameclass].Count(x => x == "");
+        foreach (var _inventoryPlayer in _inventoryPlayers)
+        {
+            var count = _inventoryPlayer.Value.Count(x => x == "");
+            if (count <= minSlots) continue;
+            minSlots = count;
+            gameclass = _inventoryPlayer.Key;
+        }
+
+        if (_inventoryPlayers[gameclass].Count(x => x == "") == 0)
+        {
+            Debug.Log("Слоты у карт переполнены");
+            return;
+        }
+
+        var indexInventory = _inventoryPlayers[gameclass].IndexOf("");
+        _inventoryPlayers[gameclass][indexInventory] = name;
+        if( gameclass == _player)
+            SpawnItemInventory(indexInventory);
     }
     //--------------------очистим слот инвентаря
     private void DeleteItemInventory(int index)                             

@@ -29,7 +29,7 @@ MonoBehaviour:
     \u0432\u043E\u0441\u043F\u043E\u043B\u043D\u044F\u0435\u0442 <color=#FF0000>\u0437\u0434\u043E\u0440\u043E\u0432\u044C\u0435</color>
     \u0442\u043E\u0433\u043E, \u043A\u0442\u043E \u0435\u0433\u043E \u0432\u044B\u043F\u044C\u0435\u0442
     \u043D\u0430 <color=#FF0000>3 \u0435\u0434\u0435\u043D\u0438\u0446\u044B</color>."
-  cardName: Small Health Flask
+  cardName: SmallHealthFlask
   displayCardName: Small Health Flask
   artCard: {fileID: 21300000, guid: 6794404b2b4981844937bb6bc34fc71b, type: 3}
   shirtMain: {fileID: 21300000, guid: a5cebb48f57715a4cb9f6480b9690afe, type: 3}
