@@ -2,27 +2,28 @@ using System.Collections.Generic;
 using EnumNamespace;
 using InterfaceNamespace;
 using UnityEngine;
-public class PopupInventory:  ISubscriber
+public class PopupInventory:  IPopupInventory, ISubscriber
 {
     private IInventoryManager _inventoryManager;
     private IAnimaManager _animaManager;
     
-    private readonly GameObject _popupInventory;       //вспылывающее окно инвентаря
+    private GameObject _popupInventory;       //вспылывающее окно инвентаря
     
     private GameObject _holderInventory;           //панель под инвентарь
     private GameObject _holderCards;           //панель под слоты экиировки  
 
     private  bool _flagPopup;
-    public PopupInventory(GameObject popupInventory)
-    {
-        _popupInventory = popupInventory;
-        _flagPopup = false;
-    }
-
-    public void SetDependecies(IInventoryManager inventoryManager, IAnimaManager animaManager)
+    public PopupInventory(IInventoryManager inventoryManager, IAnimaManager animaManager)
     {
         _inventoryManager = inventoryManager;
         _animaManager = animaManager;
+    }
+
+    public void SetDependecies(GameObject popupInventory)
+    {
+        
+        _popupInventory = popupInventory;
+        _flagPopup = false;
     }
     //---------------действия на ивенты
     public void OnEvent(CustomEventArgs messageData)

@@ -19,7 +19,9 @@ public class ObjectStorage : IObjectStorage
     
     private readonly IDictionary<SubTypeCard, IDictionary<string, ICard>> _dictCards;
     private readonly IDictionary<string, AudioClip> _audioClips;
-    private  List<Adventure> _adventure;
+    private List<Adventure> _adventure;
+    private List<IToken> _tokens;
+
     private IObjectStorage _objectStorageImplementation;
 
     public ObjectStorage (IObjectLoader objectLoader, IConfigurateManager configurateManager)
@@ -32,6 +34,7 @@ public class ObjectStorage : IObjectStorage
         _dictCards = new Dictionary<SubTypeCard, IDictionary<string, ICard>>();
         _audioClips = new Dictionary<string, AudioClip>();
         _adventure = new List<Adventure>();
+        _tokens = new List<IToken>();
         CreateDictionaryAudio();
     }
     public void CreateAllPools()
@@ -94,6 +97,7 @@ public class ObjectStorage : IObjectStorage
         CreatePoolByType(ObjectTypeEnum.SlotCardInInventory, 18);
         CreatePoolByType(ObjectTypeEnum.SlotInventory2, 9);
         CreatePoolByType(ObjectTypeEnum.PrefabBtnEvent, 4);
+        CreatePoolByType(ObjectTypeEnum.PrefabToken, 4);
     }
     private void  CreatePoolByType(ObjectTypeEnum typeEnum,int count)
     {
@@ -156,6 +160,15 @@ public class ObjectStorage : IObjectStorage
             if (isExists == false) continue;
             return value;
         }
+        return null;
+    }
+    //--------------------Берем токен (жетон награды)
+    public IToken GetTokenByName(TokenRewardEnum token)
+    {
+        foreach (var t in _tokens)
+            if (t.GetDataToken().Token == token)
+                return t;
+
         return null;
     }
     private void CreateDictionaryCards()
@@ -226,9 +239,10 @@ public class ObjectStorage : IObjectStorage
             var typeCard = cardUnit.subType;
             _dictCards[typeCard].Add(name,cardUnit);
         }
-        var allAdventure= GetPoolObjectsInStorage<Adventure>(ObjectTypeEnum.Adventure);
-        foreach (var adventure in allAdventure)
-            _adventure.Add(adventure);
+        _adventure= new List<Adventure>(GetPoolObjectsInStorage<Adventure>(ObjectTypeEnum.Adventure));
+        _tokens = new List<IToken>(GetPoolObjectsInStorage<TokenReward>(ObjectTypeEnum.Tokens));
+        //foreach (var adventure in allAdventure)
+        //    _adventure.Add(adventure);
     }
 
     private void CreateDictionaryAudio()

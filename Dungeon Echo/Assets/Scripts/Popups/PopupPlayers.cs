@@ -5,37 +5,41 @@ using InterfaceNamespace;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PopupPlayers:  ISubscriber
+public class PopupPlayers: IPopupPlayers, ISubscriber
 {
     private IAnimaManager _animaManager;
     private IObjectStorage _objectStorage;
     private IConfigurateManager _configurateManager;
     private IPublisher _publisher;
     
-    private readonly GameObject _popupPlayers;                   
+    private GameObject _popupPlayers;                   
     private List<GameObject> _arrayPlayers;
     private IDictionary<GameClass, List<float>> _dictionaryPoints;
     private bool _flagOpenInventory;
     
-    public PopupPlayers(GameObject popupPlayers)
+    public PopupPlayers(IAnimaManager animaManager, IObjectStorage objectStorage, IPublisher publisher, IConfigurateManager configurateManager)
     {
-        _popupPlayers = popupPlayers;
+        _animaManager = animaManager;
+        _objectStorage = objectStorage;
+        _publisher = publisher;
+        _configurateManager = configurateManager;
+
         _dictionaryPoints = new Dictionary<GameClass, List<float>>();
         //points = xmin, ymax, ymin, ymax
         _dictionaryPoints[GameClass.Red] = new List<float>(){0.124f, 0.888f,0.761f,0.985f};
         _dictionaryPoints[GameClass.Green] = new List<float>(){0.124f, 0.888f,0.511f,0.744f};
         _dictionaryPoints[GameClass.Blue] = new List<float>(){0.124f, 0.888f,0.259f,0.492f};
         _dictionaryPoints[GameClass.Purple] = new List<float>(){0.124f, 0.888f,0.0154f,0.2405f};
-        _flagOpenInventory = false;
+
     }
 
-    public void SetDependecies(IAnimaManager animaManager, IObjectStorage objectStorage, IPublisher publisher, IConfigurateManager configurateManager)
+    public void SetDependecies(GameObject popupPlayers)
     {
-        _animaManager = animaManager;
-        _objectStorage = objectStorage;
-        _configurateManager = configurateManager;
-        _publisher = publisher;
+        _popupPlayers = popupPlayers;
+        _flagOpenInventory = false;
+        CreatePanelPlayers();
     }
+    
     //---------------действия на ивенты
     public void OnEvent(CustomEventArgs messageData)
     {
@@ -60,8 +64,9 @@ public class PopupPlayers:  ISubscriber
                 break;
         }
     }
-    public void CreatePanelPlayers()
+    private void CreatePanelPlayers()
     {   
+       
         var holder = _popupPlayers.GetComponentsInChildren<Transform>().SearchChild("PopupPlayers");   
         var holderPlayers = holder.gameObject; //найдем панель под иконки игроков
         //----------------------------
@@ -96,15 +101,4 @@ public class PopupPlayers:  ISubscriber
         return _arrayPlayers;
     }
 
-    private void Metod(Sprite sprite)
-    {
-        var originSize = sprite.rect.size;
-
-        var originX = originSize.x;
-        var destX = originX - 100;
-        var ratio =  destX / originX;
-        //var scale = transform.localScale;
-
-       // transform.localScale = new Vector3(scale.x * ratio, scale.y, scale.z);
-    }
 }

@@ -52,6 +52,10 @@ public class UiButtonsPopups : MonoBehaviour, ISubscriber
     {
         _publisher.Publish(this,new CustomEventArgs(GameEventName.GoCloseGameMenu));
     }
+    public void ToSayClosePopupReward()
+    {
+        _publisher.Publish(this,new CustomEventArgs(GameEventName.GoClosePopupReward));
+    }
     public void ToSayStartNewGame()
     {
         SceneManager.LoadScene("Bootstrapper");

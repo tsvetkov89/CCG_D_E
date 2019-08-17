@@ -60,18 +60,11 @@
         spriterender.SetSizeSprite(_rectArt);
         spriterender = shirtM.GetComponent<SpriteRenderer>();
         spriterender.SetSizeSprite(_rectShirtMain);
-      //  Debug.Log(rectArt.position.x);
-        //var component = card.GetComponentsInChildren<Transform>().SearchChild("SpriteArtCard");
-        //var spriterender = component.GetComponent<SpriteRenderer>();
-        //spriterender.SetSizeSprite(rectArt);
-        //component = card.GetComponentsInChildren<Transform>().SearchChild("SpriteShirtMain");
-        //spriterender = component.GetComponent<SpriteRenderer>();
-        //spriterender.SetSizeSprite(rectShirt); 
-        // spriterender.sprite = artCard;
-        // 
-        //var rectShirt = shirtM.GetComponent<RectTransform>();
-        // var spriterender = shirtM.GetComponent<SpriteRenderer>();
-        // spriterender.sprite = shirtMain;
-        //  spriterender.SetSizeSprite(rectShirt); //= new Vector2(299, 422);
+    }
+
+    public void ConfigurateSprite(GameObject obj, RectTransform rectTransform)
+    {
+        var spriterender = obj.GetComponent<SpriteRenderer>();
+        spriterender.SetSizeSprite(rectTransform);
     }
  }

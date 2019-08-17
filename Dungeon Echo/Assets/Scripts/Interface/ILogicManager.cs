@@ -4,5 +4,6 @@ namespace InterfaceNamespace
     {
         IBaseManagers BaseManagers { get; }
         IGameManagers  GameManagers { get; }
+        IPopupManagers  PopupManagers { get; }
     }
 }

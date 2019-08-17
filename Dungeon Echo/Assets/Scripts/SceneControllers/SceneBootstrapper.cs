@@ -10,7 +10,6 @@ using UnityEngine;
 
 public class SceneBootstrapper :  BaseScene
 {
-    private IBaseManagers  _baseManagers;
     private IGameManagers _gameManagers;
     private ISaveManager  _saveManager;
     private IGameManager  _gameManager;
@@ -20,7 +19,7 @@ public class SceneBootstrapper :  BaseScene
     private IPublisher    _publisher;
     private IObjectLoader _objectLoader;
     private IObjectStorage _objectStorage;
-    private ILogicManager _logicManager;
+
     private IGameStageManager _gameStageManager;
     private IActivateCardManager _activateCardManager;
     private IBarsPlayerManager _barsPlayerManager;
@@ -32,7 +31,19 @@ public class SceneBootstrapper :  BaseScene
     private ICoroutiner _coroutiner;
     private IConfigurateManager _configurateManager;
     private IAudioManager _audioManager;
+    private ITokenRewardManager _tokenRewardManager;
 
+    private IBaseManagers  _baseManagers;
+    private ILogicManager _logicManager;
+    private IPopupManagers _popupManagers;
+    private IPopupEvent _popupEvent;
+    private IPopupPlayers _popupPlayers;
+    private IPopupDescriptionCard _popupDescriptionCard;
+    private IPopupPlaceInSlot _popupPlaceInSlot;
+    private IPopupRewardEvent _popupRewardEvent;
+    private IPopupGameMenu _popupGameMenu;
+    private IPopupInventory _popupInventory;
+    
     private void Awake()
     {
         var obj = GameObject.Find("CarrierObject");
@@ -51,7 +62,8 @@ public class SceneBootstrapper :  BaseScene
        _animaManager = new AnimaManager();
        _objectLoader = new ObjectLoader();
        _configurateManager = new ConfigurateManager();
-      
+       _tokenRewardManager = new TokenRewardManager(_publisher);
+       
        _objectStorage = new ObjectStorage(_objectLoader,_configurateManager);
        _audioManager = new AudioManager(_objectStorage, _coroutiner);
        _barsPlayerManager = new BarsPlayerManager(_objectStorage);
@@ -67,6 +79,15 @@ public class SceneBootstrapper :  BaseScene
        _targetManager = new TargetManager(_publisher, _animaManager, _activateCardManager, _enemyManager);
        _deckManager = new DeckManager(_objectStorage,_inventoryManager,_animaManager,_publisher,_coroutiner, _targetManager,_configurateManager);
        
+       _popupEvent = new PopupEvent(_objectStorage,_publisher,_animaManager,_coroutiner, _configurateManager);
+       _popupGameMenu = new PopupGameMenu(_objectStorage, _publisher, _animaManager,_coroutiner);
+       _popupInventory = new PopupInventory(_inventoryManager, _animaManager);
+       _popupPlaceInSlot = new PopupPlaceInSlot(_publisher);
+       _popupPlayers = new PopupPlayers(_animaManager, _objectStorage, _publisher, _configurateManager);
+       //_descriptionCardPopup = new PopupDescriptionCard(_popupDescriptionCard);
+       _popupDescriptionCard = new PopupDescriptionCard(_coroutiner,_animaManager);
+       _popupRewardEvent = new PopupRewardEvent(_publisher, _objectStorage, _configurateManager, _coroutiner);
+       
        _publisher.AddSubscriber((ISubscriber) _gameManager);
        _publisher.AddSubscriber((ISubscriber) _inventoryManager);
        _publisher.AddSubscriber((ISubscriber) _gameStageManager);
@@ -78,11 +99,22 @@ public class SceneBootstrapper :  BaseScene
        _publisher.AddSubscriber((ISubscriber) _deckManager);
        _publisher.AddSubscriber((ISubscriber) _targetManager);
        _publisher.AddSubscriber((ISubscriber) _audioManager);
+       _publisher.AddSubscriber((ISubscriber) _tokenRewardManager);
+       
+       _publisher.AddSubscriber((ISubscriber) _popupGameMenu);
+       _publisher.AddSubscriber((ISubscriber) _popupInventory);
+       _publisher.AddSubscriber((ISubscriber) _popupEvent);
+       _publisher.AddSubscriber((ISubscriber) _popupPlayers);
+       _publisher.AddSubscriber((ISubscriber) _popupDescriptionCard);
+       _publisher.AddSubscriber((ISubscriber) _popupRewardEvent);
        
        _baseManagers = new BaseManagers(_saveManager,_animaManager,_publisher,_objectStorage,_configurateManager,_coroutiner, _audioManager);
        _gameManagers = new GameManagers(_gameManager, _activateCardManager, _barsPlayerManager, _barsEnemyManager, 
-           _enemyManager, _playersManager, _deckManager, _inventoryManager, _targetManager);
-       _logicManager = new LogicManager(_baseManagers,_gameManagers);
+           _enemyManager, _playersManager, _deckManager, _inventoryManager, _targetManager, _tokenRewardManager);
+       _popupManagers = new PopupManagers(_popupGameMenu,_popupInventory, _popupEvent, _popupPlayers, _popupDescriptionCard,_popupPlaceInSlot, _popupRewardEvent);
+       
+       
+       _logicManager = new LogicManager(_baseManagers,_gameManagers, _popupManagers);
        _loadManager = new LoadManager(_logicManager);
        //-------------------Делаем переход в сцену "Меню"
        _loadManager.Navigate(SceneTypeEnum.Bootstrapper, SceneTypeEnum.Menu, CustomObject.Empty);

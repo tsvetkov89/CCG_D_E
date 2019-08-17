@@ -17,6 +17,7 @@ namespace InterfaceNamespace
         void CreateAllPools();
         List<Adventure> GetAdventure();
         AudioClip GetAudioByName(string name);
+        IToken GetTokenByName(TokenRewardEnum token);
 
     }
 }

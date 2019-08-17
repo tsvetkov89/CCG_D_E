@@ -25,7 +25,7 @@ public class Adventure : ScriptableObject
         public string name;
         public Sprite art;
         public string description;
-        public List<RewordEvent> reword;
+        public List<TokenRewardEnum> reward;
     }
 
     public DataEvent GetDataEvent()

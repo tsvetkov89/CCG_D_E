@@ -4,7 +4,7 @@ using InterfaceNamespace;
 using TMPro;
 using UnityEngine;
 
-public class PopupPlaceInSlot:  ISubscriber
+public class PopupPlaceInSlot: IPopupPlaceInSlot, ISubscriber
 {
     private IPublisher _publisher;
     private GameObject _popupPlaceInSlot;    //вспылывающее окно, просмотр карт в инвентаре
@@ -14,18 +14,9 @@ public class PopupPlaceInSlot:  ISubscriber
     private bool _flagPopup;
     private bool _flagUnEqupment;
     private TMP_Text _fullDescription;
-    public PopupPlaceInSlot(GameObject popupPlace, GameObject card)
+    public PopupPlaceInSlot(IPublisher publisher)
     {
-        _popupPlaceInSlot = popupPlace;
-        _cardView = card;
-        _flagPopup = false;
-        _flagUnEqupment = false;
-        var animator = _cardView.GetComponent<Animator>();
-        animator.enabled = false;
-        var component = _cardView.GetComponentsInChildren<Transform>().SearchChild("ShirtCard");
-        component.gameObject.SetActive(false);
-        var description = _popupPlaceInSlot.GetComponentsInChildren<Transform>().SearchChild("FullDescription");
-        _fullDescription = description.GetComponent<TMP_Text>();   
+        _publisher = publisher;
     }
     //--------обрабатываем события
     public void OnEvent(CustomEventArgs messageData)
@@ -81,8 +72,17 @@ public class PopupPlaceInSlot:  ISubscriber
             _flagUnEqupment = true;
         }
     }
-    public void SetDependecies( IPublisher publisher)
+    public void SetDependecies( GameObject popupPlace, GameObject card)
     {
-        _publisher = publisher;
+        _popupPlaceInSlot = popupPlace;
+        _cardView = card;
+        _flagPopup = false;
+        _flagUnEqupment = false;
+        var animator = _cardView.GetComponent<Animator>();
+        animator.enabled = false;
+        var component = _cardView.GetComponentsInChildren<Transform>().SearchChild("ShirtCard");
+        component.gameObject.SetActive(false);
+        var description = _popupPlaceInSlot.GetComponentsInChildren<Transform>().SearchChild("FullDescription");
+        _fullDescription = description.GetComponent<TMP_Text>();   
     }
 }

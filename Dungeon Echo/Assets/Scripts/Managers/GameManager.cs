@@ -80,7 +80,7 @@ public class GameManager : IGameManager, ISubscriber
             case GameEventName.GoFinishBattle:
                 FinishBattle();
                 break;
-            case GameEventName.GoEndRandomEvent:
+            case GameEventName.GoRewardEvent:
                 _coroutiner.StartCoroutine(EndRandomEvent(0.7f));
                 break;
             case GameEventName.GoOpenPopupWithDescriptionCard:
@@ -380,9 +380,8 @@ public class GameManager : IGameManager, ISubscriber
     private IEnumerator EndRandomEvent(float pause)
     {
         yield return new WaitForSeconds(pause);
-        Debug.Log("end random event");
         ReturnCardEvent();
-        yield return new WaitForSeconds(pause);
-        _publisher.Publish(null, new CustomEventArgs(GameEventName.GoFinishStageEvent));
     }
+    /*yield return new WaitForSeconds(pause);
+    _publisher.Publish(null, new CustomEventArgs(GameEventName.GoFinishStageEvent));*/
 }

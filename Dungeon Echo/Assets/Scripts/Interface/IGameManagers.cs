@@ -10,5 +10,6 @@ namespace InterfaceNamespace
         IInventoryManager InventoryManager { get; }
         IDeckManager DeckManager { get; }
         ITargetManager TargetManager { get; }
+        ITokenRewardManager TokenRewardManager { get; }
     }
 }

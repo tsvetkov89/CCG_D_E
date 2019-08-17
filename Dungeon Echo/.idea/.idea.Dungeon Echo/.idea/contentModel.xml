@@ -78,12 +78,22 @@
             <e p="ILogicManager.cs" t="Include" />
             <e p="IObjectLoader.cs" t="Include" />
             <e p="IObjectStorage.cs" t="Include" />
-            <e p="IPlayersManager.cs" t="Include" />
+            <e p="IPlayersManagers.cs" t="Include" />
+            <e p="IPopupDescriptionCard.cs" t="Include" />
+            <e p="IPopupEvent.cs" t="Include" />
+            <e p="IPopupGameMenu.cs" t="Include" />
+            <e p="IPopupInventory.cs" t="Include" />
+            <e p="IPopupManager.cs" t="Include" />
+            <e p="IPopupPlaceInSlot.cs" t="Include" />
+            <e p="IPopupPlayers.cs" t="Include" />
+            <e p="IPopupRewardEvent.cs" t="Include" />
             <e p="IPublisher.cs" t="Include" />
             <e p="ISaveManager.cs" t="Include" />
             <e p="IScene.cs" t="Include" />
             <e p="ISubscriber.cs" t="Include" />
             <e p="ITargetManager.cs" t="Include" />
+            <e p="IToken.cs" t="Include" />
+            <e p="ITokenRewardManager.cs" t="Include" />
           </e>
           <e p="Managers" t="Include">
             <e p="ActivateCardManager.cs" t="Include" />
@@ -105,9 +115,11 @@
             <e p="ObjectLoader.cs" t="Include" />
             <e p="ObjectStorage.cs" t="Include" />
             <e p="PlayersManager.cs" t="Include" />
+            <e p="PopupManagers.cs" t="Include" />
             <e p="Publisher.cs" t="Include" />
             <e p="SaveManager.cs" t="Include" />
             <e p="TargetManager.cs" t="Include" />
+            <e p="TokenRewardManager.cs" t="Include" />
           </e>
           <e p="Monobehavior" t="Include">
             <e p="Card.cs" t="Include" />
@@ -119,6 +131,7 @@
             <e p="PopupInventory.cs" t="Include" />
             <e p="PopupPlaceInSlot.cs" t="Include" />
             <e p="PopupPlayers.cs" t="Include" />
+            <e p="PopupRewardEvent.cs" t="Include" />
           </e>
           <e p="SceneControllers" t="Include">
             <e p="BaseScene.cs" t="Include" />
@@ -136,11 +149,13 @@
             <e p="CardsGameClass.cs" t="Include" />
             <e p="CardSpell.cs" t="Include" />
             <e p="CardUnit.cs" t="Include" />
+            <e p="TokenReward.cs" t="Include" />
           </e>
           <e p="Struct" t="Include">
             <e p="DataCard.cs" t="Include" />
             <e p="DataEvent.cs" t="Include" />
             <e p="DataObjectCard.cs" t="Include" />
+            <e p="DataToken.cs" t="Include" />
           </e>
           <e p="UIScripts" t="Include">
             <e p="ClickHandlerMenu.cs" t="Include" />

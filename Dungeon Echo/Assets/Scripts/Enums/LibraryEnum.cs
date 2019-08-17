@@ -144,6 +144,7 @@ namespace EnumNamespace
         GoStartEvent,
         GoStageMainMenu,
         GoStageStartGame,
+        GoRewardEvent,
         //---------------------end
         GoEndRandomEvent,
         //---------------------open
@@ -158,6 +159,7 @@ namespace EnumNamespace
         GoClosePlaceInSlot,
         GoCloseInventory,
         GoCloseGameMenu,
+        GoClosePopupReward,
         //---------------------add
         GoAddCardInInventory,
         //---------------------select
@@ -201,6 +203,8 @@ namespace EnumNamespace
         NonTargetingСapture,
         TargetingPlayer,
         NonTargetingPlayer,
+        //--------------------use
+        GoUseAutoReward,
     }
 
     public enum SortLayer
@@ -227,9 +231,15 @@ namespace EnumNamespace
         InHand,
         OnBoard,
     }
-    public enum RewordEvent
+    public enum TokenRewardEnum
     {
+        Pass,
         RestoreHealth,
         Bleeding,
+    }
+    public enum TokenUse
+    {
+        Auto,
+        GivePlayer,
     }
  }

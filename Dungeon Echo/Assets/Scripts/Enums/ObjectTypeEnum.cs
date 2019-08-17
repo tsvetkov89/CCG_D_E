@@ -21,5 +21,7 @@ public enum ObjectTypeEnum
     SlotInventory2,
     Adventure,
     PrefabBtnEvent,
-    Music
+    Music,
+    Tokens,
+    PrefabToken
 }

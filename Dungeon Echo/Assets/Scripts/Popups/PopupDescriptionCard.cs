@@ -5,18 +5,17 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class PopupDescriptionCard:  ISubscriber
+public class PopupDescriptionCard: IPopupDescriptionCard, ISubscriber
 {       
    private GameObject _popupDescription;    //вспылывающее окно
    private TMP_Text _fullDescription;
    private ICoroutiner _coroutiner;
    private IAnimaManager _animaManager;
 
-   public PopupDescriptionCard(GameObject popup)
+   public PopupDescriptionCard( ICoroutiner coroutiner, IAnimaManager animaManager)
    {
-       _popupDescription = popup;
-       var description = _popupDescription.GetComponentsInChildren<Transform>().SearchChild("FullDescription");
-       _fullDescription = description.GetComponent<TMP_Text>();
+       _coroutiner = coroutiner;
+       _animaManager = animaManager;
    }
    public void OnEvent(CustomEventArgs messageData)
    {
@@ -40,12 +39,16 @@ public class PopupDescriptionCard:  ISubscriber
                _animaManager.SetStateAnimation(_popupDescription, "popupCard", false);
                _coroutiner.StartCoroutine(ClosePopup(0.5f));
                break;
+           //case GameEventName.GoStartEvent:
+           //    _popupDescription.SetActive(false);
+           //    break;
        }
    }
-   public void SetDependecies( ICoroutiner coroutiner, IAnimaManager animaManager)
+   public void SetDependecies(GameObject popup)
    {
-       _coroutiner = coroutiner;
-       _animaManager = animaManager;
+       _popupDescription = popup;
+       var description = _popupDescription.GetComponentsInChildren<Transform>().SearchChild("FullDescription");
+       _fullDescription = description.GetComponent<TMP_Text>();
    }
 
    private IEnumerator ViewDescriptionCard(float seconds)

@@ -13,15 +13,14 @@ public class GameScene : BaseScene, ISubscriber
     private IAnimaManager _animaManager;
     private IPublisher    _publisher;
     private IObjectStorage _objectStorage;
-    private IInventoryManager _inventoryManager;
     private IGameManager  _gameManager;
-    private IActivateCardManager _activateCardManager;
     private ICoroutiner _coroutiner;
     private IDeckManager _deckManager;
     private ITargetManager _targetManager;
     private IEnemyManager _enemyManager;
     private IConfigurateManager _configurateManager;
     private IAudioManager _audioManager;
+    private IPopupManagers _popupManagers;
     
     private GameObject _hud;
     private GameObject _poolParent;
@@ -42,15 +41,13 @@ public class GameScene : BaseScene, ISubscriber
     private GameObject _defaultCard;
     private GameObject _targetPlayer;
     private GameObject _soundGameObject;
-
-    private PopupInventory _inventoryPopup;
+    private GameObject _popupRewardEvent;
     private GameObject _deckInGame;
-    private PopupPlayers _playersPopup;
+    
     private PopupPlaceInSlot _placeInSlotPopup;
-    private PopupDescriptionCard _descriptionCardPopup;
-    private PopupEvent _eventPopup;
-    private PopupGameMenu _gameMenuPopup;
-    private GameObject _buttGameObject;
+    
+    private GameObject _btnGameObject;
+    private GameObject _btnContinuePopupReward;
     private GameObject _popupText;
     private TextMeshProUGUI _messageText;
     private Membership _membership;
@@ -62,7 +59,8 @@ public class GameScene : BaseScene, ISubscriber
     private void Start()
     {
         _hud  = GameObject.Find("HUD");
-        _buttGameObject = GameObject.Find("HUD/PopupInventory/btnClosePanelInventory");
+        _btnGameObject = GameObject.Find("HUD/PopupInventory/btnClosePanelInventory");
+        _btnContinuePopupReward = GameObject.Find("HUD/PopupRewardEvent/btnContinue");
         _deckInGame  = GameObject.Find("HUD/DeckInGame");
         _popupInventory = GameObject.Find("HUD/PopupInventory");
         _popupPlaceInSlot = GameObject.Find("HUD/PopupPlaceInSlot");
@@ -82,7 +80,8 @@ public class GameScene : BaseScene, ISubscriber
         _targetPointer = GameObject.Find("HUD/TargetPointer");
         _defaultCard  = GameObject.Find("HUD/prefabCard");
         _targetPlayer = GameObject.Find("HUD/TargetingPlayer");
-        
+        _popupRewardEvent = GameObject.Find("HUD/PopupRewardEvent");
+            
         var child = _popupText.GetComponentsInChildren<Transform>().SearchChild("Message"); 
         _messageText = child.GetComponent<TextMeshProUGUI>();
 
@@ -93,6 +92,7 @@ public class GameScene : BaseScene, ISubscriber
         _popupEvent.GetComponent<RectTransform>().SetOffset(0,0,0,0);
         _popupFade.GetComponent<RectTransform>().SetOffset(0,0,0,0);
         _popupGameMenu.GetComponent<RectTransform>().SetOffset(0,0,0,0);
+        _popupRewardEvent.GetComponent<RectTransform>().SetOffset(0,0,0,0);
         
         _popupDescriptionCard.SetActive(false);
         _popupInventory.SetActive(false); 
@@ -102,7 +102,8 @@ public class GameScene : BaseScene, ISubscriber
         _popupGameMenu.SetActive(false);
         _btnEscapeBattle.SetActive(false);
         _btnEndTurn.SetActive(false);
-
+        _popupRewardEvent.SetActive(false);
+            
         _targetPointer.SetActive(false);
         _targetPlayer.SetActive(false);
         
@@ -110,10 +111,7 @@ public class GameScene : BaseScene, ISubscriber
     }
     public override void Activate()
     {
-        var logic = LoadManager.LogicManager;
-        SetDependecies(logic.BaseManagers.SaveManager, logic.BaseManagers.ObjectStorage, logic.GameManagers.InventoryManager, logic.GameManagers.GameManager, logic.BaseManagers.Publisher,
-            logic.BaseManagers.AnimaManager, logic.GameManagers.ActivateCardManager, logic.BaseManagers.Coroutiner, logic.GameManagers.DeckManager, logic.GameManagers.TargetManager, logic.GameManagers.EnemyManager, logic.BaseManagers.ConfigurateManager,
-            logic.BaseManagers.AudioManager);  
+        SetDependecies(LoadManager.LogicManager);
         if (_saveManager.CheckLoad())
         {
             //TODO Continue game
@@ -129,8 +127,8 @@ public class GameScene : BaseScene, ISubscriber
     }
     private void CreateDependecies()
     {
-        /*var uiButtonsPopup = _popupPlaceInSlot.GetComponent<UiButtonsPopups>();
-        uiButtonsPopup.SetDependecies(_publisher);*/
+        var uiButtonsPopup = _btnGameObject.GetComponent<UiButtonsPopups>();
+        uiButtonsPopup.SetDependecies(_publisher);
         _audioManager.SetDependecies(_soundGameObject);
         _publisher.Publish(this,new CustomEventArgs(GameEventName.GoStageStartGame));
         _configurateManager.SetDependecies(_poolParent,_defaultCard);
@@ -142,8 +140,7 @@ public class GameScene : BaseScene, ISubscriber
         _deckManager.PlaceObjects();
         _enemyManager.SetDependecies(_panelEnemy);
               
-        var uiButtonsPopup = _buttGameObject.GetComponent<UiButtonsPopups>();
-        uiButtonsPopup.SetDependecies(_publisher);
+        
         uiButtonsPopup = _btnEndTurn.GetComponent<UiButtonsPopups>();
         uiButtonsPopup.SetDependecies(_publisher);
         _publisher.AddSubscriber(uiButtonsPopup);
@@ -156,60 +153,40 @@ public class GameScene : BaseScene, ISubscriber
         cardPlaceInSlot.SetActive(true);
         cardPlaceInSlot.GetComponent<RectTransform>().SetRect(0.0614f,0.0575f,0.412f,0.9422f);
         cardPlaceInSlot.GetComponent<RectTransform>().SetOffset(0,0,0,0);
-         _placeInSlotPopup = new PopupPlaceInSlot(_popupPlaceInSlot, cardPlaceInSlot);
-        _inventoryPopup = new PopupInventory(_popupInventory);
-        _playersPopup = new PopupPlayers(_popupPlayers);
-        _descriptionCardPopup = new PopupDescriptionCard(_popupDescriptionCard);
-        _eventPopup = new PopupEvent(_popupEvent);
-        _gameMenuPopup = new PopupGameMenu(_popupGameMenu);
+
         _popupDescriptionCard.AddComponent<ClickHandlerPopupCard>();
         var component = _popupDescriptionCard.GetComponent<ClickHandlerPopupCard>();
         component.SetDependecies(_publisher);
-        
-        
-        _playersPopup.SetDependecies(_animaManager, _objectStorage, _publisher, _configurateManager);
-        _playersPopup.CreatePanelPlayers();
-        
-        _inventoryPopup.SetDependecies(_inventoryManager, _animaManager);
-        _inventoryPopup.SearchAndSetHolders(_playersPopup.GetArrayPlayers());
-        _publisher.Publish(this,
-            new CustomEventArgs(GameEventName.GoCreateBarsPlayers, _playersPopup.GetArrayPlayers()));
-        _descriptionCardPopup.SetDependecies(_coroutiner, _animaManager);
-        _placeInSlotPopup.SetDependecies(_publisher);
-        _eventPopup.SetDependecies(_objectStorage,_publisher,_animaManager,_coroutiner, _configurateManager);
-        _gameMenuPopup.SetDependecies(_objectStorage,_publisher,_animaManager,_coroutiner);
-        
-        _publisher.AddSubscriber(_placeInSlotPopup);
-        _publisher.AddSubscriber(_inventoryPopup);  
-        _publisher.AddSubscriber(_playersPopup); 
-        _publisher.AddSubscriber(_descriptionCardPopup);
-        _publisher.AddSubscriber(_eventPopup);
-        _publisher.AddSubscriber(_gameMenuPopup);
-        
-        //var dropArea = _activateArea.GetComponent<DropCardInActivationArea>();
-        //dropArea.SetDependecies(_publisher, _activateCardManager, _animaManager);
-        
+      
         _targetManager.SetDependecies(_targetPointer,_targetPlayer, _hud);
+        _popupManagers.PopupGameMenu.SetDependecies(_popupGameMenu);
+        _popupManagers.PopupInventory.SetDependecies(_popupInventory); 
+        _popupManagers.PopupEvent.SetDependecies(_popupEvent);
+        _popupManagers.PopupPlayers.SetDependecies(_popupPlayers);
+        _popupManagers.PopupInventory.SearchAndSetHolders(_popupManagers.PopupPlayers.GetArrayPlayers());
+        _publisher.Publish(this,
+            new CustomEventArgs(GameEventName.GoCreateBarsPlayers, _popupManagers.PopupPlayers.GetArrayPlayers()));
+
+        _popupManagers.PopupDescriptionCard.SetDependecies(_popupDescriptionCard);
+        _popupManagers.PopupPlaceInSlot.SetDependecies(_popupPlaceInSlot, cardPlaceInSlot);
+        _popupManagers.PopupRewardEvent.SetDependecies(_popupRewardEvent,_btnContinuePopupReward);
+
     }
-    private void SetDependecies(ISaveManager saveManager, IObjectStorage objectStorage, 
-        IInventoryManager inventoryManager, IGameManager gameManager, IPublisher publisher, 
-        IAnimaManager animaManager, IActivateCardManager activateCardManager, ICoroutiner coroutiner, 
-        IDeckManager deckManager, ITargetManager targetManager, IEnemyManager enemyManager, IConfigurateManager configurateManager,
-        IAudioManager audioManager)
+    private void SetDependecies(ILogicManager logicManager)
     {
-        _saveManager = saveManager;
-        _animaManager = animaManager;
-        _objectStorage = objectStorage;
-        _inventoryManager = inventoryManager;
-        _publisher = publisher;
-        _gameManager = gameManager;
-        _coroutiner = coroutiner;
-        _activateCardManager = activateCardManager;
-        _deckManager = deckManager;
-        _targetManager = targetManager;
-        _enemyManager = enemyManager;
-        _configurateManager = configurateManager;
-        _audioManager = audioManager;
+        _popupManagers = logicManager.PopupManagers;
+
+        _saveManager = logicManager.BaseManagers.SaveManager;
+        _animaManager = logicManager.BaseManagers.AnimaManager;
+        _objectStorage = logicManager.BaseManagers.ObjectStorage;
+        _publisher = logicManager.BaseManagers.Publisher;
+        _gameManager = logicManager.GameManagers.GameManager;
+        _coroutiner = logicManager.BaseManagers.Coroutiner;
+        _deckManager = logicManager.GameManagers.DeckManager;
+        _targetManager = logicManager.GameManagers.TargetManager;
+        _enemyManager = logicManager.GameManagers.EnemyManager;
+        _configurateManager = logicManager.BaseManagers.ConfigurateManager;
+        _audioManager = logicManager.BaseManagers.AudioManager;
         _publisher.AddSubscriber(this);   
     }
 
@@ -252,7 +229,7 @@ public class GameScene : BaseScene, ISubscriber
                 _popupFade.SetActive(true);
                 _animaManager.SetStateAnimation(_hud, "faiding", true);
                 break;
-            case GameEventName.GoEndRandomEvent:
+            case GameEventName.GoRewardEvent:
                 _popupFade.transform.SetAsLastSibling();
                 _popupFade.SetActive(true);
                 _animaManager.SetStateAnimation(_hud, "faiding", false);
