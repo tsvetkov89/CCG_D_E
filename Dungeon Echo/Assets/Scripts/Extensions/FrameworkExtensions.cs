@@ -21,6 +21,11 @@ public static partial class FrameworkExtensions
         rect.anchorMax = new Vector2 (xmax,ymax);
         rect.anchorMin = new Vector2 (xmin,ymin);
     }
+    public static void OffsetAnchorY(this RectTransform rect, float offset)
+    {
+        rect.anchorMax = new Vector2 (rect.anchorMax.x,rect.anchorMax.y+offset);
+        rect.anchorMin = new Vector2 (rect.anchorMin.x,rect.anchorMin.y +offset);
+    }
     //-----------------установить альфу картинки
     public static void SetAlpha(this Image r, float alpha)
     {

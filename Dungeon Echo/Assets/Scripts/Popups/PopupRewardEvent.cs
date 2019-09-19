@@ -73,6 +73,7 @@ public class PopupRewardEvent : IPopupRewardEvent, ISubscriber
     private IEnumerator DisplayTokensReward(float pause, List<TokenRewardEnum> tokens)
     {
         _tokensReward.Clear();
+        var count = 0;
         yield return new WaitForSeconds(pause);
         var flag = true;
         foreach (var item in tokens)
@@ -84,12 +85,14 @@ public class PopupRewardEvent : IPopupRewardEvent, ISubscriber
                 _tokensReward.Add(data.Token);
             else
                 flag = false;
-            
             foreach (var objToken in _poolTokensReward)
             {
                 if(objToken.activeSelf) continue;
                 token.DisplayToken(objToken);
+                var rect = objToken.GetComponent<RectTransform>();
+                rect.OffsetAnchorY(-0.18f*count);
                 objToken.SetActive(true);
+                ++count;
                 break;
             }
         }

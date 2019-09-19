@@ -60,7 +60,7 @@ public static class Strings
         _stringsPaths.Add(ObjectTypeEnum.PrefabBtnEvent, "Prefabs/prefabBtnEvent");
         _stringsPaths.Add(ObjectTypeEnum.Tokens, "Tokens/");
         _stringsPaths.Add(ObjectTypeEnum.PrefabToken, "Prefabs/prefabToken");
-        
+        _stringsPaths.Add(ObjectTypeEnum.PrefabIconToken, "Prefabs/prefabIconToken");
         _stringsPaths.Add(ObjectTypeEnum.Music, "Music");
         
     }

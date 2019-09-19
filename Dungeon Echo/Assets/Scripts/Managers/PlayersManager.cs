@@ -7,11 +7,13 @@ using System.Collections;
 public class PlayersManager : IPlayersManager, ISubscriber
 {
     private readonly IPublisher _publisher;
+    private readonly ITokenRewardManager _tokenRewardManager;
     
     private List<GameObject> _listPlayers;
-    public PlayersManager (IPublisher publisher)
+    public PlayersManager (IPublisher publisher, ITokenRewardManager tokenRewardManager)
     {
         _publisher = publisher;
+        _tokenRewardManager = tokenRewardManager;
         _listPlayers = new List<GameObject>();
     }
     public void OnEvent(CustomEventArgs messageData)
@@ -23,6 +25,8 @@ public class PlayersManager : IPlayersManager, ISubscriber
             {
                 var player = messageData.Value as GameObject;
                 _listPlayers.Add(player);
+                var a = player.GetComponent<ActionsWithCardGameClass>();
+                _tokenRewardManager.CreateIconTokenByGameClass(a.CardGame.GetDataCard().GameClass);
                 break;
             }
             case GameEventName.GoEnemyAttack:

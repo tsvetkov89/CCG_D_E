@@ -98,6 +98,7 @@ public class ObjectStorage : IObjectStorage
         CreatePoolByType(ObjectTypeEnum.SlotInventory2, 9);
         CreatePoolByType(ObjectTypeEnum.PrefabBtnEvent, 4);
         CreatePoolByType(ObjectTypeEnum.PrefabToken, 4);
+        CreatePoolByType(ObjectTypeEnum.PrefabIconToken, 13);
     }
     private void  CreatePoolByType(ObjectTypeEnum typeEnum,int count)
     {

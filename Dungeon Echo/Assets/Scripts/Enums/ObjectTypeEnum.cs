@@ -3,6 +3,7 @@ public enum ObjectTypeEnum
     Undefined,
     //PrefabCardGameClass,
     PrefabIconPlayer,
+    PrefabIconToken,
     PrefabCard,
     PrefabCardInInventory,
     PrefabCardArea,

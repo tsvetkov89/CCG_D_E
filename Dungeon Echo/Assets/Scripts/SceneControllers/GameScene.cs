@@ -21,6 +21,7 @@ public class GameScene : BaseScene, ISubscriber
     private IConfigurateManager _configurateManager;
     private IAudioManager _audioManager;
     private IPopupManagers _popupManagers;
+    private ITokenRewardManager _tokenRewardManager;
     
     private GameObject _hud;
     private GameObject _poolParent;
@@ -43,6 +44,7 @@ public class GameScene : BaseScene, ISubscriber
     private GameObject _soundGameObject;
     private GameObject _popupRewardEvent;
     private GameObject _deckInGame;
+    private GameObject _panelPlayers;
     
     private PopupPlaceInSlot _placeInSlotPopup;
     
@@ -81,7 +83,8 @@ public class GameScene : BaseScene, ISubscriber
         _defaultCard  = GameObject.Find("HUD/prefabCard");
         _targetPlayer = GameObject.Find("HUD/TargetingPlayer");
         _popupRewardEvent = GameObject.Find("HUD/PopupRewardEvent");
-            
+        _panelPlayers = GameObject.Find("HUD/PanelPlayers");
+        
         var child = _popupText.GetComponentsInChildren<Transform>().SearchChild("Message"); 
         _messageText = child.GetComponent<TextMeshProUGUI>();
 
@@ -139,7 +142,7 @@ public class GameScene : BaseScene, ISubscriber
         _deckManager.SetUiComponents(_hud, _pointStopDrag, _pointReturnCard);
         _deckManager.PlaceObjects();
         _enemyManager.SetDependecies(_panelEnemy);
-              
+        _tokenRewardManager.SetDependecies(_panelPlayers);
         
         uiButtonsPopup = _btnEndTurn.GetComponent<UiButtonsPopups>();
         uiButtonsPopup.SetDependecies(_publisher);
@@ -175,7 +178,8 @@ public class GameScene : BaseScene, ISubscriber
     private void SetDependecies(ILogicManager logicManager)
     {
         _popupManagers = logicManager.PopupManagers;
-
+        _tokenRewardManager = logicManager.GameManagers.TokenRewardManager;
+        
         _saveManager = logicManager.BaseManagers.SaveManager;
         _animaManager = logicManager.BaseManagers.AnimaManager;
         _objectStorage = logicManager.BaseManagers.ObjectStorage;
