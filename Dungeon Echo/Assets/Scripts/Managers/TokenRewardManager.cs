@@ -6,17 +6,23 @@ using UnityEngine;
 public class TokenRewardManager: ITokenRewardManager, ISubscriber
 {
     private IPublisher _publisher;
+    private IAnimaManager _animaManager;
     private readonly IObjectStorage _objectStorage;
     private readonly IConfigurateManager _configurateManager;
     private IDictionary<GameClass, List<GameObject>> _dictionaryIconToken;
+    private IDictionary<GameClass, List<TokenRewardEnum>> _dictionaryToken;
     private List<GameObject> _poolIconToken;
     private GameObject _panelPlayers;
-    public TokenRewardManager(IPublisher publisher, IObjectStorage objectStorage, IConfigurateManager configurateManager)
+    private IToken _currentToken;
+    private GameClass _currentPlayer;
+    public TokenRewardManager(IPublisher publisher, IAnimaManager animaManager, IObjectStorage objectStorage, IConfigurateManager configurateManager)
     {
         _publisher = publisher;
+        _animaManager = animaManager;
         _objectStorage = objectStorage;
         _configurateManager = configurateManager;
         _dictionaryIconToken = new Dictionary<GameClass, List<GameObject>>();
+        _dictionaryToken = new Dictionary<GameClass, List<TokenRewardEnum>>();
     }
     public void OnEvent(CustomEventArgs messageData)
     {
@@ -27,9 +33,38 @@ public class TokenRewardManager: ITokenRewardManager, ISubscriber
                 var tokensReward = messageData.Value as List<TokenRewardEnum>;
                 ProcessAutoUseTokens(tokensReward);
                 break;
+            case GameEventName.GoSelectTokenReward:
+                _currentToken = messageData.Value as IToken;
+                Debug.Log(_currentToken.GetDataToken().Token);
+                FindEmptyCell();
+                break;
+            case GameEventName.GoAddTokenReward:
+                _currentPlayer = (GameClass) messageData.Value;
+                var token = _currentToken.GetDataToken().Token;
+                var index = _dictionaryToken[_currentPlayer].IndexOf(TokenRewardEnum.Undefined);
+                Debug.Log(index);
+                break;
+            case GameEventName.GoRemoveTokenReward:
+                break;
+            case GameEventName.GoDeActivateTargetsPlayer:
+                _currentToken = null;
+                break;
+            
         }
     }
 
+    private void FindEmptyCell()
+    {
+        foreach (var dict in _dictionaryToken)
+        {
+            var index = dict.Value.IndexOf(TokenRewardEnum.Undefined);
+            Debug.Log(index);
+            if (index != -1)
+            {
+                _publisher.Publish(null,new CustomEventArgs(GameEventName.GoActivateTargetPlayer, dict.Key));
+            }
+        }   
+    }
     private void ProcessAutoUseTokens(IEnumerable<TokenRewardEnum> tokensReward)
     {
         foreach (var token in tokensReward)
@@ -49,6 +84,7 @@ public class TokenRewardManager: ITokenRewardManager, ISubscriber
     public void CreateIconTokenByGameClass(GameClass gameClass)
     {
         _dictionaryIconToken[gameClass] = new List<GameObject>();
+        _dictionaryToken[gameClass] = new List<TokenRewardEnum>(){TokenRewardEnum.Undefined,TokenRewardEnum.Undefined,TokenRewardEnum.Undefined};
         var cout = 0;
         foreach (var icon in _poolIconToken)
         {

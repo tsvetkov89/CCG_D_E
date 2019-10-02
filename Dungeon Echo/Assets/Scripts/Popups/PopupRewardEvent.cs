@@ -14,6 +14,7 @@ public class PopupRewardEvent : IPopupRewardEvent, ISubscriber
     private ICoroutiner _coroutiner;
     
     private GameObject _popupReward;
+    private GameObject _closePanel;
     private GameObject _btnContinue;
     private Button _buttonContinue;
     private List<GameObject> _poolTokensReward;
@@ -48,12 +49,25 @@ public class PopupRewardEvent : IPopupRewardEvent, ISubscriber
                 _publisher.Publish(null,new CustomEventArgs(GameEventName.GoUseAutoReward,_tokensReward));
                 _publisher.Publish(null,new CustomEventArgs(GameEventName.GoFinishStageEvent));
                 break;
+            case GameEventName.GoSelectTokenReward:
+            {
+                _popupReward.GetComponent<Image>().raycastTarget = false;
+                _closePanel.SetActive(false);
+                break;
+            }
+            case GameEventName.GoDeActivateTargetsPlayer:
+            {
+                _popupReward.GetComponent<Image>().raycastTarget = true;
+                _closePanel.SetActive(true);
+                break;
+            }
         }
     }
 
     public void SetDependecies(GameObject popupRewardEvent, GameObject btn)
     {
         _popupReward = popupRewardEvent;
+        _closePanel =  _popupReward.GetComponentsInChildren<Transform>().SearchChild("ClosePanelPlayer").gameObject; 
         _btnContinue = btn;
         _buttonContinue = _btnContinue.GetComponent<Button>();
         _poolTokensReward = _objectStorage.GetPollObjects(ObjectTypeEnum.PrefabToken, 3);
@@ -83,7 +97,7 @@ public class PopupRewardEvent : IPopupRewardEvent, ISubscriber
             
             if (data.Use == TokenUse.Auto)
                 _tokensReward.Add(data.Token);
-            else
+            else 
                 flag = false;
             foreach (var objToken in _poolTokensReward)
             {
@@ -91,6 +105,13 @@ public class PopupRewardEvent : IPopupRewardEvent, ISubscriber
                 token.DisplayToken(objToken);
                 var rect = objToken.GetComponent<RectTransform>();
                 rect.OffsetAnchorY(-0.18f*count);
+                if (data.Use != TokenUse.Auto)
+                {
+                    objToken.AddComponent<ClickHandlerTokenReward>();
+                    var component = objToken.GetComponent<ClickHandlerTokenReward>();
+                    component.SetDependecies(_publisher, token);    
+                }
+
                 objToken.SetActive(true);
                 ++count;
                 break;

@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ContentModelStore">
     <e p="C:\Users\Erliy\.Rider2019.2\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\Erliy\.Rider2019.2\system\resharper-host\local\Transient\ReSharperHost\v192\SolutionCaches\_Dungeon Echo.-183089198.00" t="ExcludeRecursive" />
-    <e p="D:\MyPrograms\Project\Dungeon Echo" t="IncludeRecursive">
+    <e p="C:\Users\Erliy\.Rider2019.2\system\resharper-host\local\Transient\ReSharperHost\v192\SolutionCaches\_Dungeon Echo.783225263.00" t="ExcludeRecursive" />
+    <e p="D:\MyProjects\MyGitHUB\CCG_D_E\Dungeon Echo" t="IncludeRecursive">
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
@@ -160,6 +160,7 @@
           <e p="UIScripts" t="Include">
             <e p="ClickHandlerMenu.cs" t="Include" />
             <e p="ClickHandlerPopupCard.cs" t="Include" />
+            <e p="ClickHandlerTokenReward.cs" t="Include" />
             <e p="ScrollingRawImage.cs" t="Include" />
             <e p="UiButtonsMenu.cs" t="Include" />
             <e p="UiButtonsPopups.cs" t="Include" />

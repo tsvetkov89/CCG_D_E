@@ -64,7 +64,7 @@ public class SceneBootstrapper :  BaseScene
        _configurateManager = new ConfigurateManager();
 
        _objectStorage = new ObjectStorage(_objectLoader,_configurateManager);
-       _tokenRewardManager = new TokenRewardManager(_publisher,_objectStorage,_configurateManager);
+       _tokenRewardManager = new TokenRewardManager(_publisher, _animaManager, _objectStorage,_configurateManager);
        _audioManager = new AudioManager(_objectStorage, _coroutiner);
        _barsPlayerManager = new BarsPlayerManager(_objectStorage);
 
@@ -73,7 +73,7 @@ public class SceneBootstrapper :  BaseScene
        _gameStageManager = new GameStageManager(_publisher, _coroutiner);
        _gameManager = new GameManager(_publisher, _animaManager, _objectStorage, _coroutiner,_inventoryManager,_configurateManager);
        _enemyManager = new EnemyManager(_publisher, _coroutiner,_animaManager,_objectStorage,_configurateManager);
-       _playersManager = new PlayersManager(_publisher, _tokenRewardManager);
+       _playersManager = new PlayersManager(_publisher,_animaManager, _tokenRewardManager);
        _barsEnemyManager = new BarsEnemyManager(_enemyManager, _publisher);
        _activateCardManager = new ActivateCardManager(_publisher, _barsPlayerManager,_enemyManager);
        _targetManager = new TargetManager(_publisher, _animaManager, _activateCardManager, _enemyManager);

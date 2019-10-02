@@ -160,8 +160,13 @@ namespace EnumNamespace
         GoCloseInventory,
         GoCloseGameMenu,
         GoClosePopupReward,
+        GoClosePanelPlayers,
         //---------------------add
         GoAddCardInInventory,
+        GoSelectTokenReward,
+        GoAddTokenReward,
+        //---------------------remove
+        GoRemoveTokenReward,
         //---------------------select
         GoSelectGameClass,
         GoSelectCardInInventory,
@@ -192,6 +197,8 @@ namespace EnumNamespace
         ActivateCardPlayer,
         GoDamageEnemy,
         GoUseConsumablesOnPlayer,
+        GoActivateTargetPlayer,
+        GoDeActivateTargetsPlayer,
         //---------------------finish
         GoFinishStageEvent,
         //---------------------target
@@ -233,6 +240,7 @@ namespace EnumNamespace
     }
     public enum TokenRewardEnum
     {
+        Undefined,
         Pass,
         RestoreHealth,
         Bleeding,

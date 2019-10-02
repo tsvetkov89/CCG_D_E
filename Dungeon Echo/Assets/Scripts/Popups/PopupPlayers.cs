@@ -62,6 +62,15 @@ public class PopupPlayers: IPopupPlayers, ISubscriber
                     componentObj.enabled = false;
                 }
                 break;
+            case GameEventName.GoActivateTargetPlayer:
+                /*var gameClass = messageData.Value as GameClass;
+                var index = _arrayPlayers.IndexOf(_arrayPlayers);
+                foreach (var obj in _arrayPlayers)
+                {
+                    if(obj.ge)
+                }*/
+
+                break;
         }
     }
     private void CreatePanelPlayers()
