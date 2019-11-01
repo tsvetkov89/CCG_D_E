@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 170044f49385486eb7fba1456853675f, type: 3}
   m_Name: Bleeding
   m_EditorClassIdentifier: 
-  token: 2
+  token: 3
   useToken: 1
   artToken: {fileID: 21300000, guid: 21a7db7079e48004d8bc4ae998cdf904, type: 3}
   description: "\u041A\u0440\u043E\u0432\u043E\u0442\u0435\u0447\u0435\u043D\u0438\u0435"

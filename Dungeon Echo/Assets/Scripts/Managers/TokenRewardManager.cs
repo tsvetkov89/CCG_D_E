@@ -42,7 +42,11 @@ public class TokenRewardManager: ITokenRewardManager, ISubscriber
                 _currentPlayer = (GameClass) messageData.Value;
                 var token = _currentToken.GetDataToken().Token;
                 var index = _dictionaryToken[_currentPlayer].IndexOf(TokenRewardEnum.Undefined);
-                Debug.Log(index);
+                _dictionaryToken[_currentPlayer][index] = token;
+                var art = _dictionaryIconToken[_currentPlayer][index].GetComponent<SpriteRenderer>();
+                art.sprite = _currentToken.GetDataToken().Art;
+                _publisher.Publish(null,new CustomEventArgs(GameEventName.GoEndSelectTokenReward,_currentToken));
+                _currentToken = null;
                 break;
             case GameEventName.GoRemoveTokenReward:
                 break;
@@ -58,7 +62,6 @@ public class TokenRewardManager: ITokenRewardManager, ISubscriber
         foreach (var dict in _dictionaryToken)
         {
             var index = dict.Value.IndexOf(TokenRewardEnum.Undefined);
-            Debug.Log(index);
             if (index != -1)
             {
                 _publisher.Publish(null,new CustomEventArgs(GameEventName.GoActivateTargetPlayer, dict.Key));

@@ -61,6 +61,15 @@ public class PopupRewardEvent : IPopupRewardEvent, ISubscriber
                 _closePanel.SetActive(true);
                 break;
             }
+            case GameEventName.GoEndSelectTokenReward:
+                var token = messageData.Value as IToken;
+                var index = _tokensReward.IndexOf(token.GetDataToken().Token);
+                _tokensReward.RemoveAt(index);
+                var obj = _poolTokensReward[index].GetComponent<ClickHandlerTokenReward>();
+                obj.DestoyIt();
+                _closePanel.SetActive(true);
+                checkСanСontinue();
+                break;
         }
     }
 
@@ -82,44 +91,45 @@ public class PopupRewardEvent : IPopupRewardEvent, ISubscriber
         }
           
     }
-
-       
     private IEnumerator DisplayTokensReward(float pause, List<TokenRewardEnum> tokens)
     {
-        _tokensReward.Clear();
-        var count = 0;
         yield return new WaitForSeconds(pause);
-        var flag = true;
-        foreach (var item in tokens)
+        _tokensReward = tokens;
+        for (var i = 0; i < tokens.Count; i++)
         {
-            var token = _objectStorage.GetTokenByName(item);
+            var token = _objectStorage.GetTokenByName(tokens[i]);
             var data = token.GetDataToken();
             
-            if (data.Use == TokenUse.Auto)
-                _tokensReward.Add(data.Token);
-            else 
-                flag = false;
             foreach (var objToken in _poolTokensReward)
             {
                 if(objToken.activeSelf) continue;
                 token.DisplayToken(objToken);
                 var rect = objToken.GetComponent<RectTransform>();
-                rect.OffsetAnchorY(-0.18f*count);
+                rect.OffsetAnchorY(-0.18f*i);
                 if (data.Use != TokenUse.Auto)
                 {
                     objToken.AddComponent<ClickHandlerTokenReward>();
                     var component = objToken.GetComponent<ClickHandlerTokenReward>();
                     component.SetDependecies(_publisher, token);    
                 }
-
                 objToken.SetActive(true);
-                ++count;
                 break;
             }
         }
+        checkСanСontinue();
+    }
 
-        if (flag)
-            _buttonContinue.interactable = true;
-
+    private void checkСanСontinue()
+    {
+        foreach (var t in _tokensReward)
+        {
+            var token = _objectStorage.GetTokenByName(t);
+            var data = token.GetDataToken();
+            if (data.Use == TokenUse.Auto) continue;
+            _buttonContinue.interactable = false;
+            return;
+        }
+        _buttonContinue.interactable = true;
+        _publisher.Publish(null,new CustomEventArgs(GameEventName.GoEndGiveTokensReward));
     }
 }

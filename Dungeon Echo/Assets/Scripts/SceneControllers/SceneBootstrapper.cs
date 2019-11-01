@@ -107,6 +107,7 @@ public class SceneBootstrapper :  BaseScene
        _publisher.AddSubscriber((ISubscriber) _popupPlayers);
        _publisher.AddSubscriber((ISubscriber) _popupDescriptionCard);
        _publisher.AddSubscriber((ISubscriber) _popupRewardEvent);
+       _publisher.AddSubscriber((ISubscriber) _popupPlaceInSlot);
        
        _baseManagers = new BaseManagers(_saveManager,_animaManager,_publisher,_objectStorage,_configurateManager,_coroutiner, _audioManager);
        _gameManagers = new GameManagers(_gameManager, _activateCardManager, _barsPlayerManager, _barsEnemyManager, 

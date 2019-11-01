@@ -11,6 +11,7 @@ public class ActionsWithSlotInventory :  Card , IPointerDownHandler{
     public ICard CardGame { get; private set; }
     public void OnPointerDown(PointerEventData pointerEventData)
     {
+        Debug.Log(Equpped);
         if (Empty) return;
         if (!Equpped)   
         {

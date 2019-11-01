@@ -6,4 +6,5 @@ public struct DataToken
 {
     public TokenRewardEnum Token;
     public TokenUse Use;
+    public Sprite Art;
 }

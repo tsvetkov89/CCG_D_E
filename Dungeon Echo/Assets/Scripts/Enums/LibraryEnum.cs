@@ -146,7 +146,8 @@ namespace EnumNamespace
         GoStageStartGame,
         GoRewardEvent,
         //---------------------end
-        GoEndRandomEvent,
+        GoEndGiveTokensReward,
+        GoEndSelectTokenReward,
         //---------------------open
         GoOpenPopupWithDescriptionCard,
         GoOpenPopupNoDescription,

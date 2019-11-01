@@ -133,9 +133,7 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObj/CardConsumables.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObj/CardSpell.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Managers/InventoryManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Managers/Coroutiner.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Interface/ICoroutiner.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Popups/PopupGameMenu.cs" />
@@ -149,7 +147,6 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Interface/IPopupPlayers.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Interface/IPopupDescriptionCard.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Popups/PopupDescriptionCard.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Popups/PopupPlaceInSlot.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Interface/IPopupPlaceInSlot.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Interface/IPopupManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Managers/Publisher.cs" />
@@ -163,11 +160,8 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Popups/PopupEvent.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObj/Adventure.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Interface/IConfigurateManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObj/TokenReward.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Struct/DataToken.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameManagers.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Interface/IGameManagers.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Extensions/RandomExtensions.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Managers/ConfigurateManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Extensions/FrameworkExtensions.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Enums/Strings.cs" />
@@ -177,13 +171,19 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/SceneControllers/GameScene.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/UIScripts/ClickHandlerMenu.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Popups/PopupPlayers.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/SceneControllers/SceneBootstrapper.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Managers/PlayersManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObj/TokenReward.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Struct/DataToken.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/CardScripts/ActionsWithCardGameClass.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/UIScripts/ClickHandlerTokenReward.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Popups/PopupRewardEvent.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Enums/LibraryEnum.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Managers/TokenRewardManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/UIScripts/ClickHandlerTokenReward.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Managers/PlayersManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Enums/LibraryEnum.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Popups/PopupRewardEvent.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Extensions/RandomExtensions.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/CardScripts/ActionsWithSlotInventory.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Managers/InventoryManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/SceneControllers/SceneBootstrapper.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Popups/PopupPlaceInSlot.cs" />
       </list>
     </option>
   </component>
@@ -349,6 +349,7 @@
       <workItem from="1568919676602" duration="8497000" />
       <workItem from="1569702826044" duration="3873000" />
       <workItem from="1570048797223" duration="7421000" />
+      <workItem from="1570650240971" duration="5884000" />
     </task>
     <servers />
   </component>

@@ -22,54 +22,57 @@ public class PopupPlaceInSlot: IPopupPlaceInSlot, ISubscriber
     public void OnEvent(CustomEventArgs messageData)
     {
         var message = messageData.Message;
-        if (message == GameEventName.GoOpenPlaceInSlot)
+        switch (message)
         {
-            if (_flagPopup) return;
-            _popupPlaceInSlot.transform.SetAsLastSibling();
-            _popupPlaceInSlot.SetActive(true);
-            var cardDisplay = _cardView.GetComponent<ActionsWithCards>();
-            _cardGame = messageData.Value as ICard;
-            cardDisplay.СhangeCardType(_cardGame);
-            cardDisplay.CardGame.DisplayCardInGame(_cardView);
-            _fullDescription.text = _cardGame.GetDataCard().FullDescription;
-            _flagPopup = true;
-        }
-        else if (message == GameEventName.GoClosePlaceInSlot)
-        {
-            if (!_flagPopup) return;
-            _popupPlaceInSlot.SetActive(false);
-            _flagPopup = false;
-            _flagUnEqupment = false;
-        }
-        else if (message == GameEventName.GoSelectCardInInventory)
-        {
-            if (!_flagPopup) return;
-            if (!_flagUnEqupment)
+            case GameEventName.GoOpenPlaceInSlot when _flagPopup:
+                return;
+            case GameEventName.GoOpenPlaceInSlot:
             {
+                _popupPlaceInSlot.transform.SetAsLastSibling();
+                _popupPlaceInSlot.SetActive(true);
+                var cardDisplay = _cardView.GetComponent<ActionsWithCards>();
+                _cardGame = messageData.Value as ICard;
+                cardDisplay.СhangeCardType(_cardGame);
+                cardDisplay.CardGame.DisplayCardInGame(_cardView);
+                _fullDescription.text = _cardGame.GetDataCard().FullDescription;
+                _flagPopup = true;
+                break;
+            }
+            case GameEventName.GoClosePlaceInSlot when !_flagPopup:
+                return;
+            case GameEventName.GoClosePlaceInSlot:
+                _popupPlaceInSlot.SetActive(false);
+                _flagPopup = false;
+                _flagUnEqupment = false;
+                break;
+            case GameEventName.GoSelectCardInInventory when !_flagPopup:
+                return;
+            case GameEventName.GoSelectCardInInventory when !_flagUnEqupment:
                 _publisher.Publish(_popupPlaceInSlot, new CustomEventArgs(GameEventName.GoEquipmentCard, _cardGame));
                 _popupPlaceInSlot.SetActive(false);
                 _flagPopup = false;
-            }
-            else
-            {
+                break;
+            case GameEventName.GoSelectCardInInventory:
                 _publisher.Publish(_popupPlaceInSlot, new CustomEventArgs(GameEventName.GoUnequipmentCard, _cardGame));
                 _popupPlaceInSlot.SetActive(false);
                 _flagPopup = false;
                 _flagUnEqupment = false;
+                break;
+            case GameEventName.GoOpenUnequipmentSlot when _flagPopup:
+                return;
+            case GameEventName.GoOpenUnequipmentSlot:
+            {
+                _popupPlaceInSlot.transform.SetAsLastSibling();
+                _popupPlaceInSlot.SetActive(true);
+                var cardDisplay = _cardView.GetComponent<ActionsWithCards>();
+                _cardGame = messageData.Value as ICard;
+                cardDisplay.СhangeCardType(_cardGame);
+                cardDisplay.CardGame.DisplayCardInGame(_cardView);
+                _fullDescription.text = _cardGame.GetDataCard().FullDescription;
+                _flagPopup = true;
+                _flagUnEqupment = true;
+                break;
             }
-        }
-        else if (message == GameEventName.GoOpenUnequipmentSlot)
-        {
-            if (_flagPopup) return;
-            _popupPlaceInSlot.transform.SetAsLastSibling();
-            _popupPlaceInSlot.SetActive(true);
-            var cardDisplay = _cardView.GetComponent<ActionsWithCards>();
-            _cardGame = messageData.Value as ICard;
-            cardDisplay.СhangeCardType(_cardGame);
-            cardDisplay.CardGame.DisplayCardInGame(_cardView);
-            _fullDescription.text = _cardGame.GetDataCard().FullDescription;
-            _flagPopup = true;
-            _flagUnEqupment = true;
         }
     }
     public void SetDependecies( GameObject popupPlace, GameObject card)

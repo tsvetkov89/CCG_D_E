@@ -34,5 +34,11 @@ public class ClickHandlerTokenReward : MonoBehaviour, IPointerDownHandler
     public void SetDependecies(IPublisher publisher, IToken token)
     {
         _publisher = publisher;
+        _token = token;
+    }
+
+    public void DestoyIt()
+    {
+        Destroy(this);
     }
 }

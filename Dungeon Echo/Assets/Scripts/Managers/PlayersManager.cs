@@ -61,6 +61,16 @@ public class PlayersManager : IPlayersManager, ISubscriber
                 }
                 break;
             }
+            case GameEventName.GoEndGiveTokensReward:
+            {
+                foreach (var player in _listPlayers)
+                {
+                    var a = player.GetComponent<ActionsWithCardGameClass>();
+                    a.SetEvent(GameEventName.Undefined);
+                }
+                break;
+            }
+
         }
     }
     private GameObject GetRandomEnemy()

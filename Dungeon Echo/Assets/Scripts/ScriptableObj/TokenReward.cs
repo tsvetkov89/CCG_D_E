@@ -32,7 +32,7 @@ public class TokenReward : ScriptableObject, IToken
 
     public DataToken GetDataToken()
     {
-        var data = new DataToken {Token =token, Use = useToken};
+        var data = new DataToken {Token =token, Use = useToken, Art = artToken};
         return data;
     }
 }

@@ -30,7 +30,6 @@ public class ActionsWithCardGameClass : Card , ISubscriber, IPointerDownHandler{
 	{
 		switch (_event)
 		{
-				
 			case GameEventName.GoSelectTokenReward:
 				Debug.Log("Add token: "+CardGame.GetDataCard().GameClass);
 				_publisher.Publish(this, new CustomEventArgs(GameEventName.GoAddTokenReward, CardGame.GetDataCard().GameClass));
