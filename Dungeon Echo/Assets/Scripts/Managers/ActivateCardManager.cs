@@ -1,12 +1,15 @@
 using InterfaceNamespace;
 using UnityEngine;
 using EnumNamespace;
+using TMPro;
+
 public class ActivateCardManager: IActivateCardManager,ISubscriber
 {
     private IPublisher _publisher;
     private IBarsPlayerManager _barsPlayerManager;
     private Membership _membership;
     private IEnemyManager _enemyManager;
+    private TMP_Text _counterCardPlay;
     
     private int _numberCardPlayed;
     public ActivateCardManager(IPublisher publisher,IBarsPlayerManager barsPlayerManager, IEnemyManager enemyManager)
@@ -17,6 +20,13 @@ public class ActivateCardManager: IActivateCardManager,ISubscriber
         _membership = Membership.Undefined;
         _numberCardPlayed = 2;
     }
+
+    public void SetDependecies(GameObject obj)
+    {
+        var text = obj.transform.GetComponentsInChildren<Transform>().SearchChild("Text").gameObject;
+        _counterCardPlay = text.GetComponent<TMP_Text>();
+    }
+
     //--------------Обрабатываем события
     public void OnEvent(CustomEventArgs messageData)
     {
@@ -42,6 +52,7 @@ public class ActivateCardManager: IActivateCardManager,ISubscriber
                 if (_membership == Membership.Player && _numberCardPlayed > 0)
                 {
                     --_numberCardPlayed;
+                    _counterCardPlay.text = _numberCardPlayed.ToString();
                     ActivateCardPlayer(card);
                     if (_numberCardPlayed == 0 && _enemyManager.EnemyIsLive())
                     {
@@ -54,8 +65,10 @@ public class ActivateCardManager: IActivateCardManager,ISubscriber
             case GameEventName.GoEndTurnEnemy:
             {
                 _numberCardPlayed = 2;
+                _counterCardPlay.text = _numberCardPlayed.ToString();
                 break;
             }
+
             case GameEventName.GoEndTurnPlayer:
             {
                 _numberCardPlayed = 0;
@@ -65,6 +78,11 @@ public class ActivateCardManager: IActivateCardManager,ISubscriber
             {
                 _numberCardPlayed = 2;
                 _membership = Membership.Undefined;
+                break;
+            }
+            case GameEventName.GoStageBattle:
+            {
+                _counterCardPlay.text = _numberCardPlayed.ToString();
                 break;
             }
         }
@@ -91,15 +109,15 @@ public class ActivateCardManager: IActivateCardManager,ISubscriber
         switch (type)
         {
             case SubTypeCard.AttackingSpell:
-            {
                 _publisher.Publish(null, new CustomEventArgs(GameEventName.GoDamageEnemy,card));
                 break;
-            }
             case SubTypeCard.Consumables:
                 if(card.GetDataCard().Application == Membership.Player)
                     _publisher.Publish(null, new CustomEventArgs(GameEventName.GoUseConsumablesOnPlayer,card));
                 break;
-            
+            case SubTypeCard.SummonSpell:
+                _publisher.Publish(null, new CustomEventArgs(GameEventName.GoSummonAllies,card));
+                break;
         }
         _publisher.Publish(null, new CustomEventArgs(GameEventName.ActivateCardPlayer,card));
     }

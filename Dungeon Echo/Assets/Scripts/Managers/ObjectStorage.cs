@@ -90,7 +90,7 @@ public class ObjectStorage : IObjectStorage
         CreatePoolByType(ObjectTypeEnum.PrefabIconPlayer, 4);
         CreatePoolByType(ObjectTypeEnum.PrefabCardArea, 4);
         CreatePoolByType(ObjectTypeEnum.PrefabCardEnemy, 4);
-        CreatePoolByType(ObjectTypeEnum.PrefabCardBattleEnemy, 5);
+        CreatePoolByType(ObjectTypeEnum.PrefabCardBattleUnit, 10);
         CreatePoolByType(ObjectTypeEnum.PrefabCardEvent, 4);
         CreatePoolByType(ObjectTypeEnum.PrefabCard, 26);
         CreatePoolByType(ObjectTypeEnum.PrefabCardInInventory, 12);

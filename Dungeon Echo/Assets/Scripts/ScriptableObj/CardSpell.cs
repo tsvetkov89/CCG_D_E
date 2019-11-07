@@ -21,7 +21,8 @@ public class CardSpell : ScriptableObject, ICard
     [Header("Затраты на использование карты")][Space]
     [Tooltip("Атрибут Стамина/Мана")] public CostAttribute costAttribute;
     [Header("Аттрибуты карты")][Space]
-    [Tooltip("Аттрибут карты")]public  List<StatsSpell> statsAttribute;  
+    [Tooltip("Аттрибут карты")]public  List<StatsSpell> statsAttribute; 
+    [Tooltip("Спавнит юнитов")]public List<string> spawnUnits;
     [Header("Описание карты")] [Space]
     [TextArea(1, 5)][Tooltip("Краткое описание карты")] public string description;
     [TextArea(3, 5)][Tooltip("Полное описание карты")] public string fulldescription;
@@ -105,7 +106,7 @@ public class CardSpell : ScriptableObject, ICard
     {
         var typeCard = new DataCard {TypeCard = cardType, TypeSubCard = subType, GameClass = classCard,
             NameCard = cardName, DisplayNameCard = displayCardName, Rarity = rarity, AttributeSpell = statsAttribute,
-            CostAttribute =costAttribute, FullDescription = fulldescription, Application = application
+            CostAttribute =costAttribute, FullDescription = fulldescription, Application = application, SpawnUnits = spawnUnits
         };
         return typeCard;
     }

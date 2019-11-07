@@ -60,6 +60,7 @@
           </e>
           <e p="Interface" t="Include">
             <e p="IActivateCardManager.cs" t="Include" />
+            <e p="IAlliesManager.cs" t="Include" />
             <e p="IAnimaManager.cs" t="Include" />
             <e p="IAudioManager.cs" t="Include" />
             <e p="IBarsEnemyManager.cs" t="Include" />
@@ -97,6 +98,7 @@
           </e>
           <e p="Managers" t="Include">
             <e p="ActivateCardManager.cs" t="Include" />
+            <e p="AlliesManager.cs" t="Include" />
             <e p="AnimaManager.cs" t="Include" />
             <e p="AudioManager.cs" t="Include" />
             <e p="BarsEnemyManager.cs" t="Include" />

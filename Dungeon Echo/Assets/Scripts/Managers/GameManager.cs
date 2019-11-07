@@ -19,13 +19,13 @@ public class GameManager : IGameManager, ISubscriber
     private List<GameObject> _poolGameCard; 
     private List<GameObject> _poolCardArea;
     private List<GameObject> _poolCardEnemy;
-    private List<GameObject> _poolCardBattleEnemy;
+    private List<GameObject> _poolCardBattleUnit;
     private List<GameObject> _poolCardEvent;
 
     //private IDictionary<ObjectTypeEnum,List<GameObject>> _poolGameObjects;
     private GameObject _hud;  //игровой HUD
     private GameObject _shirtDeckInGame; //рубашка колоды
-    private ICard _selectedCardEnemy;
+    private ICard _selectedCardUnit;
     public GameManager(IPublisher publisher, IAnimaManager animaManager, IObjectStorage objectStorage,
         ICoroutiner coroutiner, IInventoryManager inventoryManager, IConfigurateManager configurateManager)
     {
@@ -67,13 +67,17 @@ public class GameManager : IGameManager, ISubscriber
                 {
                     if (!card.activeSelf) continue;
                     var cardDisplay = card.GetComponent<ActionsWithCards>();
-                    _selectedCardEnemy = cardDisplay.CardGame;
+                    _selectedCardUnit = cardDisplay.CardGame;
                     break;
                 }
                 _coroutiner.StartCoroutine(PreparationStageBattle());
                 //_coroutiner.StartCoroutine(SpawnCardsInHand());
                 break;
             }
+            case GameEventName.GoSummonAllies:
+                _selectedCardUnit = messageData.Value as ICard;
+                SpawnAllies();
+                break;
             case GameEventName.GoStageBattle:
                 _publisher.Publish(null, new CustomEventArgs(GameEventName.GoNextTurn));
                 break;
@@ -276,8 +280,8 @@ public class GameManager : IGameManager, ISubscriber
     }*/
     public void PlaceObjects()
     {
-        _poolCardBattleEnemy = _objectStorage.GetPollObjects(ObjectTypeEnum.PrefabCardBattleEnemy, 4);
-        foreach (var objCard in _poolCardBattleEnemy)
+        _poolCardBattleUnit = _objectStorage.GetPollObjects(ObjectTypeEnum.PrefabCardBattleUnit, 8);
+        foreach (var objCard in _poolCardBattleUnit)
             _configurateManager.ConfigurateByParent(objCard, _hud, false);
         _poolCardArea = _objectStorage.GetPollObjects(ObjectTypeEnum.PrefabCardArea, 3);
         foreach (var objGameArea in _poolCardArea)
@@ -313,11 +317,11 @@ public class GameManager : IGameManager, ISubscriber
         }
         _publisher.Publish(null, new CustomEventArgs(GameEventName.GoSetNextStage));
         yield return new WaitForSeconds(0.4f);
-        var spawnUnits = _selectedCardEnemy.GetDataCard().SpawnUnits;
+        var spawnUnits = _selectedCardUnit.GetDataCard().SpawnUnits;
         var count = 1;
         foreach (var nameSpawnUnit in spawnUnits)
         {
-            foreach (var card in _poolCardBattleEnemy)
+            foreach (var card in _poolCardBattleUnit)
             {
                 if (card.activeSelf) continue;   
                 var cardDisplay = card.GetComponent<ActionsWithCards>();
@@ -335,6 +339,33 @@ public class GameManager : IGameManager, ISubscriber
             count++;
         }
     }
+
+    private void SpawnAllies()
+    {
+        var spawnUnits = _selectedCardUnit.GetDataCard().SpawnUnits;
+        var count = 1;
+        foreach (var nameSpawnUnit in spawnUnits)
+        {
+            foreach (var card in _poolCardBattleUnit)
+            {
+                if (card.activeSelf) continue;   
+                var cardDisplay = card.GetComponent<ActionsWithCards>();
+                var cardByName =  _objectStorage.GetCardByName(nameSpawnUnit);
+                Debug.Log(cardByName);
+                cardDisplay.СhangeCardType(cardByName);
+                cardDisplay.SetIdCard(count);
+                cardDisplay.CardGame.DisplayCardInGame(card);
+                cardDisplay.SetDependecies(_publisher, _animaManager);
+                cardDisplay.enabled = false;
+                card.SetActive(true);
+                _publisher.Publish(null, new CustomEventArgs(GameEventName.SpawnAllies, card));
+                _animaManager.SetStateAnimation(card, "ally", true);
+                break;
+            }
+            count++;
+        }
+    }
+
     private void FinishBattle()
     {
         foreach (var element in _poolCardArea)

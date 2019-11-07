@@ -21,6 +21,17 @@ public static partial class FrameworkExtensions
         rect.anchorMax = new Vector2 (xmax,ymax);
         rect.anchorMin = new Vector2 (xmin,ymin);
     }
+    
+    public static void SetRectByParent(this RectTransform rect, RectTransform rectParent)
+    {
+        rect.anchorMax = new Vector2 (rectParent.anchorMax.x,rectParent.anchorMax.y);
+        rect.anchorMin = new Vector2 (rectParent.anchorMin.x,rectParent.anchorMin.y);
+    }
+    public static void SetRectByAnchor(this RectTransform rect, Vector2 max, Vector2 min)
+    {
+        rect.anchorMax = max;
+        rect.anchorMin = min;
+    }
     public static void OffsetAnchorY(this RectTransform rect, float offset)
     {
         rect.anchorMax = new Vector2 (rect.anchorMax.x,rect.anchorMax.y+offset);

@@ -42,7 +42,7 @@ public static class Strings
         _stringsPaths.Add(ObjectTypeEnum.PrefabCardArea, "Prefabs/prefabCardArea");
         _stringsPaths.Add(ObjectTypeEnum.PrefabCardEvent, "Prefabs/prefabCardEvent");
         _stringsPaths.Add(ObjectTypeEnum.PrefabCardEnemy, "Prefabs/prefabCardEnemy");
-        _stringsPaths.Add(ObjectTypeEnum.PrefabCardBattleEnemy, "Prefabs/prefabCardBattleEnemy");
+        _stringsPaths.Add(ObjectTypeEnum.PrefabCardBattleUnit, "Prefabs/prefabCardBattleUnit");
         
         _stringsPaths.Add(ObjectTypeEnum.SlotCardInInventory, "Prefabs/prefabSlotCardInInventory");
         _stringsPaths.Add(ObjectTypeEnum.SlotInventory2, "Prefabs/prefabSlotInventory2");

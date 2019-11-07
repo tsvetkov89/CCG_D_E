@@ -29,7 +29,8 @@ namespace EnumNamespace
         AverageEnemy,
         ComplicatedEnemy,
         Boss,
-        Unit
+        Unit,
+        SummonSpell
     }
     public enum CardRarity
     {
@@ -108,13 +109,14 @@ namespace EnumNamespace
         Duration,
         Damage,
         Periodicdamage,
-        Cooldown 
+        Cooldown,
     }
     public enum Membership
     {
         Undefined,
         Player,
-        Enemy
+        Enemy,
+        AlliesArea,
     }
 
     public enum GameEventName
@@ -180,6 +182,8 @@ namespace EnumNamespace
         //---------------------set
         GoSetIdSlotInventory,
         GoSetNextStage,
+        //----------------------get
+        GoGetPositionActivateCard,
         //---------------------equpment
         GoEquipmentCard,
         //---------------------unequpment
@@ -193,11 +197,11 @@ namespace EnumNamespace
         //---------------------spawn
         SpawnPlayer,
         SpawnEnemy,
+        SpawnAllies,
         //---------------------activate
         GoActivateCard,
         ActivateCardPlayer,
         GoDamageEnemy,
-        GoUseConsumablesOnPlayer,
         GoActivateTargetPlayer,
         GoDeActivateTargetsPlayer,
         //---------------------finish
@@ -211,8 +215,13 @@ namespace EnumNamespace
         NonTargetingСapture,
         TargetingPlayer,
         NonTargetingPlayer,
+        TargetingArea,
+        NonTargetingArea,
+        TargetArea,
         //--------------------use
         GoUseAutoReward,
+        GoUseConsumablesOnPlayer,
+        GoSummonAllies,
     }
 
     public enum SortLayer

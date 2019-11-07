@@ -8,7 +8,7 @@ public enum ObjectTypeEnum
     PrefabCardInInventory,
     PrefabCardArea,
     PrefabCardEnemy,
-    PrefabCardBattleEnemy,
+    PrefabCardBattleUnit,
     PrefabCardEvent,
     CardsGameClass,
     CardsEquipment,

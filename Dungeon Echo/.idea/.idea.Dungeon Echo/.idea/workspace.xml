@@ -52,6 +52,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/Coroutiner.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Interface/ICard.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Interface/ITargetManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Asset/TextMesh Pro/Resources/Shaders/TMP_SDF-Mobile Masking.shader" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Asset/TextMesh Pro/Resources/Shaders/TMP_SDF.shader" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Interface/IPopupPlaceInSlot.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Interface/IDeckManager.cs" root0="FORCE_HIGHLIGHTING" />
@@ -78,8 +79,10 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Interface/IAnimaManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Interface/IConfigurateManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Interface/IObjectStorage.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/AlliesManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Interface/IPopupPlayers.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Interface/ICoroutiner.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Interface/IAlliesManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Interface/ITokenRewardManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Interface/ILogicManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Interface/IBarsEnemyManager.cs" root0="FORCE_HIGHLIGHTING" />
@@ -133,15 +136,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObj/CardSpell.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Managers/Coroutiner.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Interface/ICoroutiner.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Popups/PopupGameMenu.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Interface/ILogicManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Managers/LogicManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Interface/IPopupGameMenu.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Popups/PopupInventory.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Interface/IPopupInventory.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Interface/IEventPopup.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Interface/IPopupEvent.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Interface/IPopupPlayers.cs" />
@@ -154,21 +148,14 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Managers/BarsPlayerManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Interface/IPopupRewardEvent.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/UIScripts/UiButtonsPopups.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Interface/IToken.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Interface/IObjectStorage.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Popups/PopupEvent.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObj/Adventure.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Interface/IConfigurateManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameManagers.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Interface/IGameManagers.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Managers/ConfigurateManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Extensions/FrameworkExtensions.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Enums/Strings.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Enums/ObjectTypeEnum.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Managers/ObjectStorage.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Interface/ITokenRewardManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/SceneControllers/GameScene.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/UIScripts/ClickHandlerMenu.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Popups/PopupPlayers.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObj/TokenReward.cs" />
@@ -177,13 +164,29 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Managers/TokenRewardManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/UIScripts/ClickHandlerTokenReward.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Managers/PlayersManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Enums/LibraryEnum.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Popups/PopupRewardEvent.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Extensions/RandomExtensions.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/CardScripts/ActionsWithSlotInventory.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Managers/InventoryManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/SceneControllers/SceneBootstrapper.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Popups/PopupPlaceInSlot.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Interface/IActivateCardManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Enums/Strings.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Managers/AnimaManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Extensions/FrameworkExtensions.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/ScriptableObj/CardSpell.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Managers/InventoryManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/CardScripts/DraggeblePointer.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Managers/ActivateCardManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Interface/IGameManagers.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameManagers.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Managers/ObjectStorage.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/SceneControllers/GameScene.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Interface/IAlliesManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/SceneControllers/SceneBootstrapper.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Managers/TargetManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Enums/LibraryEnum.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Managers/EnemyManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Managers/AlliesManager.cs" />
       </list>
     </option>
   </component>
@@ -350,6 +353,8 @@
       <workItem from="1569702826044" duration="3873000" />
       <workItem from="1570048797223" duration="7421000" />
       <workItem from="1570650240971" duration="5884000" />
+      <workItem from="1572600775790" duration="5577000" />
+      <workItem from="1573064372187" duration="18092000" />
     </task>
     <servers />
   </component>

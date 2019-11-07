@@ -11,6 +11,7 @@ public class EnemyManager : IEnemyManager, ISubscriber
     private readonly IAnimaManager _animaManager;
     private readonly IObjectStorage _objectStorage;
     private readonly IConfigurateManager _configurateManager;
+    
     private List<GameObject> _listEnemys;
     private GameObject _panelEnemy;
     public EnemyManager (IPublisher publisher, ICoroutiner coroutiner, IAnimaManager animaManager, IObjectStorage objectStorage, IConfigurateManager configurateManager)
@@ -21,6 +22,7 @@ public class EnemyManager : IEnemyManager, ISubscriber
         _objectStorage = objectStorage;
         _configurateManager = configurateManager;
         _listEnemys = new List<GameObject>();
+        
     }
 
     public void SetDependecies(GameObject panel)

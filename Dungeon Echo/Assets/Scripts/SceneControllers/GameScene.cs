@@ -18,10 +18,12 @@ public class GameScene : BaseScene, ISubscriber
     private IDeckManager _deckManager;
     private ITargetManager _targetManager;
     private IEnemyManager _enemyManager;
+    private IAlliesManager _alliesManager;
     private IConfigurateManager _configurateManager;
     private IAudioManager _audioManager;
     private IPopupManagers _popupManagers;
     private ITokenRewardManager _tokenRewardManager;
+    private IActivateCardManager _activateCardManager;
     
     private GameObject _hud;
     private GameObject _poolParent;
@@ -36,6 +38,7 @@ public class GameScene : BaseScene, ISubscriber
     private GameObject _btnEndTurn;
     private GameObject _btnMenu;
     private GameObject _panelEnemy;
+    private GameObject _panelAllies;
     private GameObject _pointStopDrag;
     private GameObject _pointReturnCard;
     private GameObject _targetPointer;
@@ -45,6 +48,7 @@ public class GameScene : BaseScene, ISubscriber
     private GameObject _popupRewardEvent;
     private GameObject _deckInGame;
     private GameObject _panelPlayers;
+    private GameObject _iconСounterCardPlay;
     
     private PopupPlaceInSlot _placeInSlotPopup;
     
@@ -73,15 +77,18 @@ public class GameScene : BaseScene, ISubscriber
         _popupGameMenu  = GameObject.Find("HUD/PopupGameMenu");
         _btnEscapeBattle = GameObject.Find("HUD/btnEscapeBattle");
         _btnEndTurn = GameObject.Find("HUD/btnEndTurn");
+        _iconСounterCardPlay = GameObject.Find("HUD/CounterCardPlay");
         _btnMenu = GameObject.Find("HUD/btnMenu");
         _poolParent= GameObject.Find("PoolObjects");
         _panelEnemy = GameObject.Find("HUD/PanelEnemy");
+        _panelAllies = GameObject.Find("HUD/PanelAllies");
         _popupText = GameObject.Find("HUD/PopupText");
         _pointStopDrag = GameObject.Find("HUD/PointStopDragCard");
         _pointReturnCard = GameObject.Find("HUD/PointReturnCard");
         _targetPointer = GameObject.Find("HUD/TargetPointer");
         _defaultCard  = GameObject.Find("HUD/prefabCard");
         _targetPlayer = GameObject.Find("HUD/TargetingPlayer");
+        //_targetArea = GameObject.Find("HUD/TargetingArea");
         _popupRewardEvent = GameObject.Find("HUD/PopupRewardEvent");
         _panelPlayers = GameObject.Find("HUD/PanelPlayers");
         
@@ -105,6 +112,7 @@ public class GameScene : BaseScene, ISubscriber
         _popupGameMenu.SetActive(false);
         _btnEscapeBattle.SetActive(false);
         _btnEndTurn.SetActive(false);
+        _iconСounterCardPlay.SetActive(false);
         _popupRewardEvent.SetActive(false);
             
         _targetPointer.SetActive(false);
@@ -142,7 +150,9 @@ public class GameScene : BaseScene, ISubscriber
         _deckManager.SetUiComponents(_hud, _pointStopDrag, _pointReturnCard);
         _deckManager.PlaceObjects();
         _enemyManager.SetDependecies(_panelEnemy);
+        _alliesManager.SetDependecies(_panelAllies);
         _tokenRewardManager.SetDependecies(_panelPlayers);
+        _activateCardManager.SetDependecies(_iconСounterCardPlay);
         
         uiButtonsPopup = _btnEndTurn.GetComponent<UiButtonsPopups>();
         uiButtonsPopup.SetDependecies(_publisher);
@@ -161,6 +171,9 @@ public class GameScene : BaseScene, ISubscriber
         var component = _popupDescriptionCard.GetComponent<ClickHandlerPopupCard>();
         component.SetDependecies(_publisher);
       
+        var rect = _panelAllies.GetComponent<RectTransform>();
+        _panelAllies.GetComponent<BoxCollider2D>().SetSizeBox2D(rect,10f,10f);
+        
         _targetManager.SetDependecies(_targetPointer,_targetPlayer, _hud);
         _popupManagers.PopupGameMenu.SetDependecies(_popupGameMenu);
         _popupManagers.PopupInventory.SetDependecies(_popupInventory); 
@@ -189,8 +202,10 @@ public class GameScene : BaseScene, ISubscriber
         _deckManager = logicManager.GameManagers.DeckManager;
         _targetManager = logicManager.GameManagers.TargetManager;
         _enemyManager = logicManager.GameManagers.EnemyManager;
+        _alliesManager = logicManager.GameManagers.AlliesManager;
         _configurateManager = logicManager.BaseManagers.ConfigurateManager;
         _audioManager = logicManager.BaseManagers.AudioManager;
+        _activateCardManager = logicManager.GameManagers.ActivateCardManager;
         _publisher.AddSubscriber(this);   
     }
 
@@ -207,6 +222,7 @@ public class GameScene : BaseScene, ISubscriber
                 _animaManager.SetStateAnimation(_hud, "battle", false);
                 _btnEscapeBattle.SetActive(false);
                 _btnEndTurn.SetActive(false);
+                _iconСounterCardPlay.SetActive(false);
                 break;
             case GameEventName.GoSaveGameClass:
                 _saveManager.SaveClass(messageData.Value as CardsGameClass);
@@ -256,6 +272,7 @@ public class GameScene : BaseScene, ISubscriber
         _animaManager.SetStateAnimation(_hud, "battle", true);
         _btnEscapeBattle.SetActive(true);
         _btnEndTurn.SetActive(true);
+        _iconСounterCardPlay.SetActive(true);
         _popupText.transform.SetAsLastSibling();
         yield return new WaitForSeconds(1.7f);
         _messageText.text = _membership == Membership.Player ? "Your turm" : "Enemy turm";

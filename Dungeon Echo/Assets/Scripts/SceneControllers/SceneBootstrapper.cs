@@ -25,6 +25,7 @@ public class SceneBootstrapper :  BaseScene
     private IBarsPlayerManager _barsPlayerManager;
     private IBarsEnemyManager _barsEnemyManager;
     private IEnemyManager _enemyManager;
+    private IAlliesManager _alliesManager;
     private IPlayersManager _playersManager;
     private IDeckManager _deckManager;
     private ITargetManager _targetManager;
@@ -72,7 +73,8 @@ public class SceneBootstrapper :  BaseScene
        
        _gameStageManager = new GameStageManager(_publisher, _coroutiner);
        _gameManager = new GameManager(_publisher, _animaManager, _objectStorage, _coroutiner,_inventoryManager,_configurateManager);
-       _enemyManager = new EnemyManager(_publisher, _coroutiner,_animaManager,_objectStorage,_configurateManager);
+       _enemyManager = new EnemyManager(_publisher, _coroutiner,_animaManager,_objectStorage, _configurateManager);
+       _alliesManager = new AlliesManager(_coroutiner, _configurateManager);
        _playersManager = new PlayersManager(_publisher,_animaManager, _tokenRewardManager);
        _barsEnemyManager = new BarsEnemyManager(_enemyManager, _publisher);
        _activateCardManager = new ActivateCardManager(_publisher, _barsPlayerManager,_enemyManager);
@@ -95,6 +97,7 @@ public class SceneBootstrapper :  BaseScene
        _publisher.AddSubscriber((ISubscriber) _barsPlayerManager);
        _publisher.AddSubscriber((ISubscriber) _barsEnemyManager);
        _publisher.AddSubscriber((ISubscriber) _enemyManager);
+       _publisher.AddSubscriber((ISubscriber) _alliesManager);
        _publisher.AddSubscriber((ISubscriber) _playersManager);
        _publisher.AddSubscriber((ISubscriber) _deckManager);
        _publisher.AddSubscriber((ISubscriber) _targetManager);
@@ -111,7 +114,7 @@ public class SceneBootstrapper :  BaseScene
        
        _baseManagers = new BaseManagers(_saveManager,_animaManager,_publisher,_objectStorage,_configurateManager,_coroutiner, _audioManager);
        _gameManagers = new GameManagers(_gameManager, _activateCardManager, _barsPlayerManager, _barsEnemyManager, 
-           _enemyManager, _playersManager, _deckManager, _inventoryManager, _targetManager, _tokenRewardManager);
+           _enemyManager, _alliesManager,  _playersManager, _deckManager, _inventoryManager, _targetManager, _tokenRewardManager);
        _popupManagers = new PopupManagers(_popupGameMenu,_popupInventory, _popupEvent, _popupPlayers, _popupDescriptionCard,_popupPlaceInSlot, _popupRewardEvent);
        
        

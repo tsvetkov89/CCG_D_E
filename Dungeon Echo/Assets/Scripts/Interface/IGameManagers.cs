@@ -7,6 +7,7 @@ namespace InterfaceNamespace
         IBarsPlayerManager BarsPlayerManager { get; }
         IBarsEnemyManager BarsEnemyManager { get; }
         IEnemyManager EnemyManager { get; }
+        IAlliesManager AlliesManager { get; }
         IInventoryManager InventoryManager { get; }
         IDeckManager DeckManager { get; }
         ITargetManager TargetManager { get; }

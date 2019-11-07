@@ -1,4 +1,5 @@
 ﻿
+using System;
 using EnumNamespace;
 using InterfaceNamespace;
 using UnityEngine;
@@ -38,7 +39,21 @@ public class DraggeblePointer : MonoBehaviour
    public void Init(DraggableCard draggableCard, Membership membership)
    {
       _membership = membership;
-      _mainLayer = membership == Membership.Enemy ? 1 << LayerMask.NameToLayer("EnemyCard") : 1 << LayerMask.NameToLayer("IconPlayer");
+
+      switch (_membership)
+      {
+         case Membership.Undefined:
+            break;
+         case Membership.Player:
+            _mainLayer = LayerMask.GetMask("IconPlayer");
+            break;
+         case Membership.Enemy:
+            _mainLayer = LayerMask.GetMask("EnemyCard");
+            break;
+         case Membership.AlliesArea:
+            _mainLayer = LayerMask.GetMask("AlliesArea");
+            break;
+      }
       _targeting = false;
       _startPosition = new Vector3(draggableCard.transform.position.x, draggableCard.transform.position.y + 50f,
          draggableCard.transform.position.z);
@@ -46,35 +61,6 @@ public class DraggeblePointer : MonoBehaviour
       _points[0] = _startPosition;
       gameObject.SetActive(true);
    }
-
-   public void Reset()
-   {
-      _ray = Physics2D.GetRayIntersection(_camera.ScreenPointToRay(Input.mousePosition), float.PositiveInfinity, _mainLayer);
-      if (_ray)
-      {
-         var targetObject = _ray.collider.gameObject;
-         _publisher.Publish(this,
-            _membership == Membership.Player
-               ? new CustomEventArgs(GameEventName.TargetPlayer, targetObject)
-               : new CustomEventArgs(GameEventName.TargetEnemy, targetObject));
-         _publisher.Publish(this, new CustomEventArgs(GameEventName.TargetСapture, targetObject));
-
-      }
-      else
-         _publisher.Publish(this, new CustomEventArgs(GameEventName.NonTargetСapture));
-      
-      _targeting = false;
-      _publisher.Publish(this,
-         _membership == Membership.Player
-            ? new CustomEventArgs(GameEventName.NonTargetingPlayer)
-            : new CustomEventArgs(GameEventName.NonTargetingСapture));
-      
-      _startPosition = transform.position;
-      transform.position = new Vector3(0, 0, 0);
-      _lineMaterial.mainTextureOffset = new Vector2(0, 0);
-      gameObject.SetActive(false);
-   }
-
    private void Update()
    {
       if (Input.GetMouseButtonUp(0))
@@ -86,18 +72,38 @@ public class DraggeblePointer : MonoBehaviour
          {
             var targetObject = _mainRay.collider.gameObject;
             _targeting = true;
-            _publisher.Publish(this,
-               _membership == Membership.Player
-                  ? new CustomEventArgs(GameEventName.TargetingPlayer, targetObject)
-                  : new CustomEventArgs(GameEventName.TargetingСapture, targetObject));
+            switch (_membership)
+            {
+               case Membership.Undefined:
+                  break;
+               case Membership.Player:
+                  _publisher.Publish(this, new CustomEventArgs(GameEventName.TargetingPlayer, targetObject));
+                  break;
+               case Membership.Enemy:
+                  _publisher.Publish(this,new CustomEventArgs(GameEventName.TargetingСapture, targetObject));
+                  break;
+               case Membership.AlliesArea:
+                  _publisher.Publish(this, new CustomEventArgs(GameEventName.TargetingArea, targetObject));
+                  break;
+            }
          }
          else if (_targeting)
          {
             _targeting = false;
-            _publisher.Publish(this,
-               _membership == Membership.Player
-                  ? new CustomEventArgs(GameEventName.NonTargetingPlayer)
-                  : new CustomEventArgs(GameEventName.NonTargetingСapture));
+            switch (_membership)
+            {
+               case Membership.Undefined:
+                  break;
+               case Membership.Player:
+                  _publisher.Publish(this, new CustomEventArgs(GameEventName.NonTargetingPlayer));
+                  break;
+               case Membership.Enemy:
+                  _publisher.Publish(this, new CustomEventArgs(GameEventName.NonTargetingСapture));
+                  break;
+               case Membership.AlliesArea:
+                  _publisher.Publish(this, new CustomEventArgs(GameEventName.NonTargetingArea));
+                  break;
+            }
          }
       }
 
@@ -109,5 +115,53 @@ public class DraggeblePointer : MonoBehaviour
       _lineMaterial.mainTextureScale =
          new Vector2(Vector2.Distance(_startPosition, transform.position) * _materialLength, 1);
       _lineMaterial.mainTextureOffset = new Vector2(_lineMaterial.mainTextureOffset.x - _materialSpeed, 0);
+   }
+   private void Reset()
+   {
+      _ray = Physics2D.GetRayIntersection(_camera.ScreenPointToRay(Input.mousePosition), float.PositiveInfinity, _mainLayer);
+      if (_ray)
+      {
+         var targetObject = _ray.collider.gameObject;
+         switch (_membership)
+         {
+            case Membership.Undefined:
+               break;
+            case Membership.Player:
+               _publisher.Publish(this, new CustomEventArgs(GameEventName.TargetPlayer, targetObject));
+               break;
+            case Membership.Enemy:
+               _publisher.Publish(this, new CustomEventArgs(GameEventName.TargetEnemy, targetObject));
+               break;
+            case Membership.AlliesArea:
+               _publisher.Publish(this, new CustomEventArgs(GameEventName.TargetArea, targetObject));
+               break;
+         }
+         _publisher.Publish(this, new CustomEventArgs(GameEventName.TargetСapture, targetObject));
+      }
+      else
+      {
+         _publisher.Publish(this, new CustomEventArgs(GameEventName.NonTargetСapture));
+      }
+
+      _targeting = false;
+      switch (_membership)
+      {
+         case Membership.Undefined:
+            break;
+         case Membership.Player:
+            _publisher.Publish(this, new CustomEventArgs(GameEventName.NonTargetingPlayer));
+            break;
+         case Membership.Enemy:
+            _publisher.Publish(this, new CustomEventArgs(GameEventName.NonTargetingСapture));
+            break;
+         case Membership.AlliesArea:
+            _publisher.Publish(this, new CustomEventArgs(GameEventName.NonTargetingArea));
+            break;
+      }
+
+      _startPosition = transform.position;
+      transform.position = new Vector3(0, 0, 0);
+      _lineMaterial.mainTextureOffset = new Vector2(0, 0);
+      gameObject.SetActive(false);
    }
 }

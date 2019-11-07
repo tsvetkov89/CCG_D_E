@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 public class GameManagers : IGameManagers
 {
     public GameManagers(IGameManager gameManager, IActivateCardManager activateCardManager, IBarsPlayerManager barsPlayerManager,
-        IBarsEnemyManager barsEnemyManager, IEnemyManager enemyManager, IPlayersManager playersManager, IDeckManager deckManager, 
+        IBarsEnemyManager barsEnemyManager, IEnemyManager enemyManager, IAlliesManager alliesManager, IPlayersManager playersManager, IDeckManager deckManager, 
         IInventoryManager inventoryManager, ITargetManager targetManager, ITokenRewardManager tokenRewardManager)
     {
         GameManager = gameManager;
@@ -13,6 +13,7 @@ public class GameManagers : IGameManagers
         BarsPlayerManager = barsPlayerManager;
         BarsEnemyManager = barsEnemyManager;
         EnemyManager = enemyManager;
+        AlliesManager = alliesManager;
         PlayersManager = playersManager;
         DeckManager = deckManager;
         InventoryManager = inventoryManager;
@@ -24,6 +25,7 @@ public class GameManagers : IGameManagers
     public IBarsPlayerManager BarsPlayerManager { get; private set; }
     public IBarsEnemyManager BarsEnemyManager { get; private set; }
     public IEnemyManager EnemyManager { get; private set; }
+    public IAlliesManager AlliesManager  { get; private set; }
     public IPlayersManager PlayersManager { get; private set; }
     public IDeckManager DeckManager { get; private set; }
     public IInventoryManager InventoryManager { get; private set; }

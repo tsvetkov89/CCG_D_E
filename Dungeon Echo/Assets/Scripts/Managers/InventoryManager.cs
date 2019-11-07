@@ -60,7 +60,7 @@ public class InventoryManager : IInventoryManager, ISubscriber
         _equpmentCardsPlayers[GameClass.Red] = new List<string>(){"BaseAttackRed","","","","",""};
         _equpmentCardsPlayers[GameClass.Green] = new List<string>(){"BaseAttackGreen","","","","",""};
         _equpmentCardsPlayers[GameClass.Blue] = new List<string>(){"BaseAttackBlue","","","","","",""};
-        _equpmentCardsPlayers[GameClass.Purple] = new List<string>(){"BaseAttackPurple","","","","",""};
+        _equpmentCardsPlayers[GameClass.Purple] = new List<string>(){"BaseSummonUnit","","","","",""};//BaseAttackPurple
     }
     //--------------------добавим карту в инвентарь
     private void AddItemInventory(string name, int index)

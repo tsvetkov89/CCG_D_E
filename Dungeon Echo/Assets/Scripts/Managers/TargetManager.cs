@@ -18,6 +18,8 @@ public class TargetManager : ITargetManager, ISubscriber
     private GameObject _hud;
     private GameObject _targeting;
     private GameObject _targetPlayer;
+    private Vector2 _defaultMaxTargetPlayer;
+    private Vector2 _defaultMinTargetPlayer;
     private GameObject _targetIconPlayer;
     public TargetManager(IPublisher publisher, IAnimaManager animaManager, IActivateCardManager activateCardManager, IEnemyManager enemyManager)
     {
@@ -31,6 +33,11 @@ public class TargetManager : ITargetManager, ISubscriber
     {
         _targetPointer = targetPointer;
         _targetPlayer = target;
+        
+        var rect = _targetPlayer.GetComponent<RectTransform>();
+        _defaultMaxTargetPlayer = rect.anchorMax;
+        _defaultMinTargetPlayer = rect.anchorMin;
+        
         _targetIconPlayer = _targetPlayer.GetComponentsInChildren<Transform>().SearchChild("Target").gameObject;
         _hud = hud;
         _draggeblePointer = _targetPointer.GetComponent<DraggeblePointer>();
@@ -74,11 +81,21 @@ public class TargetManager : ITargetManager, ISubscriber
             case GameEventName.TargetingPlayer:
                 _targeting = messageData.Value as GameObject;
                 _targetPlayer.transform.position = _targeting.transform.position;
+                _targetPlayer.gameObject.GetComponent<RectTransform>().SetRectByAnchor(_defaultMaxTargetPlayer, _defaultMinTargetPlayer);
                 _targetPlayer.SetActive(true);
-                _animaManager.SetStateAnimation(_targetIconPlayer, "target", true);
+                //_animaManager.SetStateAnimation(_targetIconPlayer, "target", true);
                 break;
             case GameEventName.NonTargetingPlayer:
-                _animaManager.SetStateAnimation(_targetIconPlayer, "target", false);
+                //_animaManager.SetStateAnimation(_targetIconPlayer, "target", false);
+                _targetPlayer.SetActive(false);
+                break;
+            case GameEventName.TargetingArea:
+                _targeting = messageData.Value as GameObject;
+                _targetPlayer.transform.position = _targeting.transform.position;
+                _targetPlayer.GetComponent<RectTransform>().SetRectByParent(_targeting.gameObject.GetComponent<RectTransform>());
+                _targetPlayer.SetActive(true);
+                break;
+            case GameEventName.NonTargetingArea:
                 _targetPlayer.SetActive(false);
                 break;
         }
@@ -93,7 +110,7 @@ public class TargetManager : ITargetManager, ISubscriber
             _draggableCard.gameObject.SetActive(true);
             var component = _draggableCard.gameObject.GetComponent<ActionsWithCards>();
             _publisher.Publish(null, new CustomEventArgs(GameEventName.GoActivateCard, _selectedCard));
-
+            _publisher.Publish(null, new CustomEventArgs(GameEventName.GoGetPositionActivateCard, _draggableCard.gameObject));
             _draggableCard.enabled = false;
             component.Animator.enabled = true;
 
