@@ -114,6 +114,8 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/SceneControllers/MenuScene.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/SceneControllers/GameScene.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/SceneControllers/SceneBootstrapper.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/SceneControllers/BaseScene.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scenes/Bootstrapper.unity" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Shader/ShaderCard.shader" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Enums/Strings.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Enums/LibraryEnum.cs" root0="FORCE_HIGHLIGHTING" />
@@ -136,7 +138,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Assets/Scripts/Interface/IEventPopup.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Interface/IPopupEvent.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Interface/IPopupPlayers.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Interface/IPopupDescriptionCard.cs" />
@@ -178,7 +179,6 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Managers/ActivateCardManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Interface/IGameManagers.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameManagers.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Managers/ObjectStorage.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/SceneControllers/GameScene.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Interface/IAlliesManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/SceneControllers/SceneBootstrapper.cs" />
@@ -187,6 +187,8 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Managers/GameManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Managers/EnemyManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Managers/AlliesManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Interface/IInventoryManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Managers/ObjectStorage.cs" />
       </list>
     </option>
   </component>
@@ -354,7 +356,9 @@
       <workItem from="1570048797223" duration="7421000" />
       <workItem from="1570650240971" duration="5884000" />
       <workItem from="1572600775790" duration="5577000" />
-      <workItem from="1573064372187" duration="18092000" />
+      <workItem from="1573064372187" duration="18222000" />
+      <workItem from="1573158896747" duration="1055000" />
+      <workItem from="1573400127336" duration="862000" />
     </task>
     <servers />
   </component>

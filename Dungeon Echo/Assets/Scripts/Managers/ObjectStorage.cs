@@ -156,8 +156,7 @@ public class ObjectStorage : IObjectStorage
         foreach (var dict in _dictCards)
         {
             var values = dict.Value;
-            ICard value = null;
-            var isExists = values.TryGetValue(name, out value);
+            var isExists = values.TryGetValue(name, out var value);
             if (isExists == false) continue;
             return value;
         }
@@ -166,11 +165,11 @@ public class ObjectStorage : IObjectStorage
     //--------------------Берем токен (жетон награды)
     public IToken GetTokenByName(TokenRewardEnum token)
     {
-        foreach (var t in _tokens)
+        /*foreach (var t in _tokens)
             if (t.GetDataToken().Token == token)
-                return t;
-
-        return null;
+                return t;*/
+        var  t = _tokens.Find((x) => x.GetDataToken().Token == token);
+        return t ?? null;
     }
     private void CreateDictionaryCards()
     {
