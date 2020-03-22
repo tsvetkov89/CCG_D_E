@@ -30,7 +30,6 @@ public class MenuScene : BaseScene, ISubscriber
         var objButton = GameObject.Find("HUD/btnContinue");
         
         var component = objButton.GetComponentsInChildren<Transform>().SearchChild("buttonContinue");
-        
         _btnContinue = component.GetComponent<Button>();
     }
 

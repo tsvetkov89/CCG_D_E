@@ -1,6 +1,4 @@
-using DefaultNamespace;
 using UnityEngine;
-//using Object = System.Object;
 
 namespace InterfaceNamespace
 {

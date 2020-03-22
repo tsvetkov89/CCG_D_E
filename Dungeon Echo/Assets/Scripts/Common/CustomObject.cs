@@ -25,5 +25,4 @@ namespace DefaultNamespace
             _value = null;
         }
     }
-    
 }

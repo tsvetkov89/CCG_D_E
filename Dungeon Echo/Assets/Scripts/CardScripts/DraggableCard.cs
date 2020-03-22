@@ -22,7 +22,7 @@ public class DraggableCard : Card, IBeginDragHandler, IDragHandler
         var rect = GetComponent<RectTransform>();
         _widthCard = rect.rect.width + 10f;
     }
-
+    
     public void SetDependecies(GameObject objStopDrag, GameObject objReturnCard, ITargetManager targetManager)
     {
         _pointStopDrag = objStopDrag;
@@ -30,6 +30,10 @@ public class DraggableCard : Card, IBeginDragHandler, IDragHandler
         _targetManager = targetManager;
     }
 
+    public void SetStatusCard(StatusCard status)
+    {
+        _statusCard = status;
+    }
     public void OnBeginDrag(PointerEventData eventData)
     {
         _statusCard = StatusCard.InHand;

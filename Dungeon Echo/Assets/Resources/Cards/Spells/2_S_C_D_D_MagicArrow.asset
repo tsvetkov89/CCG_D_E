@@ -25,6 +25,7 @@ MonoBehaviour:
   statsAttribute:
   - stat: 2
     value: 5
+  spawnUnits: []
   description: Damage
   fulldescription: 
   cardName: Magic Arrow

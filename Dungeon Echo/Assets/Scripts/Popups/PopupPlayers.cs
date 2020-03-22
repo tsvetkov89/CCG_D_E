@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using EnumNamespace;
 using InterfaceNamespace;
 using UnityEngine;
@@ -47,18 +48,16 @@ public class PopupPlayers: IPopupPlayers, ISubscriber
         switch (message)
         {
             case GameEventName.GoOpenInventory:
-                foreach (var obj in _arrayPlayers)
+                foreach (var componentObj in _arrayPlayers.Select(obj => obj.GetComponent<ActionsWithCardGameClass>()))
                 {
-                    var componentObj = obj.GetComponent<ActionsWithCardGameClass>();
                     componentObj.enabled = true;
                 }
                 break;
             case GameEventName.GoCloseInventory:
                 break;
             case GameEventName.GoOpenPanelPlayers:
-                foreach (var obj in _arrayPlayers)
+                foreach (var componentObj in _arrayPlayers.Select(obj => obj.GetComponent<ActionsWithCardGameClass>()))
                 {
-                    var componentObj = obj.GetComponent<ActionsWithCardGameClass>();
                     componentObj.enabled = false;
                 }
                 break;
@@ -99,7 +98,6 @@ public class PopupPlayers: IPopupPlayers, ISubscriber
             
             var rect = obj.GetComponent<RectTransform>();
             obj.GetComponent<BoxCollider2D>().SetSizeBox2D(rect,10f,10f);
-
             _publisher.AddSubscriber(componentObj); 
             _publisher.Publish(null,new CustomEventArgs(GameEventName.SpawnPlayer, obj));
             count++;

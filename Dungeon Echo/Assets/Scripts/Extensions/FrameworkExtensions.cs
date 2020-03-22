@@ -7,7 +7,7 @@ using UnityEngine.UI;
 /// <summary>
 ///  Методы расширения
 /// </summary>
-public static partial class FrameworkExtensions
+public static class FrameworkExtensions
 {
     //----------------усnтанавливаю RectTransform (Left,Right,Top,Bottom)
     public static void SetOffset(this RectTransform rect, float left, float bottom, float right, float top)

@@ -122,7 +122,6 @@ namespace EnumNamespace
     public enum GameEventName
     {
         Undefined,
-
         //---------------------stage
         GoStageStartNewGame,
         GoStageSelectGameClass,

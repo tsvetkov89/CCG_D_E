@@ -31,6 +31,6 @@ MonoBehaviour:
     \u0441\u043E\u044E\u0437\u043D\u043E\u0433\u043E \u0432\u043E\u043B\u043A\u0430."
   cardName: BaseSummonUnit
   displayCardName: Summon small Wolf
-  artCard: {fileID: 21300000, guid: e2c2f7dde8e661348a646bfa130fe22f, type: 3}
+  artCard: {fileID: 21300000, guid: 01d5133d1dd42df43b943189a24d7c6d, type: 3}
   shirtMain: {fileID: 21300000, guid: a5cebb48f57715a4cb9f6480b9690afe, type: 3}
   shirtCard: {fileID: 21300000, guid: 8f571537680dfe74ca60cf151693ca3e, type: 3}

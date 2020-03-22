@@ -339,7 +339,7 @@ public class GameManager : IGameManager, ISubscriber
             count++;
         }
     }
-
+    
     private void SpawnAllies()
     {
         var spawnUnits = _selectedCardUnit.GetDataCard().SpawnUnits;
@@ -351,7 +351,6 @@ public class GameManager : IGameManager, ISubscriber
                 if (card.activeSelf) continue;   
                 var cardDisplay = card.GetComponent<ActionsWithCards>();
                 var cardByName =  _objectStorage.GetCardByName(nameSpawnUnit);
-                Debug.Log(cardByName);
                 cardDisplay.СhangeCardType(cardByName);
                 cardDisplay.SetIdCard(count);
                 cardDisplay.CardGame.DisplayCardInGame(card);
@@ -360,10 +359,46 @@ public class GameManager : IGameManager, ISubscriber
                 card.SetActive(true);
                 _publisher.Publish(null, new CustomEventArgs(GameEventName.SpawnAllies, card));
                 _animaManager.SetStateAnimation(card, "ally", true);
+                card.AddComponent<DraggableCard>();
+                var component = card.GetComponent<DraggableCard>();
+                //component.SetDependecies( _pointStopDrag, _pointReturnCard , _targetManager);
+                component.SetStatusCard(StatusCard.OnBoard);
                 break;
             }
             count++;
         }
+        /*_currentDeck = _inventoryManager.GetCardInDeck();
+        _currentDeck = RandomExtensions.Shuffle(_currentDeck);
+        yield return new WaitForSeconds(2f);
+        _currentCardsInHand = 0;
+        var list =  _currentDeck.GetRange(0, _currentDeck.Count);
+        foreach (var card in list)
+        {
+            foreach (var cardPlayer in _poolCardsPlayer)
+            {
+                if (cardPlayer.activeSelf) continue;
+                foreach (Transform child in cardPlayer.transform)
+                    child.gameObject.SetActive( true);
+                var cardDisplay = cardPlayer.GetComponent<ActionsWithCards>();
+                var cardByName =  _objectStorage.GetCardByName(card);
+                cardDisplay.СhangeCardType(cardByName);
+                cardDisplay.SetIdCard(_currentCardsInHand);
+                cardDisplay.CardGame.DisplayCardInGame(cardPlayer);
+                cardDisplay.SetDependecies(_publisher, _animaManager);
+                cardDisplay.enabled = false;
+                var component = cardPlayer.GetComponent<DraggableCard>();
+                component.SetDependecies( _pointStopDrag, _pointReturnCard , _targetManager);
+                cardPlayer.SetActive(true);
+                _configurateManager.ConfigurateCardByBattle(cardPlayer);
+                _animaManager.SetStateAnimation(cardPlayer, "go_hand",true);
+                _currentCardsInHand++;
+                _coroutiner.StartCoroutine(SwithParentCard(cardPlayer));
+                _currentDeck.Remove(card);
+                yield return new WaitForSeconds(0.2f);
+                break;
+            }
+            if (_currentCardsInHand == _maxCardsInHand) break;
+        }*/
     }
 
     private void FinishBattle()

@@ -25,7 +25,7 @@ public class DeckManager : IDeckManager, ISubscriber
     private GameObject _pointStopDrag;
     private GameObject _pointReturnCard;
     private List<GameObject> _poolCardsPlayer; //колода карт 
-    private IDeckManager _deckManagerImplementation;
+    //private IDeckManager _deckManagerImplementation;
 
     public DeckManager(IObjectStorage objectStorage, IInventoryManager inventoryManager, IAnimaManager animaManager, 
         IPublisher publisher, ICoroutiner coroutiner, ITargetManager targetManager, IConfigurateManager configurateManager)
