@@ -1,2 +1,2 @@
 # CCG_D_E
-Test Unity
+Prototype of a card game
